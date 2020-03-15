@@ -1,0 +1,246 @@
+{
+    "spells": {
+        "data": {
+            "fireball": {
+                "name": "Fireball",
+                "description": "Casts a fireball approximately 2 to 3 inches in diameter, which travels slowly towards its target. This spell is considered one of the easiest and most simple spells, taught often as a first spell to novice mages and even non-mage warriors.",
+                "type": "Fire",
+                "hitType": "Damage",
+                "hitTypeInt": 15,
+                "mana": 20,
+                "dice": ["d6", "d6"],
+                "range": 60,
+                "castText": "You focus on your enemy, remember your training, and watch as your hands glow orange, light on fire, then procure a bright ball of spewing flame, then you *fire* it from your hands, pun not intended.",
+                "origin": "Elvin",
+                "otherStats": "Deals 1d4 of burn damage if the enemy has no resistance to burn damage.",
+                "difficulty": "Extremely Easy",
+                "altNames": ["Fireball", "Fire Ball", "Ball o' fire", "one big burnyboi"]
+            }
+        },
+        "battle": {
+            "fireball": {
+                "dice": {
+                    "hit": {
+                        "base": [
+                            "d6",
+                            "d6"
+                        ],
+                        "add": {
+                            "on": "require",
+                            "type": "burn",
+                            "amount": [
+                                "d4"
+                            ]
+                        }
+                    }
+                },
+                "config": {
+                    "armorCheck": "always",
+                    "turnType": "full",
+                    "range": 60,
+                    "is": "attack"
+                }
+            },
+            "basic_heal": {
+                "dice": {
+                    "hit": {
+                        "on": "require",
+                        "base": [
+                            "d20"
+                        ],
+                        "add": {
+                            "on": "always",
+                            "amount": [
+                                4
+                            ]
+                        },
+                        "after": {
+                            "on": "require",
+                            "type": "resistance",
+                            "amount": [
+                                2
+                            ],
+                            "for": [
+                                2
+                            ]
+                        }
+                    }
+                },
+                "config": {
+                    "armorCheck": "never",
+                    "turnType": "full",
+                    "range": 20,
+                    "is": "heal"
+                }
+            },
+            "tidal_wave": {
+                "dice": {
+                    "hit": {
+                        
+                    }
+                }
+            }
+        }
+    },
+    "items": {
+
+    },
+    "enemies": {
+        "skeleton1": {
+            "hp": 20,
+            "ac": 10,
+            "atk": {
+                "prim": {
+                    "name": "Bone Arrow",
+                    "dice": [
+                        "d6",
+                        "d6"
+                    ],
+                    "type": "piercing",
+                    "desc": "The Skeleton shoots an arrow made of sharpened bone at you."
+                },
+                "sec": {
+                    "name": "Bone Throw",
+                    "dice": [
+                        "d6",
+                        "4"
+                    ],
+                    "type": "none",
+                    "desc": "The Skeleton throws a hard, blunt-ended bone at you."
+                },
+                "third": {
+                    "name": "none"
+                },
+                "leg": {
+                    "name": "none",
+                    "chance": 0
+                }
+            },
+            "difficulty": "Easy",
+            "encounter": [
+                "A standard skeleton approaches you with a bow in tow.",
+                "You come across a skeleton carrying a old wood bow."
+            ]
+        },
+        "goblin1": {
+            "hp": 7,
+            "ac": 14,
+            "atk": {
+                "prim": {
+                    "name": "Club",
+                    "dice": [
+                        "d6",
+                        "2"
+                    ],
+                    "type": "none",
+                    "desc": "The Goblin hits you with a bloodied wooden club. It hurts... momentarily."
+                },
+                "sec": {
+                    "name": "none"
+                },
+                "third": {
+                    "name": "none"
+                },
+                "leg": {
+                    "name": "none",
+                    "chance": 0
+                }
+            },
+            "difficulty": "Very Easy",
+            "encounter": [
+                "A goblin stands in front of you, making incoherent noises.",
+                "A disgusting-looking goblin gets in your way."
+            ]
+        },
+        "skeleton2": {
+            "hp": 30,
+            "ac": 8,
+            "atk": {
+                "prim": {
+                    "name": "Slash",
+                    "dice": [
+                        "d8",
+                        "d6"
+                    ],
+                    "type": "none",
+                    "desc": "The Skeleton slashes at you with its poorly-crafted sword."
+                },
+                "sec": {
+                    "name": "Stab",
+                    "dice": [
+                        "d12",
+                        "2"
+                    ],
+                    "type": "piercing",
+                    "desc": "The Skeleton stabs you with a stone knife."
+                },
+                "third": {
+                    "name": "none"
+                },
+                "leg": {
+                    "name": "none",
+                    "chance": 0
+                }
+            },
+            "difficulty": "Easy",
+            "encounter": [
+                "A standard skeleton approaches you with a bow in tow.",
+                "You come across a skeleton carrying a old wood bow."
+            ]
+        },
+        "rare_skeleton1": {
+            "hp": 42,
+            "ac": 13,
+            "atk": {
+                "prim": {
+                    "name": "Bone Arrow",
+                    "dice": [
+                        "d6",
+                        "d6"
+                    ],
+                    "type": "piercing",
+                    "desc": "The Skeleton shoots an arrow made of sharpened bone at you."
+                },
+                "sec": {
+                    "name": "Bone Arrow",
+                    "dice": [
+                        "d6",
+                        "d6"
+                    ],
+                    "type": "piercing",
+                    "desc": "The Skeleton shoots an arrow made of sharpened bone at you."
+                },
+                "third": {},
+                "leg": {}
+            },
+            "difficulty": "Intermediate"
+        },
+        "hellhound": {
+            "hp": 19,
+            "ac": 16,
+            "atk": {
+                "prim": {
+                    "name": "Bone Arrow",
+                    "dice": [
+                        "d6",
+                        "d6"
+                    ],
+                    "type": "piercing",
+                    "desc": "The Skeleton shoots an arrow made of sharpened bone at you."
+                },
+                "sec": {
+                    "name": "Bone Arrow",
+                    "dice": [
+                        "d6",
+                        "d6"
+                    ],
+                    "type": "piercing",
+                    "desc": "The Skeleton shoots an arrow made of sharpened bone at you."
+                },
+                "third": {},
+                "leg": {}
+            },
+            "difficulty": "Low-Intermediate"
+        }
+    }
+}

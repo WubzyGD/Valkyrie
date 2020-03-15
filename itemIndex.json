@@ -1,0 +1,308 @@
+{
+    "weapons": {
+        "name": "weapons",
+        "Scrap": [
+            {"name": "Stick", "rarity": "Scrap", "hitDice": ["d6", "2"]},
+            {"name": "Skeleton Bone", "rarity": "Scrap", "hitDice": ["d6", "2"]},
+            {"name": "Stone", "rarity": "Scrap", "hitDice": ["d6", "2"]},
+            {"name": "Crayon", "rarity": "Scrap", "hitDice": ["d6", "2"]},
+            {"name": "Imaginary Knife", "rarity": "Scrap", "hitDice": ["0"]},
+            {"name": "Paper Machet Dagger", "rarity": "Scrap", "hitDice": ["d6", "2"]}
+        ],
+        "Common": [
+            {"name": "Broken Glass Bottle", "rarity": "Common", "hitDice": ["d8", "3"]},
+            {"name": "Iron Dagger", "rarity": "Common", "hitDice": ["d10"]},
+            {"name": "Hand-Crafted Bow and Arrow", "rarity": "Common", "hitDice": ["d6", "d4"]},
+            {"name": "Sharpened Skeleton Bone", "rarity": "Common", "hitDice": ["d4", "d4", "3"]}
+        ],
+        "Uncommon": [
+            {"name": "Iron Sword", "rarity": "Uncommon", "hitDice": ["d10", "2"]},
+            {"name": "Basic Tome", "rarity": "Uncommon", "hitDice": ["d8", "4"]},
+            {"name": "Steel Throwing-Knives", "rarity": "Uncommon", "hitDice": ["d6", "d6"]},
+            {"name": "Bow and Arrow", "rarity": "Uncommon", "hitDice": ["d4", "d4", "d4", "d4", "3"]}
+        ],
+        "Rare": [
+            {"name": "Dual-Wieldable Iron Swords", "rarity": "Rare", "hitDice": ["d12", "2"]},
+            {"name": "Enchanted Poison Steel Dagger", "rarity": "Rare", "hitDice": ["d8", "d6", "2"]},
+            {"name": "Flaming Bow and Arrow", "rarity": "Rare", "hitDice": ["d8", "6"]},
+            {"name": "Crimson Seeking Stones", "rarity": "Rare", "hitDice": ["d6", "d6", "d6", "4"]}
+        ],
+        "Legendary": [
+            {"name": "Ancient Tome", "rarity": "Legendary", "hitDice": ["d20"]},
+            {"name": "Flaming Elvin Sword", "rarity": "Legendary", "hitDice": ["d12", "d8", "4"]},
+            {"name": "Seeking Throwing Knives", "rarity": "Legendary", "hitDice": ["d8", "d8", "d8", "2"]},
+            {"name": "War Hammer", "rarity": "Legendary", "hitDice": ["d12", "d6", "d6", "3"]}
+        ],
+        "Exotic": [
+            {"name": "Dual-Wieldable Swords of Zeus", "rarity": "Exotic", "hitDice": ["d20", "d12"]},
+            {"name": "Hellish Redmetal Knives", "rarity": "Exotic", "hitDice": ["d20", "d8", "8"]},
+            {"name": "Shrieking Bow of the Damned", "rarity": "Exotic", "hitDice": ["d12", "d12", "d12", "4"]},
+            {"name": "Incredibly Sharp Battleaxe", "rarity": "Exotic", "hitDice": ["d10", "d10", "d10", "d10", "5"]}
+        ],
+        "Exalted": [
+            {"name": "Sword of the Light", "rarity": "Exalted", "hitDice": ["d100", "-15"]},
+            {"name": "Vial of Purity", "rarity": "Exalted", "hitDice": ["d20", "d20", "d12", "20"]},
+            {"name": "Holy Tome of the Omniscient", "rarity": "Exalted", "hitDice": ["d20", "d20", "d20", "d20", "d20"]},
+            {"name": "Bow of the Thousands", "rarity": "Exalted", "hitDice": ["d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6", "d6"]}
+        ]
+    },
+    "armor": {
+        "name": "armor",
+        "Scrap": [
+            {"name": "Paper", "setType": "Special", "pieces": [
+                {"name": "Paper Helmet", "rarity": "Scrap", "defense": 2},
+                {"name": "Paper Chestplate", "rarity": "Scrap", "defense": 3},
+                {"name": "Paper Greaves", "rarity": "Scrap", "defense": 2},
+                {"name": "Paper Boots", "rarity": "Scrap", "defense": 1},
+                {"name": "Paper Claws", "rarity": "Scrap", "defense": 0}
+            ]},
+            {"name": "Rock Helmet", "setType": "Partial", "pieces": [
+                {"name": "Rock Helmet", "rarity": "Scrap", "defense": 2}
+            ]},
+            {"name": "Imaginary Armor", "setType": "Special", "pieces": [
+                {"name": "Imaginary Helmet", "rarity": "Scrap", "defense": 0},
+                {"name": "Imaginary Faceplate", "rarity": "Scrap", "defense": 0},
+                {"name": "Imaginary Chestplate", "rarity": "Scrap", "defense": 0},
+                {"name": "Imaginary Greaves", "rarity": "Scrap", "defense": 0},
+                {"name": "Imaginary Boots", "rarity": "Scrap", "defense": 0},
+                {"name": "Imaginary Armguards", "rarity": "Scrap", "defense": 0}
+            ]},
+            {"name": "Leaf", "setType": "Standard", "pieces": [
+                {"name": "Leaf Helmet", "rarity": "Scrap", "defense": 1},
+                {"name": "Leaf Chestplate", "rarity": "Scrap", "defense": 3},
+                {"name": "Leaf Greaves", "rarity": "Scrap", "defense": 2},
+                {"name": "Leaf Boots", "rarity": "Scrap", "defense": 1}
+            ]}
+        ],
+        "Common": [
+            {"name": "Chainmail", "setType": "Standard", "pieces": [
+                {"name": "Chainmail Helmet", "rarity": "Common", "defense": 3},
+                {"name": "Chainmail Chestplate", "rarity": "Common", "defense": 6},
+                {"name": "Chainmail Greaves", "rarity": "Common", "defense": 4},
+                {"name": "Chainmail Boots", "rarity": "Common", "defense": 2}
+            ]},
+            {"name": "Leather", "setType": "Standard", "pieces": [
+                {"name": "Leather Helmet", "rarity": "Common", "defense": 2},
+                {"name": "Leather Chestplate", "rarity": "Common", "defense": 4},
+                {"name": "Leather Greaves", "rarity": "Common", "defense": 3},
+                {"name": "Leather Boots", "rarity": "Common", "defense": 2}
+            ]},
+            {"name": "Specialized Leather", "setType": "Special", "pieces": [
+                {"name": "Specialized Leather Helmet", "rarity": "Common", "defense": 3},
+                {"name": "Specialized Leather Chestplate", "rarity": "Common", "defense": 6},
+                {"name": "Specialized Leather Gloves", "rarity": "Common", "defense": 2},
+                {"name": "Specialized Leather Greaves", "rarity": "Common", "defense": 4},
+                {"name": "Specialized Leather Boots", "rarity": "Common", "defense": 2}
+            ]},
+            {"name": "Old Enchanted Cloak", "setType": "Special", "pieces": [
+                {"name": "Old Enchanted Cloak", "rarity": "Common", "defense": 4},
+                {"name": "Black Gloves", "rarity": "Common", "defense": 2}
+            ]},
+            {"name": "Old Iron Chestplate", "setType": "Partial", "pieces": [
+                {"name": "Old Iron Chestplate", "rarity": "Common", "defense": 7}
+            ]}
+        ],
+        "Uncommon": [
+            {"name": "Enchanted Chainmail", "setType": "Special", "pieces": [
+                {"name": "Enchanted Chainmail Headcover", "rarity": "Uncommon", "defense": 4},
+                {"name": "Enchanted Chainmail Chestplate", "rarity": "Uncommon", "defense": 7},
+                {"name": "Enchanted Chainmail Gloves", "rarity": "Uncommon", "defense": 3},
+                {"name": "Enchanted Chainmail Greaves", "rarity": "Uncommon", "defense": 5},
+                {"name": "Enchanted Reinforced Boots", "rarity": "Uncommon", "defense": 3}
+            ]},
+            {"name": "Chainmail Poncho", "setType": "Special", "pieces": [
+                {"name": "Chainmail Poncho", "rarity": "Uncommon", "defense": 8},
+                {"name": "Enchanted Leather Gloves", "rarity": "Uncommon", "defense": 2},
+                {"name": "Enchanted Reinforced Boots", "rarity": "Uncommon", "defense": 2}
+            ]},
+            {"name": "Used Iron Half-Set", "setType": "Partial", "pieces": [
+                {"name": "Iron Helmet", "rarity": "Uncommon", "defense": 6},
+                {"name": "Iron Chestplate", "rarity": "Uncommon", "defense": 9}
+            ]},
+            {"name": "Warding Cloak of Protection", "setType": "Special", "pieces": [
+                {"name": "Warding Cloak of Protection", "rarity": "Uncommon", "defense": 7},
+                {"name": "Magic-Enhancing Gloves", "rarity": "Uncommon", "defense": 3}
+            ]}
+        ],
+        "Rare": [
+            {"name": "Intrepid Wizard's Cloak", "setType": "Special", "pieces": [
+                {"name": "Intrepid Wizard's Cloak", "rarity": "Rare", "defense": 10},
+                {"name": "Mysterious Black Gloves", "rarity": "Rare", "defense": 5}
+            ]},
+            {"name": "Cloak of Hiding", "setType": "Special", "pieces": [
+                {"name": "Cloak of Hiding", "rarity": "Rare", "defense": 9},
+                {"name": "Stealthy Black Boots", "rarity": "Rare", "defense": 3},
+                {"name": "Mysterious Black Gloves", "rarity": "Rare", "defense": 5}
+            ]},
+            {"name": "Iron", "setType": "Standard", "pieces": [
+                {"name": "Iron Helmet", "rarity": "Rare", "defense": 5},
+                {"name": "Iron Chestplate", "rarity": "Rare", "defense": 9},
+                {"name": "Iron Greaves", "rarity": "Rare", "defense": 7},
+                {"name": "Iron Boots", "rarity": "Rare", "defense": 4}
+            ]},
+            {"name": "Apprentice's Robes", "setType": "Special", "pieces": [
+                {"name": "Apprentice's Robes", "rarity": "Rare", "defense": 10},
+                {"name": "Specialized Stylish Boots", "rarity": "Rare", "defense": 4}
+            ]}
+        ],
+        "Legendary": [
+            {"name": "Enchanted Wizard's Cloak", "setType": "Special", "pieces": [
+                {"name": "Enchanted Wizard's Cloak", "rarity": "Legendary", "defense": 18}
+            ]},
+            {"name": "Sorcerer's Robes", "setType": "Special", "pieces": [
+                {"name": "Sorcerer's Robes", "rarity": "Legendary", "defense": 15},
+                {"name": "Gloves of Foucs", "rarity": "Legendary", "defense": 4},
+                {"name": "Boots of Swiftness", "rarity": "Legendary", "defense": 5}
+            ]},
+            {"name": "Shroud of Invisibility", "setType": "Special", "pieces": [
+                {"name": "Shroud of Invisibility", "rarity": "Legendary", "defense": 13},
+                {"name": "Legendary Boots of Stealth", "rarity": "Legendary", "defense": 7}
+            ]},
+            {"name": "Enchanted Iron", "setType": "Standard", "pieces": [
+                {"name": "Enchanted Iron Helmet", "rarity": "Legendary", "defense": 6},
+                {"name": "Enchanted Iron Chestplate", "rarity": "Legendary", "defense": 13},
+                {"name": "Enchanted Iron Greaves", "rarity": "Legendary", "defense": 7},
+                {"name": "Enchanted Iron Boots", "rarity": "Legendary", "defense": 6}
+            ]}
+        ],
+        "Exotic": [
+            {"name": "Master's Robes", "setType": "Special", "pieces": [
+                {"name": "Master's Robes", "rarity": "Exotic", "defense": 18},
+                {"name": "Mysterious Nebulaic Boots", "rarity": "Exotic", "defense": 9}
+            ]},
+            {"name": "Hellish Shroud", "setType": "Special", "pieces": [
+                {"name": "Hellish Cloak", "rarity": "Exotic", "defense": 15},
+                {"name": "Hellish Aura", "rarity": "Exotic", "defense": 5},
+                {"name": "Eyes of the Damned", "rarity": "Exotic", "defense": 2},
+                {"name": "Gloves of Malice", "rarity": "Exotic", "defense": 12},
+                {"name": "Boots of Fire Resistance", "rarity": "Exotic", "defense": 9}
+            ]},
+            {"name": "Ancient Warding Armor", "setType": "Special", "pieces": [
+                {"name": "Ancient Warding Shroud", "rarity": "Exotic", "defense": 10},
+                {"name": "Legendary Iron Helmet", "rarity": "Exotic", "defense": 7},
+                {"name": "Legendary Iron Chestplate", "rarity": "Exotic", "defense": 16},
+                {"name": "Legendary Iron Greaves", "rarity": "Exotic", "defense": 10},
+                {"name": "Legendary Iron Boots", "rarity": "Exotic", "defense": 9}
+            ]},
+            {"name": "Armor of the Demigod", "setType": "Special", "pieces": [
+                {"name": "Demigod's Helmet", "rarity": "Exotic", "defense": 8},
+                {"name": "Demigod's Chestplate", "rarity": "Exotic", "defense": 17},
+                {"name": "Demigod's Greaves", "rarity": "Exotic", "defense": 11},
+                {"name": "Demigod's Cape", "rarity": "Exotic", "defense": 5},
+                {"name": "Demigod's Boots", "rarity": "Exotic", "defense": 8}
+            ]},
+            {"name": "Volcanic", "setType": "Standard", "pieces": [
+                {"name": "Volcanic Helmet", "rarity": "Exotic", "defense": 11},
+                {"name": "Volcanic Chestplate", "rarity": "Exotic", "defense": 18},
+                {"name": "Volcanic Greaves", "rarity": "Exotic", "defense": 9},
+                {"name": "Volcanic Boots", "rarity": "Exotic", "defense": 12}
+            ]},
+            {"name": "Golden Magus", "setType": "Special", "pieces": [
+                {"name": "Golden Magus Helmet", "rarity": "Exotic", "defense": 9},
+                {"name": "Golden Magus Chestplate", "rarity": "Exotic", "defense": 17},
+                {"name": "Golden Magus Wristguards", "rarity": "Exotic", "defense": 6},
+                {"name": "Golden Magus Gloves", "rarity": "Exotic", "defense": 7},
+                {"name": "Golden Magus Greaves", "rarity": "Exotic", "defense": 12},
+                {"name": "Golden Magus Boots", "rarity": "Exotic", "defense": 10}
+            ]}
+        ],
+        "Exalted": [
+            {"name": "Zeus' Plates", "setType": "Standard", "pieces": [
+                {"name": "Zeus' Helmet", "rarity": "Exalted", "defense": 17},
+                {"name": "Zeus' Chestplate", "rarity": "Exalted", "defense": 20},
+                {"name": "Zeus' Greaves", "rarity": "Exalted", "defense": 15},
+                {"name": "Zeus' Boots", "rarity": "Exalted", "defense": 14}
+            ]},
+            {"name": "Dark Chasm", "setType": "Standard", "pieces": [
+                {"name": "Dark Chasm Helmet", "rarity": "Exalted", "defense": 14},
+                {"name": "Dark Chasm Chestplate", "rarity": "Exalted", "defense": 19},
+                {"name": "Dark Chasm Greaves", "rarity": "Exalted", "defense": 15},
+                {"name": "Perfected Boots of Fire Resistance and Malice", "rarity": "Exalted", "defense": 13}
+            ]},
+            {"name": "Volatile Shield", "setType": "Special", "pieces": [
+                {"name": "Volatile Two-Handed Shield", "rarity": "Exalted", "defense": 24},
+                {"name": "Enchanted Iron Helmet", "rarity": "Legendary", "defense": 6},
+                {"name": "Enchanted Iron Chestplate", "rarity": "Legendary", "defense": 13}
+            ]},
+            {"name": "Holy", "setType": "Special", "pieces": [
+                {"name": "Holy Helmet", "rarity": "Exotic", "defense": 12},
+                {"name": "Holy Chestplate", "rarity": "Exotic", "defense": 20},
+                {"name": "Holy Wristguards", "rarity": "Exotic", "defense": 9},
+                {"name": "Holy Gloves", "rarity": "Exotic", "defense": 10},
+                {"name": "Holy Greaves", "rarity": "Exotic", "defense": 15},
+                {"name": "Holy Boots", "rarity": "Exotic", "defense": 13}
+            ]}
+        ]
+    },
+    "junk": {
+        "name": "junk",
+        "junk": [
+            {"name": "Skeleton Bone", "sellValue": "30 Copper"},
+            {"name": "Crude Iron Ore", "sellValue": "1 Silver, 75 Copper"},
+            {"name": "Barely intact and unreadable newspaper piece", "sellValue": "15 Copper"},
+            {"name": "Shiny rocks that look like they're worth something", "sellValue": "50 Copper"},
+            {"name": "Glass Bottle with some Spider Poison in it", "sellValue": "2 Silver"},
+            {"name": "Wooden Oar", "sellValue": "60 Copper"},
+            {"name": "Crude Health Potion that you probably shouldn't drink", "sellValue": "1 Silver"},
+            {"name": "Sticks", "sellValue": "35 Copper"},
+            {"name": "Half of a leather glove. Not one glove, *half* of a glove.", "sellValue": "75 Copper"},
+            {"name": "Metal Pieces", "sellValue": "3 Silver, 10 Copper"},
+            {"name": "Good Glass Bottle", "sellValue": "1 Silver, 50 Copper"},
+            {"name": "Parts of... something..", "sellValue": "80 Copper"}
+        ]
+    },
+    "fish": {
+        "name": "fish",
+        "fish": [
+            {"name": "Trout", "hunger": "10", "size": "Small"},
+            {"name": "Trout", "hunger": "40", "size": "Large"},
+            {"name": "Catfish", "hunger": "25", "size": "Regular"},
+            {"name": "Rainbow Trout", "hunger": "25", "size": "Regular"},
+            {"name": "Codfish", "hunger": "25", "size": "Regular"},
+            {"name": "Salmon", "hunger": "25", "size": "Regular"},
+            {"name": "Salmon", "hunger": "40", "size": "Large"},
+            {"name": "Tuna", "hunger": "25", "size": "Regular"},
+            {"name": "Tuna", "hunger": "40", "size": "Large"},
+            {"name": "Narwhale", "hunger": "123", "size": "verie lorg"}
+        ]
+    },
+    "relics": {
+        "name": "relics",
+        "relics": [
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "", "sellValue": ""},
+            {"name": "Weird-Looking Crystal that's probably important..", "sellValue": "25 Foxed-Iron"},
+            {"name": "", "sellValue": ""},
+            {"name": "Vincent's Left Horn", "sellValue": "1 Garthryl"}
+        ],
+        "rareCoins": [
+            {"name": "Tungsten", "belowWorth": "25 Gold"},
+            {"name": "Platinum", "belowWorth": "4 Tungsten"},
+            {"name": "Titanium", "belowWorth": "15 Platinum"},
+            {"name": "Foxed-Iron", "belowWorth": "150 Titanium"},
+            {"name": "Dalicyte", "belowWorth": "100 Foxed Iron"},
+            {"name": "Odandite", "belowWorth": "225 Dalicyte"},
+            {"name": "Mythril", "belowWorth": "100 Odandite"},
+            {"name": "Petrified Jade", "belowWorth": "550 Mythril"},
+            {"name": "Garthryl", "belowWorth": "1250 Petrified Jade"}
+        ]
+    },
+    "chests": {
+        "name": "chests"
+    },
+    "money": {
+        "name": "money",
+        "coins": [
+            {"name": "Copper", "belowWorth": "1 Bronze"},
+            {"name": "Silver", "belowWorth": "100 Copper"},
+            {"name": "Gold", "belowWorth": "100 Silver"}
+        ]
+    }
+}

@@ -1,0 +1,28 @@
+//META{"name":"{{themeName}}","description":"{{themeDescription}}","author":"{{themeAuthor}}","version":"1.0"}*//{}
+@import url(https://cdn.discordthemes.net/file/notanotheranimetheme/scsl.css);
+
+.embedFull-2tM8-- {
+    border-left: 4px solid var(--main-color);
+    background: rgba(0,0,0,0.4);
+}
+.theme-dark .markup-2BOw-j code.inline {
+    background: rgba(0,0,0,0.5);
+}
+
+:root {
+    --background-image: {{background-image}};
+    --friends-icon: {{friends-icon}};
+    --friends-icon-position: center center;
+    --friends-icon-zoom: 100%;
+    --main-color: {{main-color}};
+    --main-transparency: {{main-transparency}};
+    --unread-server-animation: rainbow;
+    --hover-list-bg-color: rgba(255, 255, 255, .15);
+    --border-lines-color: hsla(0,0%,100%,.1);
+    --scroll-bar-color: {{main-color}};
+    --font-size: 16px;
+    --selected-text-voice-color: {{main-color}};
+    --channel-hover-text-color: rgb(255, 255, 255);
+    --unread-text-color: {{main-color}};
+    --user-popup-background: rgba(0, 0, 0, 0.8);
+}
