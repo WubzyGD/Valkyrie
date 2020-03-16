@@ -97,6 +97,7 @@ module.exports = {
 			players[p2n].armor = items.armor.Scrap[2].pieces[Math.floor(Math.random() * items.armor.Scrap[2].pieces.length)];
 			var lastTurn = "There have been no turns yet.";
 			async function turn(p) {
+				console.log(`${p.displayName} has started their turn.`);
 				var inst = `React to this message with a :crossed_swords: to attack the other player, and react to it with a :fish: to get better materials. Or, react to it with an :x: to just be a plain coward and get oofed instantly.`;
 				var battleEmbed = new Discord.RichEmbed()
 				.setAuthor("1v1 Duel", client.users.get(p.id).avatarURL)
@@ -107,6 +108,7 @@ module.exports = {
 				.addField("Current Stats", `**__${p2.displayName}__**\n\n**Health**: ${players[p2n].hp}/100 HP\n__**Weapon**__: ${players[p2n].weapon.name}\n**Rarity**: ${players[p2n].weapon.rarity}\n**Hit Dice**: ${makeHDStr(players[p2n].weapon)}\n**__Armor__**: ${players[p2n].armor.name}\n**Rarity**: ${players[p2n].armor.rarity}\n**Defense**: ${players[p2n].armor.defense}`)
 				.setColor("DC134C").setFooter("Valkyrie").setTimestamp();
 				await game.edit(battleEmbed);
+				await game.clearReactions();
 				await game.react("⚔️"); await game.react("🐟"); await game.react("❌");
 				await wait(200);
 
@@ -205,25 +207,27 @@ module.exports = {
 						await gatherQuery.react("👎");
 						await wait(300);
 						gatherQuery.delete(200000);
-						var filter = filter = reaction => (reaction.emoji.name.includes("👍") || reaction.emoji.name.includes("👎")) && reaction.users.first().id == p.id;
+						var filter = filter = reaction => (reaction.emoji.name.includes("👍") || reaction.emoji.name.includes("👎")) && reaction.users.array()[1].id == p.id;
 						var collector = await gatherQuery.createReactionCollector(filter, {time: 200000, maxMatches: 1});
 						collector.on("collect", choice => {
 							if (choice.emoji.name == "👍") {players[p.displayName].weapon = nweapon; lastTurn = `${p.displayName} fished an item and kept it!`}
 							else if (choice.emoji.name == "👎") {lastTurn = `${p.displayName} fished an item and didn't keep it!`};
-						});
-						collector.on("end", collected => {
-							if ((!collected.size) || collected.size == 0) {return message.channel.send("The battle ended becuase someone didn't take their turn ;-;");};
+							gatherQuery.clearReactions();
 							if (players[p.displayName].hp <= 0) {if(p==p1){win(p2);}else{win(p1);};};
 							if (players[p.displayName].hp > 100) {players[p.displayName].hp = 100};
 							if (p == p1) {turn(p2);} else {turn(p1);};
 						});
-					};
+						collector.on("end", collected => {
+							if ((!collected.size) || collected.size == 0) {return message.channel.send("The battle ended becuase someone didn't take their turn ;-;");};
+						});
+					}
 				};
 
 				var filter = filter = reaction => (reaction.emoji.name.includes("⚔️") || reaction.emoji.name.includes("🐟") || reaction.emoji.name.includes("❌")) && reaction.users.array()[1].id == p.id;
 				var collector = await game.createReactionCollector(filter, {time: 200000, maxMatches: 1});
 				var choice;
 				collector.on("collect", async collected => {
+					console.log("collected");
 					choice = collected.emoji.name;
 					if (choice == "⚔️") {await attack();}
 					else if (choice == "🐟") {await find();}

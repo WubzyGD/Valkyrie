@@ -29,7 +29,7 @@ module.exports = {
         } else if (msg.includes("stonks")) {
             return message.channel.send({files: ["https://cdn.discordapp.com/attachments/563198656241598484/655553468160933929/download.jpeg-2.jpg"]});
         };
-        if ((msg.startsWith("i am ") || msg.startsWith("im ") || msg.startsWith("i'm ") || msg.startsWith("i’m ")) && message.content.length <= 30) {
+        if ((msg.startsWith("i am ") || msg.startsWith("im ") || msg.startsWith("i'm ") || msg.startsWith("i’m ")) && message.content.length <= 30 && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705")) {
             message.channel.send(`Hi **${message.content.slice((message.content.search("m ") + 2))}**, I'm Dad!`);
         };
     }
