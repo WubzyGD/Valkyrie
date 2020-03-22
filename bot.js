@@ -228,10 +228,10 @@ client.on("message", async message => {
 		});
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
-
+	console.log((new Date().getTime() - new Date(pstats.last_xpGain)));
 	if ((new Date().getTime() - new Date(pstats.last_xpGain)) / 1000 > 60) {
-		await pstats.increment(money, {by: 15 * (pstats.lost_remnants + 1)});
-		await pstats.increment(xp, {by: 10 * (pstats.lost_remnants + 1)});
+		await pstats.update({money: 15 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
+		await pstats.update({xp: 10 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 0}, {where: user_id});
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
