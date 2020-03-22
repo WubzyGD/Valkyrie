@@ -241,12 +241,12 @@ client.on("message", async message => {
 	if ((new Date().getTime() - new Date(pstats.last_xpGain)) / 1000 > 60) {
 		await pstats.update({money: 15 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 10 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
-		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
 		pstats.increment(level);
+		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
 	};
 
@@ -281,7 +281,7 @@ client.on("message", async message => {
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
 		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
-			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt\n${pstats.ancient_boss_damage_done}`);
+			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt: ${pstats.ancient_boss_damage_done}`);
 		} else if (message.channel.guild.id == "679127746592636949") {
 			pstatsembed.addField("Extended Stats", "Please go to <#691178546097553418> to view your game stats!");
 		} else {
