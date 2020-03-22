@@ -224,15 +224,25 @@ client.on("message", async message => {
 		await userGameData.create({
 			user_id: message.author.id,
 			username: message.author.username,
-			last_xpGain: new Date().toString()
+			last_xpGain: new Date().toString(),
+			xp: 0,
+			level: 1,
+			prestige: 0,
+			fighters_count: 0,
+			money: 100,
+			lost_remnants: 0,
+			prestige_fighters_count: 0,
+			boss_damage_done: 0,
+			ancient_boss_damage_done: 0
 		});
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
-	console.log((new Date().getTime() - new Date(pstats.last_xpGain)));
+	//console.log((new Date().getTime() - new Date(pstats.last_xpGain)));
 	if ((new Date().getTime() - new Date(pstats.last_xpGain)) / 1000 > 60) {
 		await pstats.update({money: 15 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 10 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
+		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
