@@ -61,8 +61,6 @@ client.on("ready", async () => {
 	console.log("Client ID: " + client.user.id);
 	console.log("Running on " + client.guilds.size + " guilds and serving " + client.users.size + " members.");
 
-	diceRolled.sync();
-	userGameData.sync();
 	console.log("\nSuccessfully loaded Sequelize database(s)");
 	
   	var responses = new Array("some high rolls...", "with dice...", "a great rpg...", "with the laws of the dice...", 
