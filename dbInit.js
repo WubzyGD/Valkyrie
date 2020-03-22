@@ -6,8 +6,8 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	storage: 'database.sqlite',
 });
 
-const diceRolled = await sequelize.import("./models/dicerolled");
-const userGameData = await sequelize.import("./models/usergamedata");
+const diceRolled = sequelize.import("./models/dicerolled");
+const userGameData = sequelize.import("./models/usergamedata");
 
 var e = process.argv.includes('--force') || process.argv.includes('-f');
 
