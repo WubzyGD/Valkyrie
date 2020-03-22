@@ -281,7 +281,7 @@ client.on("message", async message => {
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
 		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
-			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${fighters_count}\nLost Remnants Owned: ${lost_remnants}\nNumber of Prestige Fighters: ${prestige_fighters_count}\nBoss Damage Dealt: ${boss_damage_done}\nAncient Boss Damage Dealt\n${ancient_boss_damage_done}`);
+			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt\n${pstats.ancient_boss_damage_done}`);
 		} else if (message.channel.guild.id == "679127746592636949") {
 			pstatsembed.addField("Extended Stats", "Please go to <#691178546097553418> to view your game stats!");
 		} else {
