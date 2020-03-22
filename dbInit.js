@@ -11,7 +11,7 @@ sequelize.import("./models/usergamedata");
 
 var force = process.argv.includes('--force') || process.argv.includes('-f');
 
-/*sequelize.sync({force}).then(async () => {
+sequelize.sync({force}).then(async () => {
 	console.log('Database synced');
 	sequelize.close();
-}).catch(console.error);*/
+}).catch(console.error);

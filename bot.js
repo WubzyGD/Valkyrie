@@ -196,12 +196,14 @@ client.on("message", async message => {
 		await pstats.update({money: (15 * (pstats.lost_remnants + 1)) + pstats.money}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: (10 * (pstats.lost_remnants + 1)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
+		pstats.save();
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
 		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
+		pstats.save();
 	};
 
 	if (msg.startsWith(prefix) && (cmd == "diceduel" || cmd == "rolldice")) {
@@ -219,6 +221,7 @@ client.on("message", async message => {
 				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
 			} catch (e) {};
 		};
+		tempDieCount.save();
 	};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
