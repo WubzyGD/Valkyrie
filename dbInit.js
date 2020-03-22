@@ -9,9 +9,9 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 sequelize.import("./models/dicerolled");
 sequelize.import("./models/usergamedata");
 
-var force = process.argv.includes('--force') || process.argv.includes('-f');
+var e = process.argv.includes('--force') || process.argv.includes('-f');
 
-sequelize.sync({force}).then(async () => {
+sequelize.sync({force: false}).then(async () => {
 	console.log('Database synced');
 	sequelize.close();
 }).catch(console.error);

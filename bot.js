@@ -37,6 +37,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	dialect: 'sqlite',
 	logging: false,
 	storage: 'database.sqlite',
+	transactionType: 'immediate'
 });
 
 const {exec} = require("child_process");
