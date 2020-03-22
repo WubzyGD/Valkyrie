@@ -39,10 +39,10 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'database.sqlite',
 });
 
-var child_process = require('child_process');
+/*var child_process = require('child_process');
 child_process.exec('./init.bat', function(error, stdout, stderr) {
     console.log(stdout);
-});
+});*/
 
 const userGameData = sequelize.import("./models/usergamedata");
 const diceRolled = sequelize.import("./models/dicerolled");
