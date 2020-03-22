@@ -212,7 +212,7 @@ client.on("message", async message => {
 		if (tempDieCount) {tempDieCount.increment("dice_rolled")}
 		else {
 			try {
-				var tempDieCountawait = await diceRolled.create({
+				var tempDieCount = await diceRolled.create({
 					name: "dice_rolled_count",
 					description: "The number of dice that this user has rolled.",
 					username: message.author.username,
@@ -220,7 +220,7 @@ client.on("message", async message => {
 					dice_rolled: 1
 				});
 				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
-			} catch (e) {};
+			} catch (e) {console.log(e);};
 		};
 		tempDieCount.save();
 	};
