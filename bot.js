@@ -30,74 +30,17 @@ function wait(time) {
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
 
+const Sequelize = require('sequelize');
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize('database', 'user', 'password', {
+const sequelize = new Sequelize('database', 'username', 'password', {
 	host: 'localhost',
 	dialect: 'sqlite',
 	logging: false,
 	storage: 'database.sqlite',
 });
-const diceRolled = sequelize.define('dice_rolled', {
-	name: Sequelize.STRING,
-	description: Sequelize.TEXT,
-	username: Sequelize.STRING,
-	user_id: {
-		type: Sequelize.STRING,
-		unique: true
-	},
-	dice_rolled: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0,
-		allowNull: false,
-	},
-});
-const userGameData = sequelize.define('usergamedata', {
-	user_id: {
-		type: Sequelize.STRING, 
-		unique: true
-	},
-	username: Sequelize.STRING,
 
-	xp: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	}, 
-	last_xpGain: Sequelize.STRING,
-	level: {
-		type: Sequelize.INTEGER,
-		defaultValue: 1
-	},
-	prestige: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	},
-
-	fighters_count: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	},
-	money: {
-		type: Sequelize.INTEGER,
-		defaultValue: 100
-	},
-	lost_remnants: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	},
-	prestige_fighters_count: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	},
-	boss_damage_done: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	},
-	ancient_boss_damage_done: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0
-	}
-});
+const userGameData = sequelize.import("./models/usergamedata");
+const diceRolled = sequelize.import("./models/dicerolled");
 
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
 
