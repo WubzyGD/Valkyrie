@@ -265,4 +265,5 @@ client.on("message", async message => {
 	//insult
 	//scene
 	//seduce
+	//e
 });
