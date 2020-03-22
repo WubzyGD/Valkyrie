@@ -30,32 +30,23 @@ function wait(time) {
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
 
-const Sequelize = require('sequelize');
+/*const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('database', 'username', 'password', {
 	host: 'localhost',
 	dialect: 'sqlite',
 	logging: false,
 	storage: 'database.sqlite',
-	transactionType: 'immediate'
 });
 
-const {exec} = require("child_process");
-
-exec("node dbInit.js", (error, stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-    }
-    console.log(`stdout: ${stdout}`);
+/*var child_process = require('child_process');
+child_process.exec('./init.bat', function(error, stdout, stderr) {
+    console.log(stdout);
 });
 
-const {userGameData, diceRolled} = sequelize.import("dbInit");
-
+const userGameData = sequelize.import("./models/usergamedata");
+const diceRolled = sequelize.import("./models/dicerolled");
+*/
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
 
 console.log("All commands successfully loaded with no errors!\n");
@@ -174,7 +165,7 @@ client.on("message", async message => {
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
-	var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+	/*var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	if (!pstats) {
 		await userGameData.create({
 			user_id: message.author.id,
@@ -196,14 +187,12 @@ client.on("message", async message => {
 		await pstats.update({money: (15 * (pstats.lost_remnants + 1)) + pstats.money}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: (10 * (pstats.lost_remnants + 1)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
-		pstats.save();
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
 		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
-		pstats.save();
 	};
 
 	if (msg.startsWith(prefix) && (cmd == "diceduel" || cmd == "rolldice")) {
@@ -211,7 +200,7 @@ client.on("message", async message => {
 		if (tempDieCount) {tempDieCount.increment("dice_rolled")}
 		else {
 			try {
-				var tempDieCount = await diceRolled.create({
+				await diceRolled.create({
 					name: "dice_rolled_count",
 					description: "The number of dice that this user has rolled.",
 					username: message.author.username,
@@ -219,9 +208,8 @@ client.on("message", async message => {
 					dice_rolled: 1
 				});
 				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
-			} catch (e) {console.log(e);};
+			} catch (e) {};
 		};
-		tempDieCount.save();
 	};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
@@ -247,7 +235,7 @@ client.on("message", async message => {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
 		return message.channel.send(pstatsembed);
-	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
+	} else */if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
 			if (client.commands.has(cmd)) {
@@ -282,5 +270,4 @@ client.on("message", async message => {
 	//insult
 	//scene
 	//seduce
-	//e
 });
