@@ -1,2 +1,2 @@
-worker: node init.bat
+worker: node dbInit.js
 worker: node bot.js
