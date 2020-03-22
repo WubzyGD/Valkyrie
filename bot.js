@@ -239,13 +239,13 @@ client.on("message", async message => {
 	};
 	//console.log((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000, pstats.last_xpGain, message.author.username);
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 > 60) {
-		await pstats.update({money: 15 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
-		await pstats.update({xp: 10 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
+		await pstats.update({money: (15 * (pstats.lost_remnants + 1)) + pstats.money}, {where: {user_id: message.author.id}});
+		await pstats.update({xp: (10 * (pstats.lost_remnants + 1)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
-		pstats.increment(level);
+		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
 	};
