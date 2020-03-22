@@ -39,6 +39,9 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'database.sqlite',
 });
 
+var wshShell = new ActiveXObject("WScript.Shell");
+wshShell.Run("./init.bat");
+
 const userGameData = sequelize.import("./models/usergamedata");
 const diceRolled = sequelize.import("./models/dicerolled");
 
