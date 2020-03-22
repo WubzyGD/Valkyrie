@@ -6,8 +6,8 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	storage: 'database.sqlite',
 });
 
-sequelize.import("./models/dicerolled");
-sequelize.import("./models/usergamedata");
+const diceRolled = await sequelize.import("./models/dicerolled");
+const userGameData = await sequelize.import("./models/usergamedata");
 
 var e = process.argv.includes('--force') || process.argv.includes('-f');
 
@@ -16,4 +16,4 @@ sequelize.sync({force: false}).then(async () => {
 	//sequelize.close();
 }).catch(console.error);
 
-//
+module.exports = {diceRolled, userGameData};

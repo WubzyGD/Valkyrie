@@ -54,8 +54,7 @@ exec("node dbInit.js", (error, stdout, stderr) => {
     console.log(`stdout: ${stdout}`);
 });
 
-const userGameData = sequelize.import("./models/usergamedata");
-const diceRolled = sequelize.import("./models/dicerolled");
+const {userGameData, diceRolled} = sequelize.import("dbInit");
 
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
 
