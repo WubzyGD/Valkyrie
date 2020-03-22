@@ -30,6 +30,75 @@ function wait(time) {
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
 
+
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize('database', 'user', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	storage: 'database.sqlite',
+});
+const diceRolled = sequelize.define('dice_rolled', {
+	name: Sequelize.STRING,
+	description: Sequelize.TEXT,
+	username: Sequelize.STRING,
+	user_id: {
+		type: Sequelize.STRING,
+		unique: true
+	},
+	dice_rolled: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0,
+		allowNull: false,
+	},
+});
+const userGameData = sequelize.define('usergamedata', {
+	user_id: {
+		type: Sequelize.STRING, 
+		unique: true
+	},
+	username: Sequelize.STRING,
+
+	xp: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	}, 
+	last_xpGain: Sequelize.STRING,
+	level: {
+		type: Sequelize.INTEGER,
+		defaultValue: 1
+	},
+	prestige: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	},
+
+	fighters_count: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	},
+	money: {
+		type: Sequelize.INTEGER,
+		defaultValue: 100
+	},
+	lost_remnants: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	},
+	prestige_fighters_count: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	},
+	boss_damage_done: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	},
+	ancient_boss_damage_done: {
+		type: Sequelize.INTEGER,
+		defaultValue: 0
+	}
+});
+
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
 
 console.log("All commands successfully loaded with no errors!\n");
@@ -47,6 +116,10 @@ client.on("ready", async () => {
 	console.log("Logged in as " + client.user.username);
 	console.log("Client ID: " + client.user.id);
 	console.log("Running on " + client.guilds.size + " guilds and serving " + client.users.size + " members.");
+
+	diceRolled.sync();
+	userGameData.sync();
+	console.log("\nSuccessfully loaded Sequelize database(s)");
 	
   	var responses = new Array("some high rolls...", "with dice...", "a great rpg...", "with the laws of the dice...", 
   	"with the dead elf's knife...", "with skeleton bones...", "with a new set of dice...", "five-finger filet...", 
@@ -55,7 +128,8 @@ client.on("ready", async () => {
   	"cards with Wubzy...", "with my code...", "roll to seduce...", "in blood...", "with a fishing rod...", 
 	"52-Card Burn-up...", "some bops...", "battle music...", "country music during a battle...", "at being insane...",
 	"I'm self-aware now...", "with newfound boredom...", "with a will to die...", "with stonks...", "with a deagle...",
-	"with your server ;)..."
+	"with your server ;)...", "in a lava pool...", "piano, just badly...", "for only myself...", "with the odds...",
+	"in purgatory...", "..."
 	,`in ${client.guilds.size} servers...`, );
   	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
 });
@@ -140,7 +214,68 @@ client.on("message", async message => {
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
-	if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
+	var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+	if (!pstats) {
+		await userGameData.create({
+			user_id: message.author.id,
+			username: message.author.username,
+			last_xpGain: new Date().toString()
+		});
+		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+	};
+
+	if ((new Date().getTime() - new Date(pstats.last_xpGain)) / 1000 > 60) {
+		await pstats.increment(money, {by: 15 * (pstats.lost_remnants + 1)});
+		await pstats.increment(xp, {by: 10 * (pstats.lost_remnants + 1)});
+		await pstats.update({xp: 0}, {where: user_id});
+	};
+	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
+		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
+		pstats.increment(level);
+		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
+	};
+
+	if (msg.startsWith(prefix) && (cmd == "diceduel" || cmd == "rolldice")) {
+		var tempDieCount = await diceRolled.findOne({where: {user_id: message.author.id}});
+		if (tempDieCount) {tempDieCount.increment("dice_rolled")}
+		else {
+			try {
+				await diceRolled.create({
+					name: "dice_rolled_count",
+					description: "The number of dice that this user has rolled.",
+					username: message.author.username,
+					user_id: message.author.id,
+					dice_rolled: 1
+				});
+				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
+			} catch (e) {};
+		};
+	};
+	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
+		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
+		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
+		else {return message.reply("You haven't rolled any dice yet!")};
+	} else if (msg.startsWith(prefix) && cmd == "stats") {
+		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
+		var pstatsembed = new Discord.RichEmbed()
+		.setTitle(`${message.member.displayName}'s Stats`)
+		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
+		.setThumbnail(message.author.avatarURL)
+		.setColor("DC134C")
+		.setFooter("Valkyrie", client.user.avatarURL)
+		.setTimestamp();
+		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
+			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${fighters_count}\nLost Remnants Owned: ${lost_remnants}\nNumber of Prestige Fighters: ${prestige_fighters_count}\nBoss Damage Dealt: ${boss_damage_done}\nAncient Boss Damage Dealt\n${ancient_boss_damage_done}`);
+		} else if (message.channel.guild.id == "679127746592636949") {
+			pstatsembed.addField("Extended Stats", "Please go to <#691178546097553418> to view your game stats!");
+		} else {
+			pstatsembed.addField("Extended Stats", "Join the support server to gain access to a game within Valkyrie where you can use your levels and cash to purchase fighters to earn you more cash prestige, and gain cool rewards! Use `v.supportserver` to get the invite link!");
+		};
+		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
+		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
+		return message.channel.send(pstatsembed);
+	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
 			if (client.commands.has(cmd)) {

@@ -269,10 +269,10 @@
     "relics": {
         "name": "relics",
         "relics": [
-            {"name": "", "sellValue": ""},
-            {"name": "", "sellValue": ""},
-            {"name": "", "sellValue": ""},
-            {"name": "", "sellValue": ""},
+            {"name": "Odd Blue Amulet", "sellValue": ""},
+            {"name": "Glowing Stone", "sellValue": ""},
+            {"name": "Staff of the Elder Tree", "sellValue": ""},
+            {"name": "An old Gem", "sellValue": ""},
             {"name": "", "sellValue": ""},
             {"name": "", "sellValue": ""},
             {"name": "", "sellValue": ""},

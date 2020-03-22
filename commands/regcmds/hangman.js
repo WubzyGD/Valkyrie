@@ -21,7 +21,7 @@ var words = ["rainbow", "goblin", "skeleton", "despair", "turtle", "chocolate", 
 "fogged glass", "freightening", "superpower", "technokinetic", "rocket science",
 "pringle", "beach", "sky light", "poignant", "osteoperosis", "tower", "chalk board",
 "square one", "maple syrup", "sometimes", "blade dance", "sword flay", "extra moist",
-"easter egg", "the snack that smiles back", "eggcellent news"];
+"easter egg", "the snack that smiles back", "eggcellent news", "pneumonoultramicroscopicsilicavolcanoconiosis"];
 
 module.exports = {
     name: "hangman",
