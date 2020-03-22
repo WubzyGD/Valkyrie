@@ -111,6 +111,7 @@ const adminPrefix = "adm.";
 client.login(config.id);
 
 client.on("ready", async () => {
+	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
 	console.log("Logged in at " + date +"!");
 	console.log("Logged in as " + client.user.username);
@@ -131,10 +132,12 @@ client.on("ready", async () => {
 	"with your server ;)...", "in a lava pool...", "piano, just badly...", "for only myself...", "with the odds...",
 	"in purgatory...", "..."
 	,`in ${client.guilds.size} servers...`, );
-  	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
+	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
+	} catch (e) {};
 });
 
 client.on('guildMemberAdd', async member => {
+	try {
 	var role = member.guild.roles.find(r => r.name == "Member");
 	member.addRole(role).catch(console.error);
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
@@ -189,6 +192,7 @@ client.on('guildMemberAdd', async member => {
 	} catch (error) {
 		console.log(error);
 	};
+	} catch (e) {};
 });
 
 client.on('guildMemberRemove', (member) => {
@@ -200,6 +204,7 @@ client.on('guildMemberRemove', (member) => {
 });
 
 client.on("message", async message => {
+	try {
 	if (message.author.bot) { return undefined; }
 	if (message.channel.type == 'dm') {var dmch = true;} else {var dmch = false};
 	if (message.channel.type !== 'text' && message.channel.type !== 'dm') { return undefined; }
@@ -301,6 +306,7 @@ client.on("message", async message => {
 		client.users.get(Wubzy).send("There was a fatal error in " + message.member.guild.name);
 		client.users.get(Wubzy).send(err);
 	};
+	} catch (e) {console.log(e);};
 
 	//enemy
 	//story
