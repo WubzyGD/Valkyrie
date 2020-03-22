@@ -15,3 +15,5 @@ sequelize.sync({force: false}).then(async () => {
 	console.log('Database synced');
 	sequelize.close();
 }).catch(console.error);
+
+//
