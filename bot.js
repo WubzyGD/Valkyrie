@@ -237,8 +237,8 @@ client.on("message", async message => {
 		});
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
-	//console.log((new Date().getTime() - new Date(pstats.last_xpGain)));
-	if ((new Date().getTime() - new Date(pstats.last_xpGain)) / 1000 > 60) {
+	//console.log((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000, pstats.last_xpGain, message.author.username);
+	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 > 60) {
 		await pstats.update({money: 15 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 10 * (pstats.lost_remnants + 1)}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
