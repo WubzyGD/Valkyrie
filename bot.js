@@ -231,6 +231,8 @@ client.on("message", async message => {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
 		else {return message.reply("You haven't rolled any dice yet!")};
+	} else if (msg.startsWith(prefix) && (cmd == "getdata") && message.author.id === Wubzy) {
+		client.users.get(Wubzy).send({file: "./database.sqlite"});
 	} else if (msg.startsWith(prefix) && cmd == "stats") {
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
