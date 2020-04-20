@@ -39,14 +39,21 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'database.sqlite',
 });
 
-var child_process = require('child_process');
+/*var child_process = require('child_process');
 child_process.exec('./init.bat', function(error, stdout, stderr) {
 	console.log(stdout);
 	if (error) {console.log(error);} else if (stderr) {console.log(stderr);};
-});
+});*/
 
-const userGameData = sequelize.import("./models/usergamedata");
 const diceRolled = sequelize.import("./models/dicerolled");
+const userGameData = sequelize.import("./models/usergamedata");
+
+var e = process.argv.includes('--force') || process.argv.includes('-f');
+
+sequelize.sync({force: false}).then(async () => {
+	console.log('Database synced');
+	sequelize.close();
+}).catch(console.error);
 
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
 
