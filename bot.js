@@ -42,7 +42,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 var child_process = require('child_process');
 child_process.exec('./init.bat', function(error, stdout, stderr) {
 	console.log(stdout);
-	if (error) {console.log(errror);} else if (stderr) {console.log(stderr);};
+	if (error) {console.log(error);} else if (stderr) {console.log(stderr);};
 });
 
 const userGameData = sequelize.import("./models/usergamedata");
