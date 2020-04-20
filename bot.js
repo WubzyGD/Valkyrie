@@ -30,7 +30,7 @@ function wait(time) {
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
 
-/*const Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('database', 'username', 'password', {
 	host: 'localhost',
@@ -39,14 +39,14 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'database.sqlite',
 });
 
-/*var child_process = require('child_process');
+var child_process = require('child_process');
 child_process.exec('./init.bat', function(error, stdout, stderr) {
     console.log(stdout);
 });
 
 const userGameData = sequelize.import("./models/usergamedata");
 const diceRolled = sequelize.import("./models/dicerolled");
-*/
+
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
 
 console.log("All commands successfully loaded with no errors!\n");
@@ -165,7 +165,7 @@ client.on("message", async message => {
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
-	/*var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+	var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	if (!pstats) {
 		await userGameData.create({
 			user_id: message.author.id,
@@ -235,7 +235,7 @@ client.on("message", async message => {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
 		return message.channel.send(pstatsembed);
-	} else */if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
+	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
 			if (client.commands.has(cmd)) {
