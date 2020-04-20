@@ -4,6 +4,6 @@ module.exports = {
     name: "vibecheck",
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}`)}
+        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}`);};
     }
 };

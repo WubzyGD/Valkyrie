@@ -1,5 +1,5 @@
 {
-    "name": "Valkyrie",
+    "name": "valkyrie",
     "version": "1.0.0",
     "description": "A bot built for RPG Discord servers.",
     "main": "bot.js",

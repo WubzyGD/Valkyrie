@@ -68,6 +68,7 @@ module.exports = {
 			};
 			var reasonIncluded = false;
 		};
+		if (!Number(die) in [4, 6, 8, 10, 12, 20, 100]) {return message.reply("Your die is not actually a die! You have to use 4, 6, 8, 10, 12, 20, or 100!");};
 		var roll1 = Math.ceil(Math.random() * Number(die));
 		var roll2 = Math.ceil(Math.random() * Number(die));
 		if (roll1 > roll2) {

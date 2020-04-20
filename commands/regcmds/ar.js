@@ -12,14 +12,14 @@ module.exports = {
             return message.channel.send("And the dice are never wrong.");
         };
         if (msg.startsWith(`<@${client.user.id}>`) || msg.startsWith(`<@!${client.user.id}`)) {
-            var resps = ["You found me!", "Yup, that's definitely me. At least I think so. Wait what is \"Me\"?\n\n...whaddya want I'm in the middle of an existential crisis.", "What is this, a game of peekaboo?", "Pff that's not me.", "Valkyrie isn't here right now, please leave a message."];
-            var prefixEmbed = new Discord.RichEmbed().setTitle("My Prefix").setDescription(`${resps[Math.floor(Math.random() * resps.length)]}\n\n**My prefix is currently ${prefix}. Use ${prefix}help for a list of commands.**`);
+            var resps = ["You found me!", "whaddya want I'm in the middle of an existential crisis.", "What is this, a game of peekaboo?", "Pff that's not me.", "Valkyrie isn't here right now, please leave a message.", "Yup, that's definitely me!", "Hey uh I'm kinda in the middle of ~~enjoying watching the party die~~ trying to fend off a dragon.", "Can't you see I'm busy??", "Can I help you?", "\\*sigh* I'm trying to relax for a second. Go ask someone else to roll your stupid dice."];
+            var prefixEmbed = new Discord.RichEmbed().setTitle("My Prefix").setDescription(`${resps[Math.floor(Math.random() * resps.length)]}\nMy prefix is currently ${prefix}. Use ${prefix}help for a list of commands.`);
             return message.channel.send(prefixEmbed);
         };
-        if (msg.startsWith("goodnight") || msg.startsWith("gn ") || msg.startsWith("night ")) {
+        /*if (msg.startsWith("goodnight") || msg.startsWith("gn ") || msg.startsWith("night ")) {
             var leavingUser = message.author.id;
             return message.channel.send("Goodnight <@"+leavingUser+">!");
-        };
+        };*/
         /*if (msg.startsWith("hi ") || msg.startsWith("hello") || msg.startsWith("hoi ") || msg.content == "hi" || msg.content == "hoi") {
             var userSaying = message.author.id;
             return message.channel.send("Hello <@"+userSaying+">");
