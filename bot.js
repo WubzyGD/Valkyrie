@@ -220,7 +220,7 @@ client.on("message", async message => {
 			} catch (e) {};
 		};
 	};
-	function spawnTreasure() {
+	async function spawnTreasure() {
 		var xpintreasure = (Math.ceil(Math.random() * 1300)) + 200;
 		var moneyintreasure = (Math.ceil(Math.random() * 1300)) + 200;
 		var chestEmbed = new Discord.RichEmbed()
