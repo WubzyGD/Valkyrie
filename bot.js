@@ -6,15 +6,6 @@ const Canvas = require("canvas");
 const fs = require("fs");
 client.commands = new Discord.Collection();
 
-fs.access("./database.sqlite", fs.F_OK, (err) => {
-	if (err) {
-	  console.log(err, "Database doesn't exist");
-	  return;
-	}
-  
-	else {console.log("Database exists");};
-  })
-
 const Wubzy = "330547934951112705";
 
 const regCommands = fs.readdirSync("./commands/regcmds").filter(file => file.endsWith(".js"));
@@ -48,18 +39,12 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 	storage: 'database.sqlite',
 });
 
-/*var child_process = require('child_process');
-child_process.exec('./init.bat', function(error, stdout, stderr) {
-	console.log(stdout);
-	if (error) {console.log(error);} else if (stderr) {console.log(stderr);};
-});*/
-
 const diceRolled = sequelize.import("./models/dicerolled");
 const userGameData = sequelize.import("./models/usergamedata");
 
 var e = process.argv.includes('--force') || process.argv.includes('-f');
 
-sequelize.sync({force: false}).then(async () => {
+sequelize.sync({force: e}).then(async () => {
 	console.log('Database synced');
 }).catch(console.error);
 
@@ -73,6 +58,13 @@ const prefix = "v.";
 const adminPrefix = "adm.";
 
 client.login(config.id);
+
+fs.access("./database.sqlite", fs.F_OK, (err) => {
+	if (err) {
+	  	console.log("Database doesn't exist");
+	  	client.users.get(Wubzy).send("It looks like you forgot to grab the database before restart ;(");
+	  	return;};
+	});
 
 client.on("ready", async () => {
 	try {
@@ -199,13 +191,14 @@ client.on("message", async message => {
 		});
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
-	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 > 60) {
+	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
 		await pstats.update({money: (15 * (pstats.lost_remnants + 1)) + pstats.money}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: (10 * (pstats.lost_remnants + 1)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
+		totalLevelXP = ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))
 		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: 0}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
@@ -227,12 +220,43 @@ client.on("message", async message => {
 			} catch (e) {};
 		};
 	};
+	function spawnTreasure() {
+		var xpintreasure = (Math.ceil(Math.random() * 1300)) + 200;
+		var moneyintreasure = (Math.ceil(Math.random() * 1300)) + 200;
+		var chestEmbed = new Discord.RichEmbed()
+		.setTitle("Treasure Chest")
+		.setDescription("A Treasure Chest has spawned!\n\nSay \"claim\" to get the chest! Only one person can claim it, and you'll have an hour from before it expires.")
+		.addField("In the chest", `**${xpintreasure} XP**\n**${moneyintreasure} Coins**`)
+		.setColor("DC134C")
+		.setFooter("Valkyrie", client.user.avatarURL)
+		.setTimestamp();
+		client.guilds.get("679127746592636949").channels.get("691149517021511722").send(chestEmbed);
+		try {var filter = m => m.channel.id == "691149517021511722" && m.content.toLowerCase().includes("claim");
+		var claimed = client.guilds.get("679127746592636949").channels.get("691149517021511722").awaitMessages(filter, {time: (60 * 1000), max: 1});
+		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}}); if (!tpstats) {
+		await userGameData.create({
+			user_id: message.author.id, username: message.author.username,
+			last_xpGain: new Date().toString(), xp: 0, level: 1, prestige: 0, fighters_count: 0, money: 100,
+			lost_remnants: 0, prestige_fighters_count: 0, boss_damage_done: 0, ancient_boss_damage_done: 0
+		});
+		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}});};
+		await tpstats.update({xp: (xpintreasure * (tpstats.lost_remnants + 1)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
+		await tpstats.update({money: (moneyintreasure * (tpstats.lost_remnants + 1)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
+		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
+		} catch (e) {return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
+	};
+	if (!last_treasureRoll) {last_treasureRoll = new Date();};
+	if ((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60) {spawnTreasure();};
+	var last_treasureRoll = new Date();
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
-		else {return message.reply("You haven't rolled any dice yet!")};
+		else {return message.reply("You haven't rolled any dice yet!");};
 	} else if (msg.startsWith(prefix) && (cmd == "getdata") && message.author.id === Wubzy) {
 		client.users.get(Wubzy).send({file: "./database.sqlite"});
+	} else if (msg.startsWith(prefix) && (cmd == "spawnTreasure")) {
+		message.delete();
+		return spawnTreasure();
 	} else if (msg.startsWith(prefix) && cmd == "stats") {
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
