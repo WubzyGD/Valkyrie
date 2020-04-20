@@ -6,6 +6,8 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	storage: 'database.sqlite',
 });
 
+console.log("I am here!");
+
 sequelize.import("./models/dicerolled");
 sequelize.import("./models/usergamedata");
 
