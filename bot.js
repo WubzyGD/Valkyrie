@@ -8,7 +8,7 @@ client.commands = new Discord.Collection();
 
 fs.access("./database.sqlite", fs.F_OK, (err) => {
 	if (err) {
-	  console.log("Database doesn't exist");
+	  console.log(err, "Database doesn't exist");
 	  return;
 	}
   
