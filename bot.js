@@ -52,7 +52,6 @@ var e = process.argv.includes('--force') || process.argv.includes('-f');
 
 sequelize.sync({force: false}).then(async () => {
 	console.log('Database synced');
-	sequelize.close();
 }).catch(console.error);
 
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
