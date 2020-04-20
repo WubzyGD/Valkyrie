@@ -6,6 +6,15 @@ const Canvas = require("canvas");
 const fs = require("fs");
 client.commands = new Discord.Collection();
 
+fs.access("./database.sqlite", fs.F_OK, (err) => {
+	if (err) {
+	  console.log("Database doesn't exist");
+	  return;
+	}
+  
+	else {console.log("Database exists");};
+  })
+
 const Wubzy = "330547934951112705";
 
 const regCommands = fs.readdirSync("./commands/regcmds").filter(file => file.endsWith(".js"));
