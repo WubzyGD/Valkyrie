@@ -13,7 +13,7 @@ var e = process.argv.includes('--force') || process.argv.includes('-f');
 
 sequelize.sync({force: false}).then(async () => {
 	console.log('Database synced');
-	//sequelize.close();
+	sequelize.close();
 }).catch(console.error);
 
 //
