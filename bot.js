@@ -54,7 +54,7 @@ sequelize.sync({force: false}).then(async () => {
 	console.log('Database synced');
 }).catch(console.error);
 
-//https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430
+//https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430 e
 
 console.log("All commands successfully loaded with no errors!\n");
 
