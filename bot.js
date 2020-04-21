@@ -297,7 +297,7 @@ client.on("message", async message => {
 		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
 
 		xpbar = await Canvas.loadImage("https://cdn.discordapp.com/attachments/472600312432164875/702246396723724317/xp-bar-2.png");
-		await ctx.drawImage(xpbar, 300, 215, 465, 245);
+		await ctx.drawImage(xpbar, 0, 0, canvas.width, canvas.height);
 
 		const attachment = await new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
 
