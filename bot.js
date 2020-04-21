@@ -296,9 +296,9 @@ client.on("message", async message => {
 		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
 		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
 
-		await ctx.drawImage(xpbar, (canvas.width / 2.5) + 40, 218, 66, 12);
+		await ctx.drawImage(xpbar, 0, canvas.height - 12, canvas.width, canvas.height);
 
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
+		const attachment = await new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
 
 		var pstatsembed = new Discord.RichEmbed()
 		.setTitle(`${message.member.displayName}'s Stats`)
