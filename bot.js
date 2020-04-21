@@ -246,7 +246,7 @@ client.on("message", async message => {
 		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
 	if (!last_treasureRoll) {var last_treasureRoll = new Date();};
-	console.log((new Date().getTime() - last_treasureRoll.getTime()) / 1000);
+	console.log((new Date().getTime() - last_treasureRoll.getTime()) / 1000, last_treasureRoll.getDate(), last_treasureRoll);
 	if (((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); var last_treasureRoll = new Date();};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
