@@ -314,7 +314,7 @@ client.on("message", async message => {
 		};
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
-		pstatsembed.setAttachment(attachment)
+		pstatsembed.setImage("attachment://user-stats.png");
 		return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
