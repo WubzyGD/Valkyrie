@@ -261,7 +261,8 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && cmd == "stats") {
 		try {var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
-		var lvlpercent = (((pstats.xp) / ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) * 100);
+		if (pstats.xp == 0) {var lvlpercent = 0;}
+		else {var lvlpercent = (((pstats.xp) / ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) * 100);};
 
 		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
@@ -293,6 +294,7 @@ client.on("message", async message => {
 		else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");}
 		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
 		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
+		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
 
 		ctx.drawImage(xpbar, (canvas.width / 2.5) + 40, 218, 66, 12);
 
@@ -302,7 +304,6 @@ client.on("message", async message => {
 		.setTitle(`${message.member.displayName}'s Stats`)
 		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
 		.setThumbnail(message.author.avatarURL)
-		.setImage("attachment://user-stats.png")
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
@@ -316,6 +317,7 @@ client.on("message", async message => {
 		};
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
+		if (args[0] == "image") {return message.channel.send(attachment);};
 		return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
