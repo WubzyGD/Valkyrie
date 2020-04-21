@@ -104,6 +104,7 @@ client.on("ready", async () => {
 client.on('guildMemberAdd', async member => {
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	if (!thisServerSettings) {
+		console.log("bad here");
 		await serverSettings.create({
 			guild_name: message.member.guild.name,
 			guild_id: String(message.member.guild.id),
@@ -112,12 +113,15 @@ client.on('guildMemberAdd', async member => {
 	};
 	try {
 	if (!thisServerSettings.join_role == "none") {
+		console.log("here");
 		var role = member.guild.roles.find(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim()).catch();
 		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!thisServerSettings.welcome_message_channel == "none") {
+		console.log("here2");
 		var channel = member.guild.channels.find(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim()).catch();
-		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+		console.log(channel);
+		if (!channel) {console.log("bad here2"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!role == "none") {member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
