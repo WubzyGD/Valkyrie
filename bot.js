@@ -288,7 +288,7 @@ client.on("message", async message => {
 		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
 		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
 		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
-		await ctx.drawImage(xpbar, 300, 215, 465, 245);
+		await ctx.drawImage(xpbar, 300 / 5, 215 / 5, 465 / 5, 245 / 5);
 		ctx.beginPath();
 		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
 		ctx.closePath();
