@@ -232,7 +232,7 @@ client.on("message", async message => {
 		.setTimestamp();
 		client.guilds.get("679127746592636949").channels.get("691149517021511722").send(chestEmbed);
 		try {var filter = m => m.channel.id == "691149517021511722" && m.content.toLowerCase().includes("claim");
-		var claimed = client.guilds.get("679127746592636949").channels.get("691149517021511722").awaitMessages(filter, {time: (60 * 1000), max: 1});
+		var claimed = await client.guilds.get("679127746592636949").channels.get("691149517021511722").awaitMessages(filter, {time: (60 * 1000), max: 1});
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}}); if (!tpstats) {
 		await userGameData.create({
 			user_id: message.author.id, username: message.author.username,
@@ -245,9 +245,9 @@ client.on("message", async message => {
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
 		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
-	if (!last_treasureRoll) {last_treasureRoll = new Date();};
-	if ((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60) {spawnTreasure();};
-	var last_treasureRoll = new Date();
+	if (!last_treasureRoll) {var last_treasureRoll = new Date();};
+	console.log((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60);
+	if (((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); var last_treasureRoll = new Date();};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
