@@ -27,6 +27,15 @@ function wait(time) {
 	});
 };
 
+const applyText = (canvas, text) => {
+	const ctx = canvas.getContext('2d');
+	let fontSize = 70;
+	do {
+		ctx.font = `${fontSize -= 10}px sans-serif`;
+	} while (ctx.measureText(text).width > canvas.width - 300);
+	return ctx.font;
+};
+
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
 
@@ -108,15 +117,6 @@ client.on('guildMemberAdd', async member => {
 	"Don't pay attention to the dark cavern over there. Except for when you go into it in a minute.");
 	var chosen_join_extraOptions = Math.floor(Math.random() * join_extraOptions.length);
 	try {
-		const applyText = (canvas, text) => {
-			const ctx = canvas.getContext('2d');
-			let fontSize = 70;
-			do {
-				ctx.font = `${fontSize -= 10}px sans-serif`;
-			} while (ctx.measureText(text).width > canvas.width - 300);
-			return ctx.font;
-		};
-
 		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
 
@@ -269,9 +269,9 @@ client.on("message", async message => {
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
-		const canvas = Canvas.createCanvas(700, 250);
-		const ctx = canvas.getContext('2d');
 
+		try {const canvas = Canvas.createCanvas(700, 250);
+		const ctx = canvas.getContext('2d');
 		const background = await Canvas.loadImage('./wallpaper.jpg');
 		ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 		ctx.strokeStyle = '#74037b';
@@ -314,7 +314,7 @@ client.on("message", async message => {
 		};
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
-		return message.channel.send(pstatsembed, attachment);
+		return message.channel.send(pstatsembed, attachment);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
