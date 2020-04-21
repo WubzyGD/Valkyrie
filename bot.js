@@ -266,7 +266,7 @@ client.on("message", async message => {
 
 		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
-		const background = await Canvas.loadImage('./wallpaper.jpg');
+		/*const background = await Canvas.loadImage('./wallpaper.jpg');
 		ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 		ctx.strokeStyle = '#74037b';
 		ctx.strokeRect(0, 0, canvas.width, canvas.height);
@@ -281,7 +281,7 @@ client.on("message", async message => {
 		ctx.closePath();
 		ctx.clip();
 		const avatar = await Canvas.loadImage(message.author.avatarURL);
-		ctx.drawImage(avatar, 25, 25, 200, 200);
+		ctx.drawImage(avatar, 25, 25, 200, 200);*/
 
 		if (lvlpercent <= 3) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-0.png");}
 		else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");}
