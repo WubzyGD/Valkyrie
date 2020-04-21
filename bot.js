@@ -247,7 +247,6 @@ client.on("message", async message => {
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
 		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
-	//console.log((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000, new Date(last_treasureRoll).getTime(), last_treasureRoll);
 	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); last_treasureRoll = new Date().toString();}
 	else if ((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) {last_treasureRoll = new Date().toString();};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
@@ -262,6 +261,7 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && cmd == "stats") {
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
+		var lvlpercent = (((pstats.xp) / ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) * 100);
 		var pstatsembed = new Discord.RichEmbed()
 		.setTitle(`${message.member.displayName}'s Stats`)
 		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
@@ -269,6 +269,17 @@ client.on("message", async message => {
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
+		if (lvlpercent <= 3) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-0.png", "xp.png"));}
+		else if (lvlpercent <= 10) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-1.png", "xp.png"));}
+		else if (lvlpercent <= 20) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-2.png", "xp.png"));}
+		else if (lvlpercent <= 30) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-3.png", "xp.png"));}
+		else if (lvlpercent <= 40) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-4.png", "xp.png"));}
+		else if (lvlpercent <= 50) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-5.png", "xp.png"));}
+		else if (lvlpercent <= 60) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-6.png", "xp.png"));}
+		else if (lvlpercent <= 70) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-7.png", "xp.png"));}
+		else if (lvlpercent <= 80) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-8.png", "xp.png"));}
+		else if (lvlpercent <= 90) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-9.png", "xp.png"));}
+		else if (lvlpercent <= 100) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-10.png", "xp.png"));};
 		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
 			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt: ${pstats.ancient_boss_damage_done}`);
 		} else if (message.channel.guild.id == "679127746592636949") {
