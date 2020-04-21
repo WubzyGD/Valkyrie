@@ -247,7 +247,7 @@ client.on("message", async message => {
 	};
 	if (!last_treasureRoll) {var last_treasureRoll = new Date().toString();};
 	console.log((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000, new Date(last_treasureRoll).getTime(), last_treasureRoll);
-	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); var last_treasureRoll = new Date().toString();};
+	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); var last_treasureRoll = new Date().toString(); console.log("rolled");};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
