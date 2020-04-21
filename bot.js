@@ -276,13 +276,6 @@ client.on("message", async message => {
 		ctx.font = applyText(canvas, message.member.displayName);
 		ctx.fillStyle = '#ffffff';
 		ctx.fillText(message.member.displayName, canvas.width / 2.5, canvas.height / 1.8);
-		ctx.beginPath();
-		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.clip();
-		const avatar = await Canvas.loadImage(message.author.avatarURL);
-		ctx.drawImage(avatar, 25, 25, 200, 200);
-
 		if (lvlpercent <= 3) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-0.png");}
 		else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");}
 		else if (lvlpercent <= 20) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-2.png");}
@@ -295,9 +288,13 @@ client.on("message", async message => {
 		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
 		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
 		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
-
-		xpbar = await Canvas.loadImage("https://cdn.discordapp.com/attachments/472600312432164875/702246396723724317/xp-bar-2.png");
-		await ctx.drawImage(xpbar, 0, 0, canvas.width, canvas.height);
+		await ctx.drawImage(xpbar, 300, 215, 465, 245);
+		ctx.beginPath();
+		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+		ctx.closePath();
+		ctx.clip();
+		const avatar = await Canvas.loadImage(message.author.avatarURL);
+		ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		const attachment = await new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
 
