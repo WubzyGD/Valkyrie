@@ -57,6 +57,8 @@ const info = require("./info.json");
 const prefix = "v.";
 const adminPrefix = "adm.";
 
+var last_treasureRoll = new Date().toString();
+
 client.login(config.id);
 
 fs.access("./database.sqlite", fs.F_OK, (err) => {
@@ -245,9 +247,8 @@ client.on("message", async message => {
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
 		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
-	if (!last_treasureRoll) {var last_treasureRoll = new Date().toString();};
-	//console.log((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000, new Date(last_treasureRoll).getTime(), last_treasureRoll);
-	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 10 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); var last_treasureRoll = new Date().toString(); console.log("rolled");};
+	console.log((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000, new Date(last_treasureRoll).getTime(), last_treasureRoll);
+	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); last_treasureRoll = new Date().toString(); console.log("rolled");};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
