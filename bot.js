@@ -280,20 +280,20 @@ client.on("message", async message => {
 		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
-		//const avatar = await Canvas.loadImage(message.author.avatarURL);
-		//ctx.drawImage(avatar, 25, 25, 200, 200);
+		const avatar = await Canvas.loadImage(message.author.avatarURL);
+		ctx.drawImage(avatar, 25, 25, 200, 200);
 
-		if (lvlpercent <= 3) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-0.png");}
-		else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");}
-		else if (lvlpercent <= 20) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-2.png");}
-		else if (lvlpercent <= 30) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-3.png");}
-		else if (lvlpercent <= 40) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-4.png");}
-		else if (lvlpercent <= 50) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-5.png");}
-		else if (lvlpercent <= 60) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-6.png");}
-		else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png");}
-		else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");}
-		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
-		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
+		if (lvlpercent <= 3) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-0.png"); console.log("Using xp bar 0");}
+		else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png"); console.log("Using xp bar 1");}
+		else if (lvlpercent <= 20) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-2.png"); console.log("Using xp bar 2");}
+		else if (lvlpercent <= 30) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-3.png"); console.log("Using xp bar 3");}
+		else if (lvlpercent <= 40) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-4.png"); console.log("Using xp bar 4");}
+		else if (lvlpercent <= 50) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-5.png"); console.log("Using xp bar 5");}
+		else if (lvlpercent <= 60) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-6.png"); console.log("Using xp bar 6");}
+		else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png"); console.log("Using xp bar 7");}
+		else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png"); console.log("Using xp bar 8");}
+		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png"); console.log("Using xp bar 9");}
+		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png"); console.log("Using xp bar 10");}
 		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
 
 		await ctx.drawImage(xpbar, (canvas.width / 2.5) + 40, 218, 66, 12);
@@ -317,7 +317,7 @@ client.on("message", async message => {
 		};
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
-		if (args[0] == "image") {return message.channel.send(new Discord.Attachment(xpbar.toBuffer(), 'xp.png'));};
+		if (args[0] == "image") {return message.channel.send(attachment);};
 		return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
