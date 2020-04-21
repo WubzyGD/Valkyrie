@@ -62,7 +62,7 @@ module.exports = {
                     return message.reply("This server will no longer receive welcome messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
                     await serverConfig.update({welcome_message_channel: args[0]}, {where: {guild_id: message.member.guild.id}});
-                    return message.reply(`This server will now receive leaving messages in the ${args[0]} channel.`);
+                    return message.reply(`This server will now receive welcome messages in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomechannel <#channel|none>\``);};
             } else if (args[0] == "leavechannel") {
                 args.shift();

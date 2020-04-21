@@ -261,7 +261,7 @@ client.on("message", async message => {
 		.setTimestamp();
 		client.guilds.get("679127746592636949").channels.get("691149517021511722").send(chestEmbed);
 		try {var filter = m => m.channel.id == "691149517021511722" && m.content.toLowerCase().includes("claim");
-		var claimed = await client.guilds.get("679127746592636949").channels.get("691149517021511722").awaitMessages(filter, {time: (60 * 1000), max: 1});
+		var claimed = await client.guilds.get("679127746592636949").channels.get("691149517021511722").awaitMessages(filter, {time: (60 * 10000), max: 1});
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}}); if (!tpstats) {
 		await userGameData.create({
 			user_id: message.author.id, username: message.author.username,
@@ -272,7 +272,7 @@ client.on("message", async message => {
 		await tpstats.update({xp: Math.floor(xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
 		await tpstats.update({money: Math.floor(moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
-		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
+		} catch (e) {return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobody claimed the chest. Whelp Asher, all yours.");};
 	};
 	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); last_treasureRoll = new Date().toString();}
 	else if ((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) {last_treasureRoll = new Date().toString();};
