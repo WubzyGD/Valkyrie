@@ -199,6 +199,7 @@ client.on("message", async message => {
 
 	if (message.content === '!join') {
 		if (!message.author.id === Wubzy) {return;};
+		message.channel.send("Simulating member join...");
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
