@@ -192,8 +192,8 @@ client.on("message", async message => {
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
-		await pstats.update({money: (15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.money}, {where: {user_id: message.author.id}});
-		await pstats.update({xp: (10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
+		await pstats.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.money}, {where: {user_id: message.author.id}});
+		await pstats.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) {
@@ -240,8 +240,8 @@ client.on("message", async message => {
 			lost_remnants: 0, prestige_fighters_count: 0, boss_damage_done: 0, ancient_boss_damage_done: 0
 		});
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}});};
-		await tpstats.update({xp: (xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
-		await tpstats.update({money: (moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
+		await tpstats.update({xp: Math.floor(xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
+		await tpstats.update({money: Math.floor(moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
 		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
