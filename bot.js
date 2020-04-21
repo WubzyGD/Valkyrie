@@ -290,16 +290,16 @@ client.on("message", async message => {
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		if (lvlpercent <= 3) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-0.png");}
-		else if (lvlpercent <= 10) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-1.png");}
-		else if (lvlpercent <= 20) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-2.png");}
-		else if (lvlpercent <= 30) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-3.png");}
-		else if (lvlpercent <= 40) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-4.png");}
-		else if (lvlpercent <= 50) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-5.png");}
-		else if (lvlpercent <= 60) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-6.png");}
-		else if (lvlpercent <= 70) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-7.png");}
-		else if (lvlpercent <= 80) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-8.png");}
-		else if (lvlpercent <= 90) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
-		else if (lvlpercent <= 100) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-10.png");};
+		else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");}
+		else if (lvlpercent <= 20) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-2.png");}
+		else if (lvlpercent <= 30) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-3.png");}
+		else if (lvlpercent <= 40) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-4.png");}
+		else if (lvlpercent <= 50) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-5.png");}
+		else if (lvlpercent <= 60) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-6.png");}
+		else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png");}
+		else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");}
+		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
+		else if (lvlpercent <= 100) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");};
 
 		ctx.drawImage(xpbar, canvas.width / 2.5, 218, 66, 12);
 
