@@ -201,7 +201,7 @@ client.on("message", async message => {
 		totalLevelXP = ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))
 		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
-		if (client.guilds.get("330547934951112705").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
+		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
 	};
 
 	if (msg.startsWith(prefix) && (cmd == "diceduel" || cmd == "rolldice")) {
