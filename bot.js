@@ -269,17 +269,18 @@ client.on("message", async message => {
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
-		if (lvlpercent <= 3) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-0.png", "xp.png"));}
-		else if (lvlpercent <= 10) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-1.png", "xp.png"));}
-		else if (lvlpercent <= 20) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-2.png", "xp.png"));}
-		else if (lvlpercent <= 30) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-3.png", "xp.png"));}
-		else if (lvlpercent <= 40) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-4.png", "xp.png"));}
-		else if (lvlpercent <= 50) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-5.png", "xp.png"));}
-		else if (lvlpercent <= 60) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-6.png", "xp.png"));}
-		else if (lvlpercent <= 70) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-7.png", "xp.png"));}
-		else if (lvlpercent <= 80) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-8.png", "xp.png"));}
-		else if (lvlpercent <= 90) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-9.png", "xp.png"));}
-		else if (lvlpercent <= 100) {pstatsembed.setImage(new Discord.Attachment("./images/dw/xp/xp-bar-10.png", "xp.png"));};
+		var xp0 = new Discord.Attachment("./images/dw/xp/xp-bar-0.png", "xp0.png");var xp1 = new Discord.Attachment("./images/dw/xp/xp-bar-1.png", "xp1.png");var xp2 = new Discord.Attachment("./images/dw/xp/xp-bar-2.png", "xp2.png");var xp3 = new Discord.Attachment("./images/dw/xp/xp-bar-3.png", "xp3.png");var xp4 = new Discord.Attachment("./images/dw/xp/xp-bar-4.png", "xp4.png");var xp5 = new Discord.Attachment("./images/dw/xp/xp-bar-5.png", "xp5.png");var xp6 = new Discord.Attachment("./images/dw/xp/xp-bar-6.png", "xp6.png");var xp7 = new Discord.Attachment("./images/dw/xp/xp-bar-7.png", "xp7.png");var xp8 = new Discord.Attachment("./images/dw/xp/xp-bar-8.png", "xp8.png");var xp9 = new Discord.Attachment("./images/dw/xp/xp-bar-9.png", "xp9.png");var xp10 = new Discord.Attachment("./images/dw/xp/xp-bar-10.png", "xp10.png");
+		if (lvlpercent <= 3) {pstatsembed.setImage("attachment://xp0.png");}
+		else if (lvlpercent <= 10) {pstatsembed.setImage("attachment://xp1.png");}
+		else if (lvlpercent <= 20) {pstatsembed.setImage("attachment://xp2.png");}
+		else if (lvlpercent <= 30) {pstatsembed.setImage("attachment://xp3.png");}
+		else if (lvlpercent <= 40) {pstatsembed.setImage("attachment://xp4.png");}
+		else if (lvlpercent <= 50) {pstatsembed.setImage("attachment://xp5.png");}
+		else if (lvlpercent <= 60) {pstatsembed.setImage("attachment://xp6.png");}
+		else if (lvlpercent <= 70) {pstatsembed.setImage("attachment://xp7.png");}
+		else if (lvlpercent <= 80) {pstatsembed.setImage("attachment://xp8.png");}
+		else if (lvlpercent <= 90) {pstatsembed.setImage("attachment://xp9.png");}
+		else if (lvlpercent <= 100) {pstatsembed.setImage("attachment://xp10.png");};
 		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
 			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt: ${pstats.ancient_boss_damage_done}`);
 		} else if (message.channel.guild.id == "679127746592636949") {
