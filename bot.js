@@ -167,7 +167,7 @@ client.on('guildMemberAdd', async member => {
 	} catch (e) {};
 });
 
-client.on('guildMemberRemove', (member) => {
+client.on('guildMemberRemove', async member => {
 	try {
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 		if (!thisServerSettings) {
