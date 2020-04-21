@@ -286,8 +286,8 @@ client.on("message", async message => {
 		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
-		const avatar = await Canvas.loadImage(message.author.avatarURL);
-		ctx.drawImage(avatar, 25, 25, 200, 200);
+		//const avatar = await Canvas.loadImage(message.author.avatarURL);
+		//ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		if (lvlpercent <= 3) {var xpbar = Canvas.loadImage("./images/dw/xp/xp-bar-0.png");}
 		else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");}
@@ -299,8 +299,7 @@ client.on("message", async message => {
 		else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png");}
 		else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");}
 		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
-		else if (lvlpercent <= 100) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
-		else {message.channel.send("what the fuck");};
+		else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
 
 		ctx.drawImage(xpbar, (canvas.width / 2.5) + 40, 218, 66, 12);
 
@@ -315,7 +314,8 @@ client.on("message", async message => {
 		};
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
-		return message.channel.send(pstatsembed, attachment);} catch (e) {console.log(e);};
+		pstatsembed.setAttachment(attachment)
+		return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
