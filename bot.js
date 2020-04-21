@@ -243,7 +243,7 @@ client.on("message", async message => {
 		await tpstats.update({xp: (xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
 		await tpstats.update({money: (moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
-		} catch (e) {return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
+		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
 	if (!last_treasureRoll) {last_treasureRoll = new Date();};
 	if ((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60) {spawnTreasure();};
