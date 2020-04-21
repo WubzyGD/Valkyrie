@@ -259,7 +259,7 @@ client.on("message", async message => {
 		message.delete();
 		return spawnTreasure();
 	} else if (msg.startsWith(prefix) && cmd == "stats") {
-		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+		try {var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
 		var lvlpercent = (((pstats.xp) / ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) * 100);
 		var pstatsembed = new Discord.RichEmbed()
@@ -270,7 +270,7 @@ client.on("message", async message => {
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
 
-		try {const canvas = Canvas.createCanvas(700, 250);
+		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
 		const background = await Canvas.loadImage('./wallpaper.jpg');
 		ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -299,9 +299,10 @@ client.on("message", async message => {
 		else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png");}
 		else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");}
 		else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");}
-		else if (lvlpercent <= 100) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");};
+		else if (lvlpercent <= 100) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
+		else {message.channel.send("what the fuck");};
 
-		ctx.drawImage(xpbar, canvas.width / 2.5, 218, 66, 12);
+		ctx.drawImage(xpbar, (canvas.width / 2.5) + 40, 218, 66, 12);
 
 		const attachment = new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
 
