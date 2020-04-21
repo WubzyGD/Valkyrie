@@ -269,7 +269,6 @@ client.on("message", async message => {
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
-		console.log(lvlpercent);
 		var xp0 = new Discord.Attachment("./images/dw/xp/xp-bar-0.png", "xp0.png");var xp1 = new Discord.Attachment("./images/dw/xp/xp-bar-1.png", "xp1.png");var xp2 = new Discord.Attachment("./images/dw/xp/xp-bar-2.png", "xp2.png");var xp3 = new Discord.Attachment("./images/dw/xp/xp-bar-3.png", "xp3.png");var xp4 = new Discord.Attachment("./images/dw/xp/xp-bar-4.png", "xp4.png");var xp5 = new Discord.Attachment("./images/dw/xp/xp-bar-5.png", "xp5.png");var xp6 = new Discord.Attachment("./images/dw/xp/xp-bar-6.png", "xp6.png");var xp7 = new Discord.Attachment("./images/dw/xp/xp-bar-7.png", "xp7.png");var xp8 = new Discord.Attachment("./images/dw/xp/xp-bar-8.png", "xp8.png");var xp9 = new Discord.Attachment("./images/dw/xp/xp-bar-9.png", "xp9.png");var xp10 = new Discord.Attachment("./images/dw/xp/xp-bar-10.png", "xp10.png");
 		if (lvlpercent <= 3) {pstatsembed.setImage("attachment://xp0.png");}
 		else if (lvlpercent <= 10) {pstatsembed.setImage("attachment://xp1.png");}
