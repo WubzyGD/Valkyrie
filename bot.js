@@ -74,7 +74,6 @@ client.login(config.id);
 fs.access("./database.sqlite", fs.F_OK, (err) => {
 	if (err) {
 	  	console.log("Database doesn't exist");
-	  	client.users.get(Wubzy).send("It looks like you forgot to grab the database before restart ;(");
 	  	return;};
 	});
 
