@@ -249,7 +249,7 @@ client.on("message", async message => {
 	};
 	//console.log((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000, new Date(last_treasureRoll).getTime(), last_treasureRoll);
 	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); last_treasureRoll = new Date().toString();}
-	else if ((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) {last_treasureRoll};
+	else if ((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) {last_treasureRoll = new Date().toString();};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
