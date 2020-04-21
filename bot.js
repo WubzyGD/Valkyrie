@@ -196,9 +196,9 @@ client.on("message", async message => {
 		await pstats.update({xp: (10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
-	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))) {
+	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
-		totalLevelXP = ((pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level))))
+		totalLevelXP = ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))
 		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
@@ -246,7 +246,7 @@ client.on("message", async message => {
 		} catch (e) {console.log(e); return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobodu claimed the chest. Whelp Asher, all yours.");};
 	};
 	if (!last_treasureRoll) {var last_treasureRoll = new Date();};
-	console.log((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60);
+	console.log((new Date().getTime() - last_treasureRoll.getTime()) / 1000);
 	if (((new Date().getTime() - last_treasureRoll.getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); var last_treasureRoll = new Date();};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
