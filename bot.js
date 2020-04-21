@@ -262,13 +262,6 @@ client.on("message", async message => {
 		try {var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
 		var lvlpercent = (((pstats.xp) / ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) * 100);
-		var pstatsembed = new Discord.RichEmbed()
-		.setTitle(`${message.member.displayName}'s Stats`)
-		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
-		.setThumbnail(message.author.avatarURL)
-		.setColor("DC134C")
-		.setFooter("Valkyrie", client.user.avatarURL)
-		.setTimestamp();
 
 		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
@@ -305,6 +298,15 @@ client.on("message", async message => {
 
 		const attachment = new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
 
+		var pstatsembed = new Discord.RichEmbed()
+		.setTitle(`${message.member.displayName}'s Stats`)
+		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
+		.setThumbnail(message.author.avatarURL)
+		.setImage("attachment://user-stats.png")
+		.setColor("DC134C")
+		.setFooter("Valkyrie", client.user.avatarURL)
+		.setTimestamp();
+
 		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
 			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt: ${pstats.ancient_boss_damage_done}`);
 		} else if (message.channel.guild.id == "679127746592636949") {
@@ -314,7 +316,6 @@ client.on("message", async message => {
 		};
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
-		pstatsembed.setImage("attachment://user-stats.png");
 		return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
