@@ -224,15 +224,15 @@ client.on("message", async message => {
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
-		await pstats.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.money}, {where: {user_id: message.author.id}});
-		await pstats.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
-		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
+		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5)) + pstats.money}, {where: {user_id: message.author.id}});
+		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
+		await userGameData.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {
-		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
+		message.channel.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
-		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
-		await pstats.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
+		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
+		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
 	};
 
@@ -272,8 +272,8 @@ client.on("message", async message => {
 			lost_remnants: 0, prestige_fighters_count: 0, boss_damage_done: 0, ancient_boss_damage_done: 0
 		});
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}});};
-		await tpstats.update({xp: Math.floor(xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
-		await tpstats.update({money: Math.floor(moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 3) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
+		await userGameData.update({xp: Math.floor(xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 2) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
+		await userGameData.update({money: Math.floor(moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 2) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
 		} catch (e) {return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobody claimed the chest. Whelp Asher, all yours.");};
 	};
@@ -294,7 +294,7 @@ client.on("message", async message => {
 		if (!args.length) {var mr = await message.channel.send(`Syntax: \`${prefix}shop <fighter|f|prestigefighter|pf>\` or use \`${prefix}shop display\` to view your prices. **The shop does not have a purchase confirmation. If you use a buy command with sufficient funds, the items will be purchased.**`); return mr.delete(20000);};
 		if (!pstats) {var mr = await message.reply("Hmm, it looks like you aren't in my databse. Send some messages and try again in a few minutes?"); return mr.delete(20000);};
 		if (pstats.fighters_count < 1) {var fighterCost = 500;}
-		else {var fighterCost = (500 + Math.ceil((pstats.fighters_count * 125) ** 1.2));};
+		else {var fighterCost = (500 + Math.ceil((pstats.fighters_count * 100) ** 1.05));};
 		if (pstats.prestige_fighters_count < 1) {var pfcost = 5;}
 		else {var pfcost = (5 + Math.ceil((pstats.prestige_fighters_count * 10) ** 1.25));};
 		if (args[0] == "fighter" || args[0] == "f") {
