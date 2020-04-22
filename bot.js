@@ -104,7 +104,6 @@ client.on("ready", async () => {
 client.on('guildMemberAdd', async member => {
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	if (!thisServerSettings) {
-		console.log("bad here");
 		await serverSettings.create({
 			guild_name: message.member.guild.name,
 			guild_id: String(message.member.guild.id),
@@ -113,15 +112,12 @@ client.on('guildMemberAdd', async member => {
 	};
 	try {
 	if (!thisServerSettings.join_role == "none") {
-		console.log("here");
 		var role = member.guild.roles.find(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim()).catch();
 		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!thisServerSettings.welcome_message_channel == "none") {
-		console.log("here2");
 		var channel = member.guild.channels.find(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim()).catch();
-		console.log(channel);
-		if (!channel) {console.log("bad here2"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!role == "none") {member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
@@ -207,6 +203,8 @@ client.on("message", async message => {
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
+	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (!cmd == "shop") && (!message.author.id == Wubzy)) {return message.delete();};
+
 	var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	if (!pstats) {
 		await userGameData.create({
@@ -230,9 +228,9 @@ client.on("message", async message => {
 		await pstats.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 3) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
 		await pstats.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
-	if (pstats.xp > ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) {
+	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {
 		message.author.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
-		totalLevelXP = ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))
+		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		pstats.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await pstats.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
 		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
@@ -290,11 +288,25 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && (cmd == "spawntreasure") && message.author.id === Wubzy) {
 		message.delete();
 		return spawnTreasure();
+	} else if (msg.startsWith(prefix) && cmd == "shop") {
+		if (!args.length) {return message.channel.send(`Syntax: \`${prefix}shop <fighter|f|prestigefighter|pf|lostremnant|lr>\` or use \`${prefix}shop display\` to view your prices. **The shop does not have a purchase confirmation. If you use a buy command with sufficient funds, the items will be purchased.**`).delete(20000);};
+		if (message.channel.id !== "691149309755916370") {return message.delete();};
+		if (!pstats) {return message.reply("Hmm, it looks like you aren't in my databse. Send some messages and try again in a few minutes?").delete(20000);};
+		if (args[0] == "fighter" || args[0] == "f") {
+			if (pstats.fighters_count < 1) {var fighterCost = 500;}
+			else {var fighterCost = (500 + Math.ceil((pstats.fighters_count * 125) ** 1.2));};
+			if (fighterCost > pstats.money) {return message.reply(`You don't have enough for that! (\`${pstats.money}\`/\`${fighterCost}\`)`).delete(20000);};
+			await userGameData.update({fighters_count: pstats.fighters_count + 1}, {where: {user_id: message.author.id}});
+			await userGameData.update({money: pstats.money - fighterCost}, {where: {user_id: message.author.id}});
+			message.reply("Fighter bought!").delete(20000);
+			pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+			return message.author.send(`Purchase receipt:\n\n(This is mainly for debugging purposes. It will likely be removed in the future.)\n\nPurchased: 1 Fighter\nSpent: ${fighterCost}\nMoney left: ${pstats.money}\nFighter Count: ${pstats.fighters_count}`);
+		} else if (args[0] == "prestigefighter" || args[0] == "pf") {} else if (args[0] == "lostremnant" || args[0] == "lr") {} else {};
 	} else if (msg.startsWith(prefix) && cmd == "stats") {
 		try {var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
 		if (pstats.xp == 0) {var lvlpercent = 0;}
-		else {var lvlpercent = (((pstats.xp) / ((pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level))))) * 100);};
+		else {var lvlpercent = (((pstats.xp) / ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) * 100);};
 
 		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
@@ -304,7 +316,7 @@ client.on("message", async message => {
 		ctx.strokeRect(0, 0, canvas.width, canvas.height);
 		ctx.font = '28px sans-serif';
 		ctx.fillStyle = '#ffffff';
-		ctx.fillText(`Level ${pstats.level} | [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.4 * (150 * pstats.level)))}]`, canvas.width / 2.5, canvas.height / 3.5);
+		ctx.fillText(`Level ${pstats.level} | [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.4 * (100 * pstats.level)))}]`, canvas.width / 2.5, canvas.height / 3.5);
 		ctx.font = applyText(canvas, message.member.displayName);
 		ctx.fillStyle = '#ffffff';
 		ctx.fillText(message.member.displayName, canvas.width / 2.5, canvas.height / 1.8);
@@ -332,7 +344,7 @@ client.on("message", async message => {
 
 		var pstatsembed = new Discord.RichEmbed()
 		.setTitle(`${message.member.displayName}'s Stats`)
-		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 150) + ((pstats.level * 6) + (0.3 * (150 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
+		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
 		.setThumbnail(message.author.avatarURL)
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
