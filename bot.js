@@ -179,7 +179,7 @@ client.on('guildMemberRemove', async member => {
 		};
 		if (!thisServerSettings.leave_message_channel == "none") {
 			var channel = member.guild.channels.find(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim()).catch();
-			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+			if (!channel) {console.log("i am here"); serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 		};
 		if (!channel == "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
 	} catch (e) {
@@ -235,7 +235,7 @@ client.on("message", async message => {
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
-		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level}!`);};
+		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
 	};
 
 	if (msg.startsWith(prefix) && (cmd == "diceduel" || cmd == "rolldice")) {
