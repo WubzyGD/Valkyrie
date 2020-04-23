@@ -100,10 +100,8 @@ client.on("ready", async () => {
 });
 
 client.on('guildMemberAdd', async member => {
-	console.log("i am here?");
 	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
-	console.log(thisServerSettings);
 	if (!thisServerSettings) {
 		console.log("i am here. bad here.");
 		await serverSettings.create({
@@ -112,14 +110,13 @@ client.on('guildMemberAdd', async member => {
 		});
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	};
-	console.log(thisServerSettings);
 	try {
-	if (!thisServerSettings.join_role == "none") {
+	if (thisServerSettings.join_role !== "none") {
 		console.log("i am here. good here.");
 		var role = member.guild.roles.find(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim()).catch();
 		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
 	};
-	if (!thisServerSettings.welcome_message_channel == "none") {
+	if (!thisServerSettings.welcome_message_channel !== "none") {
 		console.log("i am here. also good here.");
 		var channel = member.guild.channels.find(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim()).catch();
 		if (!channel) {console.log("vere bad here"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
@@ -181,7 +178,7 @@ client.on('guildMemberRemove', async member => {
 		};
 		if (!thisServerSettings.leave_message_channel == "none") {
 			var channel = member.guild.channels.find(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim()).catch();
-			if (!channel) {console.log("i am here"); serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 		};
 		if (!channel == "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
 	} catch (e) {
