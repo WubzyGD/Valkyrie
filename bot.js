@@ -103,6 +103,7 @@ client.on('guildMemberAdd', async member => {
 	console.log("i am here?");
 	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
+	console.log(thisServerSettings);
 	if (!thisServerSettings) {
 		console.log("i am here. bad here.");
 		await serverSettings.create({
@@ -111,6 +112,7 @@ client.on('guildMemberAdd', async member => {
 		});
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	};
+	console.log(thisServerSettings);
 	try {
 	if (!thisServerSettings.join_role == "none") {
 		console.log("i am here. good here.");
@@ -120,7 +122,7 @@ client.on('guildMemberAdd', async member => {
 	if (!thisServerSettings.welcome_message_channel == "none") {
 		console.log("i am here. also good here.");
 		var channel = member.guild.channels.find(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim()).catch();
-		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+		if (!channel) {console.log("vere bad here"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!role == "none") {member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
