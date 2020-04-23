@@ -54,9 +54,7 @@ const serverSettings = sequelize.import("./models/serversettings");
 
 var e = process.argv.includes('--force') || process.argv.includes('-f');
 
-sequelize.sync({force: e}).then(async () => {
-	console.log('Database synced');
-}).catch(console.error);
+sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 
 //https://discordapp.com/oauth2/authorize?client_id=619305062900039726&scope=bot&permissions=1544547430 e
 
@@ -102,20 +100,24 @@ client.on("ready", async () => {
 });
 
 client.on('guildMemberAdd', async member => {
+	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	if (!thisServerSettings) {
+		console.log("i am here. bad here.");
 		await serverSettings.create({
-			guild_name: message.member.guild.name,
-			guild_id: String(message.member.guild.id),
+			guild_name: member.guild.name,
+			guild_id: String(member.guild.id),
 		});
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	};
 	try {
 	if (!thisServerSettings.join_role == "none") {
+		console.log("i am here. good here.");
 		var role = member.guild.roles.find(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim()).catch();
 		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!thisServerSettings.welcome_message_channel == "none") {
+		console.log("i am here. also good here.");
 		var channel = member.guild.channels.find(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim()).catch();
 		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
@@ -160,13 +162,11 @@ client.on('guildMemberAdd', async member => {
 		const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
 		if (!channel == "none") {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
-	} catch (error) {
-		console.log(error);
-	};
-	} catch (e) {};
+	} catch (error) {console.log(error);};} catch (e) {console.log(e);};
 });
 
 client.on('guildMemberRemove', async member => {
+	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	try {
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 		if (!thisServerSettings) {
@@ -187,6 +187,7 @@ client.on('guildMemberRemove', async member => {
 });
 
 client.on("message", async message => {
+	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	try {
 	if (message.author.bot) { return undefined; }
 	if (message.channel.type == 'dm') {var dmch = true;} else {var dmch = false};
@@ -411,4 +412,7 @@ client.on("message", async message => {
 	//insult
 	//scene
 	//seduce
+	//waifu
+	//card games
+	//raids
 });
