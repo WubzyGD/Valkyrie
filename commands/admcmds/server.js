@@ -11,14 +11,13 @@ const serverConfig = sequelize.import("../../models/serversettings");
 
 var e = process.argv.includes('--force') || process.argv.includes('-f');
 
-sequelize.sync({force: e}).then(async () => {
-	console.log('Database synced');
-}).catch(console.error);
+sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 
 module.exports = {
     name: "server",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
+        await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         var currentServer = await serverConfig.findOne({where: {guild_id: message.member.guild.id}});
 		if (!currentServer) {
 			try {
