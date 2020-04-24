@@ -114,11 +114,13 @@ client.on('guildMemberAdd', async member => {
 	if (thisServerSettings.join_role !== "none") {
 		console.log("i am here. good here.");
 		var role = member.guild.roles.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
+		console.log(role, thisServerSettings.join_role);
 		if (!role) {console.log("other vere bad here"); serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!thisServerSettings.welcome_message_channel !== "none") {
 		console.log("i am here. also good here.");
 		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
+		console.log(channel, thisServerSettings.welcome_message_channel);
 		if (!channel) {console.log("vere bad here"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!role == "none") {member.addRole(role.id).catch(console.error);};
@@ -278,7 +280,7 @@ client.on("message", async message => {
 		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
 		} catch (e) {return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobody claimed the chest. Whelp Asher, all yours.");};
 	};
-	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 2) {spawnTreasure(); last_treasureRoll = new Date().toString();}
+	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 1) {spawnTreasure(); last_treasureRoll = new Date().toString();}
 	else if ((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) {last_treasureRoll = new Date().toString();};
 	if (msg.startsWith(prefix) && (cmd == "dicecount" || cmd == "rollcount")) {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
