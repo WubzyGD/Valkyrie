@@ -1,5 +1,5 @@
 const Discord = require("discord.js");
-const Canvas = require("canvas");
+
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('database', 'username', 'password', {
