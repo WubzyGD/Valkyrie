@@ -56,6 +56,15 @@ const info = require("./info.json");
 const prefix = "v.";
 const adminPrefix = "adm.";
 
+const applyText = (canvas, text) => {
+	const ctx = canvas.getContext('2d');
+	let fontSize = 70;
+	do {
+		ctx.font = `${fontSize -= 10}px sans-serif`;
+	} while (ctx.measureText(text).width > canvas.width - 300);
+	return ctx.font;
+};
+
 var last_treasureRoll = new Date().toString();
 
 client.login(config.id);
@@ -197,7 +206,7 @@ client.on("message", async message => {
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
-	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (!cmd == "shop") && (!message.author.id == Wubzy)) {return message.delete();};
+	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (cmd !== "shop") && (message.author.id !== Wubzy)) {return message.delete();};
 
 	var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	if (!pstats) {
