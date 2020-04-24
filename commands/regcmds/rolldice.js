@@ -14,7 +14,7 @@ const diceRolled = sequelize.import("../../models/dicerolled");
 module.exports = {
     name: "rolldice",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
 		var e = process.argv.includes('--force') || process.argv.includes('-f');
 		sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (!args.length) { return message.channel.send(`You made an oopsie there. Syntax: \`${prefix}rolldice ["reason"] d<die>\`. The reason is optional, but must be placed in quotation marks if used. You may include an infinite number of dice, but each one must start with d and then the number, and you must use valid dice numbers (4, 6, 8, 10, 12, 20, 100)`)};

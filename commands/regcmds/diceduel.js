@@ -14,7 +14,7 @@ const diceRolled = sequelize.import("../../models/dicerolled");
 module.exports = {
     name: "diceduel",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
 		var e = process.argv.includes('--force') || process.argv.includes('-f');
 		sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (args.length <= 1) {return message.channel.send(`You've done a wrong. Syntax: \`${prefix}diceduel ["reason"] d<die> <duelingMember>\``)};
