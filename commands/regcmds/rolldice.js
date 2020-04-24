@@ -1,9 +1,22 @@
 const Discord = require("discord.js");
 
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	storage: 'database.sqlite',
+});
+
+const diceRolled = sequelize.import("../../models/dicerolled");
+
 module.exports = {
     name: "rolldice",
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
+		var e = process.argv.includes('--force') || process.argv.includes('-f');
+		sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (!args.length) { return message.channel.send(`You made an oopsie there. Syntax: \`${prefix}rolldice ["reason"] d<die>\`. The reason is optional, but must be placed in quotation marks if used. You may include an infinite number of dice, but each one must start with d and then the number, and you must use valid dice numbers (4, 6, 8, 10, 12, 20, 100)`)};
 		if (msg.includes(`"`)) {
 			var reason = message.content.slice((message.content.search(`"`) + 1));
@@ -41,6 +54,20 @@ module.exports = {
 		rollresultsstring = "";
 		for (i = 0; i <= (dicerolls.length - 1); i++) {
 			rollresultsstring += `${i + 1}. Roll d${dice[i]}: ${dicerolls[i]}\n`;
+		};
+		var tempDieCount = await diceRolled.findOne({where: {user_id: message.author.id}});
+		if (tempDieCount) {tempDieCount.increment("dice_rolled")}
+		else {
+			try {
+				await diceRolled.create({
+					name: "dice_rolled_count",
+					description: "The number of dice that this user has rolled.",
+					username: message.author.username,
+					user_id: message.author.id,
+					dice_rolled: 1
+				});
+				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
+			} catch (e) {};
 		};
 		if (reasonIncluded == false) {
 			var finaldice = new Discord.RichEmbed()

@@ -103,7 +103,7 @@ client.on('guildMemberAdd', async member => {
 	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	if (!thisServerSettings) {
-		console.log("i am here. bad here.");
+		//console.log("i am here. bad here.");
 		await serverSettings.create({
 			guild_name: member.guild.name,
 			guild_id: String(member.guild.id),
@@ -112,16 +112,16 @@ client.on('guildMemberAdd', async member => {
 	};
 	try {
 	if (thisServerSettings.join_role !== "none") {
-		console.log("i am here. good here.");
+		//console.log("i am here. good here.");
 		var role = member.guild.roles.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
-		console.log(role, thisServerSettings.join_role);
-		if (!role) {console.log("other vere bad here"); serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
+		//console.log(role, thisServerSettings.join_role);
+		if (!role) {/*console.log("other vere bad here");*/ serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (!thisServerSettings.welcome_message_channel !== "none") {
-		console.log("i am here. also good here.");
+		//console.log("i am here. also good here.");
 		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
-		console.log(channel, thisServerSettings.welcome_message_channel);
-		if (!channel) {console.log("vere bad here"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+		//console.log(channel, thisServerSettings.welcome_message_channel);
+		if (!channel) {/*console.log("vere bad here");*/ serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
 	if (role !== "none") {member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
@@ -239,22 +239,6 @@ client.on("message", async message => {
 		if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
 	};
 
-	if (msg.startsWith(prefix) && (cmd == "diceduel" || cmd == "rolldice")) {
-		var tempDieCount = await diceRolled.findOne({where: {user_id: message.author.id}});
-		if (tempDieCount) {tempDieCount.increment("dice_rolled")}
-		else {
-			try {
-				await diceRolled.create({
-					name: "dice_rolled_count",
-					description: "The number of dice that this user has rolled.",
-					username: message.author.username,
-					user_id: message.author.id,
-					dice_rolled: 1
-				});
-				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
-			} catch (e) {};
-		};
-	};
 	async function spawnTreasure() {
 		var xpintreasure = (Math.ceil(Math.random() * 1300)) + 200;
 		var moneyintreasure = (Math.ceil(Math.random() * 1300)) + 200;

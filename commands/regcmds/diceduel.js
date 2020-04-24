@@ -1,9 +1,22 @@
 const Discord = require("discord.js");
 
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	storage: 'database.sqlite',
+});
+
+const diceRolled = sequelize.import("../../models/dicerolled");
+
 module.exports = {
     name: "diceduel",
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
+		var e = process.argv.includes('--force') || process.argv.includes('-f');
+		sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (args.length <= 1) {return message.channel.send(`You've done a wrong. Syntax: \`${prefix}diceduel ["reason"] d<die> <duelingMember>\``)};
 		if (msg.includes(`"`)) {
 			var reason = message.content.slice((message.content.search(`"`) + 1));
@@ -68,7 +81,23 @@ module.exports = {
 			};
 			var reasonIncluded = false;
 		};
-		if (!Number(die) in [4, 6, 8, 10, 12, 20, 100]) {return message.reply("Your die is not actually a die! You have to use 4, 6, 8, 10, 12, 20, or 100!");};
+		if (!(Number(die) in [4, 6, 8, 10, 12, 20, 100])) {return message.reply("Your die is not actually a die! You have to use 4, 6, 8, 10, 12, 20, or 100!");};
+		
+		var tempDieCount = await diceRolled.findOne({where: {user_id: message.author.id}});
+		if (tempDieCount) {tempDieCount.increment("dice_rolled")}
+		else {
+			try {
+				await diceRolled.create({
+					name: "dice_rolled_count",
+					description: "The number of dice that this user has rolled.",
+					username: message.author.username,
+					user_id: message.author.id,
+					dice_rolled: 1
+				});
+				message.reply(`This seems to be the first time you're having me roll dice! I can track the number of dice you've rolled using \`${prefix}dicecount\``);
+			} catch (e) {};
+		};
+		
 		var roll1 = Math.ceil(Math.random() * Number(die));
 		var roll2 = Math.ceil(Math.random() * Number(die));
 		if (roll1 > roll2) {
@@ -79,7 +108,7 @@ module.exports = {
 			var winner = "Both people";
 		};
 		
-		if (mention == null) {
+		if (!mention) {
 			var person1 = person;
 		} else {
 			var person1 = message.guild.member(mention);
