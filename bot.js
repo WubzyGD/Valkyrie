@@ -173,8 +173,8 @@ client.on('guildMemberRemove', async member => {
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 		if (!thisServerSettings) {
 			await serverSettings.create({
-				guild_name: message.member.guild.name,
-				guild_id: String(message.member.guild.id),
+				guild_name: member.guild.name,
+				guild_id: String(member.guild.id),
 			});
 			var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 		};
@@ -275,84 +275,6 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && (cmd == "spawntreasure") && message.author.id === Wubzy) {
 		message.delete();
 		return spawnTreasure();
-	} else if (msg.startsWith(prefix) && cmd == "shop") {
-		if (message.channel.id !== "691149309755916370") {return message.delete();};
-		message.delete();
-		if (!args.length) {var mr = await message.channel.send(`Syntax: \`${prefix}shop <fighter|f|prestigefighter|pf>\` or use \`${prefix}shop display\` to view your prices. **The shop does not have a purchase confirmation. If you use a buy command with sufficient funds, the items will be purchased.**`); return mr.delete(20000);};
-		if (!pstats) {var mr = await message.reply("Hmm, it looks like you aren't in my databse. Send some messages and try again in a few minutes?"); return mr.delete(20000);};
-		if (pstats.fighters_count < 1) {var fighterCost = 500;}
-		else {var fighterCost = (500 + Math.ceil((pstats.fighters_count * 110) ** 1.05));};
-		if (pstats.prestige_fighters_count < 1) {var pfcost = 5;}
-		else {var pfcost = (5 + Math.ceil((pstats.prestige_fighters_count * 10) ** 1.25));};
-		if (args[0] == "fighter" || args[0] == "f") {
-			if (fighterCost > pstats.money) {var mr = await message.reply(`You don't have Gold enough for that! (\`${pstats.money}\`/\`${fighterCost}\`)`); return mr.delete(20000);};
-			await userGameData.update({fighters_count: pstats.fighters_count + 1}, {where: {user_id: message.author.id}});
-			await userGameData.update({money: pstats.money - fighterCost}, {where: {user_id: message.author.id}});
-			var mr = await message.reply("Fighter bought!"); mr.delete(20000);
-			pstats = await userGameData.findOne({where: {user_id: message.author.id}});
-			await userGameData.update({xp: Math.floor(100 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
-			return message.author.send(`Purchase receipt:\n\n(This is mainly for debugging purposes. It will likely be removed in the future.)\n\nPurchased: 1 Fighter\nSpent: ${fighterCost}\nMoney left: ${pstats.money}\nFighter Count: ${pstats.fighters_count}`);
-		} else if (args[0] == "prestigefighter" || args[0] == "pf") {
-			if (pfcost > pstats.lost_remnants) {var mr = await message.reply(`You don't have enough Lost Remnants for that! (\`${pstats.lost_remnants}\`/\`${pfcost}\`)`); return mr.delete(20000);};
-			await userGameData.update({prestige_fighters_count: pstats.prestige_fighters_count + 1}, {where: {user_id: message.author.id}});
-			await userGameData.update({lost_remnants: pstats.lost_remnants - pfcost}, {where: {user_id: message.author.id}});
-			var mr = await message.reply("Prestige Fighter bought!"); mr.delete(20000);
-			await userGameData.update({xp: Math.floor(500 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
-			pstats = await userGameData.findOne({where: {user_id: message.author.id}});
-			return message.author.send(`Purchase receipt:\n\n(This is mainly for debugging purposes. It will likely be removed in the future.)\n\nPurchased: 1 Prestige Fighter\nSpent: ${pfcost}\nLost Remnants left: ${pstats.lost_remnants}\nFighter Count: ${pstats.prestige_fighters_count}`);
-		} else if (args[0] == "display" || args[0] == "d") {
-			var mr = await message.reply(`Your fighters cost ${fighterCost} Gold. Your prestige fighters cost ${pfcost} Lost Remnants.`);
-			return mr.delete(20000);
-		} else {var mr = await message.reply(`Syntax: \`${prefix}shop <fighter|f|prestigefighter|pf>\` or use \`${prefix}shop display\` to view your prices.`); return mr.delete(20000);};
-	} else if (msg.startsWith(prefix) && cmd == "stats") {
-		try {var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
-		if (!pstats) {return message.channel.send("You do not have any stats yet. This is a super rare message to get, send some messages and try again in a few minutes...");};
-		if (pstats.xp == 0) {var lvlpercent = 0;}
-		else {var lvlpercent = (((pstats.xp) / ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) * 100);};
-
-		const canvas = Canvas.createCanvas(700, 250);
-		const ctx = canvas.getContext('2d');
-		const background = await Canvas.loadImage('./wallpaper.jpg');
-		ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-		ctx.strokeStyle = '#74037b';
-		ctx.strokeRect(0, 0, canvas.width, canvas.height);
-		ctx.font = '28px sans-serif';
-		ctx.fillStyle = '#ffffff';
-		ctx.fillText(`Level ${pstats.level} | [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.4 * (100 * pstats.level)))}]`, canvas.width / 2.5, canvas.height / 3.5);
-		ctx.font = applyText(canvas, message.member.displayName);
-		ctx.fillStyle = '#ffffff';
-		ctx.fillText(message.member.displayName, canvas.width / 2.5, canvas.height / 1.8);
-		if (lvlpercent <= 3) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-0.png");} else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");} else if (lvlpercent <= 20) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-2.png");} else if (lvlpercent <= 30) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-3.png");} else if (lvlpercent <= 40) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-4.png");} else if (lvlpercent <= 50) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-5.png");} else if (lvlpercent <= 60) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-6.png");} else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png");} else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");} else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");} else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
-		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
-		await ctx.drawImage(xpbar, canvas.width / 2.5, canvas.height / 1.5, (canvas.width / 2.2) - 5, (canvas.height / 1.5) - 100);
-		ctx.beginPath();
-		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
-		ctx.closePath();
-		ctx.clip();
-		const avatar = await Canvas.loadImage(message.author.avatarURL);
-		ctx.drawImage(avatar, 25, 25, 200, 200);
-
-		const attachment = await new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
-
-		var pstatsembed = new Discord.RichEmbed()
-		.setTitle(`${message.member.displayName}'s Stats`)
-		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
-		.setThumbnail(message.author.avatarURL)
-		.setColor("DC134C")
-		.setFooter("Valkyrie", client.user.avatarURL)
-		.setTimestamp();
-
-		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {
-			pstatsembed.addField("Extended Stats", `Prestiges: ${pstats.prestige}\nNumber of Fighters: ${pstats.fighters_count}\nLost Remnants Owned: ${pstats.lost_remnants}\nNumber of Prestige Fighters: ${pstats.prestige_fighters_count}\nBoss Damage Dealt: ${pstats.boss_damage_done}\nAncient Boss Damage Dealt: ${pstats.ancient_boss_damage_done}`);
-		} else if (message.channel.guild.id == "679127746592636949") {
-			pstatsembed.addField("Extended Stats", "Please go to <#691178546097553418> to view your game stats!");
-		} else {
-			pstatsembed.addField("Extended Stats", "Join the support server to gain access to a game within Valkyrie where you can use your levels and cash to purchase fighters to earn you more cash prestige, and gain cool rewards! Use `v.supportserver` to get the invite link!");
-		};
-		var tempDieCount = await diceRolled.findOne({where: {user_id: String(message.author.id)}});
-		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
-		if (args[0] == "image") {return message.channel.send(attachment);};
-		return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
