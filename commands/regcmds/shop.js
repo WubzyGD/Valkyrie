@@ -20,6 +20,7 @@ module.exports = {
         if (message.channel.id !== "691149309755916370") {return message.delete();};
 		message.delete();
 		if (!args.length) {var mr = await message.channel.send(`Syntax: \`${prefix}shop <fighter|f|prestigefighter|pf>\` or use \`${prefix}shop display\` to view your prices. **The shop does not have a purchase confirmation. If you use a buy command with sufficient funds, the items will be purchased.**`); return mr.delete(20000);};
+		var pstats = userGameData.findOne({where: {user_id: message.author.id}});
 		if (!pstats) {var mr = await message.reply("Hmm, it looks like you aren't in my databse. Send some messages and try again in a few minutes?"); return mr.delete(20000);};
 		if (pstats.fighters_count < 1) {var fighterCost = 500;}
 		else {var fighterCost = (500 + Math.ceil((pstats.fighters_count * 110) ** 1.05));};
