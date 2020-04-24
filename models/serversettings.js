@@ -24,5 +24,25 @@ module.exports = (sequelize, DataTypes) => {
         join_role: {
             type: DataTypes.STRING,
             defaultValue: "none"
-        }
+        },
+        prefix: {
+            type: DataTypes.STRING,
+            defaultValue: "v."
+        },
+        adminPrefix: {
+            type: DataTypes.STRING,
+            defaultValue: "adm."
+        },
+        level_update: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        },
+        log_channel: {
+            type: DataTypes.STRING,
+            defaultValue: "none"
+        },
+        welcome_ping_role: {
+            type: DataTypes.STRING,
+            defaultValue: 0
+        },
 })};

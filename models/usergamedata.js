@@ -43,5 +43,44 @@ module.exports = (sequelize, DataTypes) => {
 	ancient_boss_damage_done: {
 		type: DataTypes.INTEGER,
 		defaultValue: 0
-	}
+	},
+
+	upgrade_fighters: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	},
+	upgrade_base: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	},
+	upgrade_daily: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	},
+	upgrade_remnants: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	},
+
+	commands_executed: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	},
+
+	is_vip: {
+		type: DataTypes.BOOLEAN,
+		defaultValue: false
+	},
+	custom_background: {
+		type: DataTypes.STRING,
+		defaultValue: "none"
+	},
+	custom_emblem: {
+		type: DataTypes.STRING,
+		defaultValue: "none"
+	},
+	custom_levelup_message: {
+		type: DataTypes.STRING,
+		defaultValue: "none"
+	},
 })};

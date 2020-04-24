@@ -115,13 +115,13 @@ client.on('guildMemberAdd', async member => {
 		//console.log("i am here. good here.");
 		var role = member.guild.roles.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
 		//console.log(role, thisServerSettings.join_role);
-		if (!role) {/*console.log("other vere bad here");*/ serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}});};
+		if (!role) {/*console.log("other vere bad here");*/ serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	if (!thisServerSettings.welcome_message_channel !== "none") {
 		//console.log("i am here. also good here.");
 		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
 		//console.log(channel, thisServerSettings.welcome_message_channel);
-		if (!channel) {/*console.log("vere bad here");*/ serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+		if (!channel) {/*console.log("vere bad here");*/ serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	if (role !== "none") {member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
@@ -180,7 +180,7 @@ client.on('guildMemberRemove', async member => {
 		};
 		if (thisServerSettings.leave_message_channel !== "none") {
 			var channel = member.guild.channels.get(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim());
-			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
+			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 		};
 		if (channel !== "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
 	} catch (e) {
@@ -201,7 +201,7 @@ client.on("message", async message => {
 	var cmd = args.shift().toLowerCase();
 
 	if (message.content === '!join') {
-		if (!message.author.id === Wubzy) {return;};
+		if (message.author.id != Wubzy) {return;};
 		message.channel.send("Simulating member join...");
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
@@ -232,7 +232,11 @@ client.on("message", async message => {
 		await userGameData.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {
-		message.channel.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);
+		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
+		if (!thisServerSettings) {
+		await serverSettings.create({guild_name: member.guild.name, guild_id: String(member.guild.id)});
+		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
+		if (thisServerSettings.level_update == true) {message.channel.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);};
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});

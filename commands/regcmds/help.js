@@ -49,7 +49,7 @@ module.exports = {
 		.setDescription("Anything not \"fun\" or RPG. All moderative commands such as announce and delete use the prefix `adm.`")
 		.addField("__Calc__", "Syntax: `calc <num> <+|-|*|/> <num>`\n\nReturns the calculated number")
 		.addField("__Randnum__", "Syntax: `randnum <minNum> <maxNum>`\n\nInclusively returns a random number between the two values")
-		.addField("__Theme__", "Syntax: `theme create`\n\nCreates a customized Better Discord theme, right there in chat! This command only works in a direct message to Valkyrie, so be careful.")
+		//.addField("__Theme__", "Syntax: `theme create`\n\nCreates a customized Better Discord theme, right there in chat! This command only works in a direct message to Valkyrie, so be careful.")
 		//.addField("__Role__", "")
 		.addField("__Avatar__", "Syntax: `avatar [@member]`\n\nSends the user's full avatar. If nobody is mentioned, displays your avatar")
 		.addField("__Coinflip__", "Syntax: `coinflip`\n\nNot really much to say here...")

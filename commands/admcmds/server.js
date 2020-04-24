@@ -32,7 +32,7 @@ module.exports = {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server <edit|view>\``)};
         if (args[0] == "edit") {
             args.shift();
-            if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole>\` More settings will be coming soon! Be patient.`)};
+            if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole|welcomerole|levelmessage>\`.`)};
             if (args[0] == "adminedit") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit adminedit <true|false>\` Setting this to \`true\` means that any member can update my settings in this server. Otherwise, members must have administrator permissions to edit my settings.`);};
@@ -81,9 +81,29 @@ module.exports = {
                     return message.reply("This server now has no default role - I won't add a role to users when they join. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<@&") && args[0].endsWith(">")) {
                     await serverConfig.update({join_role: args[0]}, {where: {guild_id: message.member.guild.id}});
-                    return message.reply(`I'll add the role ${args[0]} to new members.`);
+                    return message.reply(`I'll add that role to new members.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit defaultrole <@role|none>\``);};
-            } else {return message.reply(`Invalid syntax/option provided. Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole>\``);};
+            } else if (args[0] == "welcomerole") {
+                args.shift();
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit welcomerole <@role|none>\` This will add ping a role when new users join - if you mention a role, or disable it if you type "none".`)};
+                if (args[0] == "none") {
+                    await serverConfig.update({welcome_ping_role: "none"}, {where: {guild_id: message.member.guild.id}});
+                    return message.reply("This server now has no welcome role ping - I won't add ping a role when users join. This can be re-enabled at any time.");
+                } else if (args[0].startsWith("<@&") && args[0].endsWith(">")) {
+                    await serverConfig.update({welcome_ping_role: args[0]}, {where: {guild_id: message.member.guild.id}});
+                    return message.reply(`I'll ping that role when new members join.`);
+                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomerole <@role|none>\``);};
+            } else if (args[0] == "levelmessage") {
+                args.shift();
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit levelmessage <true|false>\` Setting this to \`true\` means that when a user levels up, a message will be sent. Otherwise, they'll just level up... er... *incognito*.`);};
+                if (args[0] == "true" || args[0] == "yes") {
+                    await serverConfig.update({level_update: true}, {where: {guild_id: message.member.guild.id}});
+                    return message.reply("This server is now set to send level up messages.");
+                } else if (args[0] == "false" || args[0] == "no") {
+                    await serverConfig.update({level_update: false}, {where: {guild_id: message.member.guild.id}});
+                    return message.reply("Level up messages have been disabled.");
+                } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
+            } else {return message.reply(`Invalid syntax/option provided. Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole|welcomerole|levelmessage>\``);};
         } else if (args[0] == "view") {
             var serverSettingsEmbed = new Discord.RichEmbed()
             .setAuthor("Server Settings", message.member.guild.iconURL)
@@ -93,6 +113,8 @@ module.exports = {
             .addField("Welcome Message Channel", currentServer.welcome_message_channel)
             .addField("Leave Message Channel", currentServer.leave_message_channel)
             .addField("Join Role", currentServer.join_role)
+            .addField("Welcome Committee Role", currentServer.welcome_ping_role)
+            .addField("Level Up Messages", currentServer.level_update)
             .setColor("DC134C")
             .setFooter("Valkyrie")
             .setTimestamp();
