@@ -123,7 +123,7 @@ client.on('guildMemberAdd', async member => {
 		console.log(channel, thisServerSettings.welcome_message_channel);
 		if (!channel) {console.log("vere bad here"); serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 	};
-	if (!role == "none") {member.addRole(role.id).catch(console.error);};
+	if (role !== "none") {member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
 	"Be warned, the wizard is a little irritable, he just rolled pretty low.", "Careful, dice rolls are a little low today.", 
 	"Look on the bright side, finally someone other than the dragonborn can help take care of the goblins.", 
@@ -163,7 +163,7 @@ client.on('guildMemberAdd', async member => {
 
 		const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
 
-		if (!channel == "none") {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
+		if (channel !== "none") {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
 	} catch (error) {console.log(error);};} catch (e) {console.log(e);};
 });
 
@@ -182,7 +182,7 @@ client.on('guildMemberRemove', async member => {
 			var channel = member.guild.channels.get(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim());
 			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}});};
 		};
-		if (!channel == "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
+		if (channel !== "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
 	} catch (e) {
 		console.log(e);
 	};
