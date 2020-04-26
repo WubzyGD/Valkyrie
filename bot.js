@@ -27,6 +27,8 @@ function wait(time) {
 	});
 };
 
+var cmdcount = 0;
+
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
 
@@ -205,6 +207,8 @@ client.on("message", async message => {
 		message.channel.send("Simulating member join...");
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
+
+	if (msg.startsWith(prefix)) {cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.RichEmbed().setAuhor("Commands Executed since last restart", client.user.avatarURL).setDescription(`${cmdcount} commands.`));};
 
 	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (cmd !== "shop") && (message.author.id !== Wubzy)) {return message.delete();};
 
