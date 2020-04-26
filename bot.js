@@ -184,7 +184,7 @@ client.on('guildMemberRemove', async member => {
 		};
 		if (channel !== "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
 	} catch (e) {
-		console.log(e);
+		console.log(e, channel, thisServerSettings.channel);
 	};
 });
 
@@ -227,8 +227,9 @@ client.on("message", async message => {
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
-		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5)) + pstats.money}, {where: {user_id: message.author.id}});
-		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5)) + pstats.xp}, {where: {user_id: message.author.id}});
+		if (message.channel.guild.id == "679127746592636949") {var guildBoost = 1.5;} else {var guildBoost = 1;};
+		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.money}, {where: {user_id: message.author.id}});
+		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.xp}, {where: {user_id: message.author.id}});
 		await userGameData.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {

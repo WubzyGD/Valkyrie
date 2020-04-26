@@ -43,6 +43,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         welcome_ping_role: {
             type: DataTypes.STRING,
-            defaultValue: 0
+            defaultValue: "none"
         },
 })};
