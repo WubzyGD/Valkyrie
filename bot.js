@@ -125,7 +125,8 @@ client.on('guildMemberAdd', async member => {
 		//console.log(channel, thisServerSettings.welcome_message_channel);
 		if (!channel) {/*console.log("vere bad here");*/ serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
-	if (role !== "none") {member.addRole(role.id).catch(console.error);};
+	console.log(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim(), thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
+	if (role != "none") {console.log(role); member.addRole(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
 	"Be warned, the wizard is a little irritable, he just rolled pretty low.", "Careful, dice rolls are a little low today.", 
 	"Look on the bright side, finally someone other than the dragonborn can help take care of the goblins.", 
