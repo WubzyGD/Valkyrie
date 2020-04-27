@@ -50,7 +50,7 @@ module.exports = {
                     var pfp2 = await Canvas.loadImage(mention.avatarURL);
                 };
                 await ctx.drawImage(pfp2, 30, 66, 220, 220);
-                await ctx.drawImage(pfp1, 550, 90, 80, 80);
+                await ctx.drawImage(pfp1, 470, 95, 90, 90);
                 return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
                 //30, 66 -> 220
                 //550, 90 -> 80
