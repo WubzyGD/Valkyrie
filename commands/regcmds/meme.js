@@ -35,25 +35,40 @@ module.exports = {
         else if (args[0] == "avatar") {
             var meme = args[1];
             if (meme == "roloshoot") {
-                if (!mention || args.length < 3) {return message.reply("You have to mention someone else for this meme!");};
-                message.delete();
                 try {const canvas = Canvas.createCanvas(630, 360);
 		        const ctx = canvas.getContext('2d');
 
 		        const background = await Canvas.loadImage('./images/templates/avatar/roloshoot.png');
-                await ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-                if (args[2] == "flip") {
-                    var pfp2 = await Canvas.loadImage(message.author.avatarURL);
-                    var pfp1 = await Canvas.loadImage(mention.avatarURL);
+                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+                
+                if (!mention) {
+                    if (args[2] == "flip") {
+                        var pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp1 = await Canvas.loadImage(client.user.avatarURL);
+                    } else {
+                        var pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp2 = await Canvas.loadImage(client.user.avatarURL);
+                    };
+                } else if (message.mentions.users.size > 1) {
+                    if (args[2] == "flip") {
+                        var pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
+                    } else {
+                        var pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
+                    };
                 } else {
-                    var pfp1 = await Canvas.loadImage(message.author.avatarURL);
-                    var pfp2 = await Canvas.loadImage(mention.avatarURL);
+                    if (args[2] == "flip") {
+                        var pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp1 = await Canvas.loadImage(mention.avatarURL);
+                    } else {
+                        var pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp2 = await Canvas.loadImage(mention.avatarURL);
+                    };
                 };
-                await ctx.drawImage(pfp2, 30, 66, 220, 220);
-                await ctx.drawImage(pfp1, 470, 95, 90, 90);
+                ctx.drawImage(pfp2, 30, 66, 220, 220);
+                ctx.drawImage(pfp1, 470, 95, 90, 90);
                 return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
-                //30, 66 -> 220
-                //550, 90 -> 80
                 } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             };
         };
