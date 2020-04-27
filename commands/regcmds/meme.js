@@ -34,7 +34,7 @@ module.exports = {
         }
         else if (args[0] == "avatar") {
             if (args.length < 2) {return message.reply(`Syntax: \`${prefix}meme avatar <memeName> [flip] [@mention] [@mention]\`. For templates with two avatars, if you mention nobody, it will use your avatar and Valkyrie's avatar, If you mention one person, it will use your avatar and their avatar, and if you mention two people, it will use both of their avatars and not yours. For two-avatar templates, you can use "flip" after the meme name to swap avatar positions. To see valid template names, use \`${prefix}meme avatar list\``)};
-            function twoAv() {
+            async function twoAv() {
                 if (!mention) {
                     if (args[2] == "flip") {
                         var pfp2 = await Canvas.loadImage(message.author.avatarURL);
