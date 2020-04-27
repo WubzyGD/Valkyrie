@@ -33,14 +33,8 @@ module.exports = {
             return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(link));
         }
         else if (args[0] == "avatar") {
-            var meme = args[1];
-            if (meme == "roloshoot") {
-                try {const canvas = Canvas.createCanvas(630, 360);
-		        const ctx = canvas.getContext('2d');
-
-		        const background = await Canvas.loadImage('./images/templates/avatar/roloshoot.png');
-                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-                
+            if (args.length < 2) {return message.reply(`Syntax: \`${prefix}meme avatar <memeName> [flip] [@mention] [@mention]\`. For templates with two avatars, if you mention nobody, it will use your avatar and Valkyrie's avatar, If you mention one person, it will use your avatar and their avatar, and if you mention two people, it will use both of their avatars and not yours. For two-avatar templates, you can use "flip" after the meme name to swap avatar positions. To see valid template names, use \`${prefix}meme avatar list\``)};
+            function twoAv() {
                 if (!mention) {
                     if (args[2] == "flip") {
                         var pfp2 = await Canvas.loadImage(message.author.avatarURL);
@@ -66,8 +60,17 @@ module.exports = {
                         var pfp2 = await Canvas.loadImage(mention.avatarURL);
                     };
                 };
-                ctx.drawImage(pfp2, 30, 66, 220, 220);
-                ctx.drawImage(pfp1, 470, 95, 90, 90);
+                return [pfp1, pfp2];
+            };
+            var meme = args[1];
+            if (meme == "roloshoot") {
+                var pfps = twoAv();
+                try {const canvas = Canvas.createCanvas(630, 360);
+		        const ctx = canvas.getContext('2d');
+		        const background = await Canvas.loadImage('./images/templates/avatar/roloshoot.png');
+                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+                ctx.drawImage(pfps[1], 30, 66, 220, 220);
+                ctx.drawImage(pfps[0], 470, 95, 90, 90);
                 return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
                 } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             };
