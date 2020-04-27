@@ -77,7 +77,7 @@ module.exports = {
                 await twoAv();
                 try {const canvas = Canvas.createCanvas(700, 394);
                 const ctx = canvas.getContext("2d");
-                const background = Canvas.loadImage("./images/templates/avatar/mhabattle.jpg");
+                const background = await Canvas.loadImage("./images/templates/avatar/mhabattle.jpg");
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
                 ctx.drawImage(pfp1, 210, 155, 55, 55);
                 ctx.drawImage(pfp2, 460, 155, 55, 55);
