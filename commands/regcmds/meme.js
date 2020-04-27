@@ -5,7 +5,7 @@ module.exports = {
     name: "meme",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.channel.send(`Syntaxx: \`${prefix}meme <memeName>\` to create a meme OR \`${prefix}meme use <memeName>\` to have Valk send a meme/reaction image. Use \`list\` as the meme name to show available options.`);};
+        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}meme use <memeName>\` to have Valk send a meme/reaction image. Use \`list\` as the meme name to show available options.`);};
         message.delete();
         if (args[0] == "use") {
             var meme = args[1];
@@ -32,80 +32,30 @@ module.exports = {
             if (!link) {return message.reply("I don't have the meme `" + meme + "`!");};
             return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(link));
         }
-        if (args[0] == "excusewtf") {
-            args.shift();
-            if (!args.length) {return message.reply("Options for this meme template are `$text1` and `$text2`.");};
-            var reading = false;
-            var text1 = "";
-            var text2 = "";
-            for (t = 0; t < args.length; t++) {
-                i = args[t];
-                if ((!reading == false) && (!i.startsWith("$"))) {
-                    if (reading == "text1") {
-                        text1 += `${i} `;
-                    } else if (reading == "text2") {
-                        text2 += `${i} `;
-                    } else {
-                        var warn = await message.reply(`\`${i}\` is not a valid option. Use \`${adminPrefix}announce options\` to see a list of valid options.`);
-                        warn.delete(10000);
-                    };
-                } else if (i.startsWith("$")) {
-                    i = i.toLowerCase().slice(1);
-                    reading = i;
-                };
-            };
-            if (!text1.length > 0 && !text2.length > 0) {return message.reply("You must have some text in your meme.");};
-            if (text1.length == 0) {text1 = text2; text2 = false;} else if (text2.length == 0) {text2 = false;};
-            /*const applyText = (canvas, text) => {
-                const ctx = canvas.getContext('2d');
-                let fontSize = 70;
-                do {
-                    ctx.font = `${fontSize -= 10}px sans-serif`;
-                } while (ctx.measureText(text).width > canvas.width - 300);
-                return ctx.font;
-            };*/
-    
-            const canvas = Canvas.createCanvas(640, 544);
-            const ctx = canvas.getContext('2d');
-            
-            if (text1.length <= 25 && !text2) {ctx.font = "35px sans-serif"; var t1draw = 55;}
-            else if (text1.length <= 25) {ctx.font = "35px sans-serif"; var t1draw = 30;}
-            else if (text1.length > 25 && !text2) {ctx.font = "30px sans-serif"; var t1draw = 55;}
-            else if (text1.length > 25) {ctx.font = "30px sans-serif"; var t1draw = 30;};
+        else if (args[0] == "avatar") {
+            var meme = args[1];
+            if (meme == "roloshoot") {
+                if (!mention || !args.shift().shift().length) {return message.reply("You have to mention someone else for this meme!");};
+                message.delete();
+                try {const canvas = Canvas.createCanvas(630, 360);
+		        const ctx = canvas.getContext('2d');
 
-            var t1l1 = false; var t1l2 = false; var t2l1 = false; var t2l2 = false;
-            if (text1.length > 40) {t1l1 = text1.slice(0, 39).trim(); t1l2 = text1.slice(40, text1.length).trim();};
-            if (text2.length > 40) {t2l1 = text2.slice(0, 39).trim(); t2l2 = text2.slice(40, text2.length).trim();};
-
-            const background = await Canvas.loadImage("https://cdn.discordapp.com/attachments/563198656241598484/673735219249152023/excusewtf.jpg");
-            ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-    
-            ctx.fillStyle = '#000000';
-            if (!t1l1) {
-                ctx.fillText(text1, 20, t1draw);
-            } else {
-                ctx.fillText(t1l1, 20, t1draw);
-                ctx.fillText(t1l2, 20, t1draw + 30);
-            };
-
-            if (text2) {
-                ctx.fillText(text2, 20, 60);
-                if (!t2l1) {
-                    if (!t1l1) {ctx.fillText(text2, 20, t1draw + 65);}
-                    else {ctx.fillText(text2, 20, t1draw + 95);};
+		        const background = await Canvas.loadImage('./images/templates/avatar/roloshoot.png');
+                await ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+                if (args[2] == "flip") {
+                    var pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                    var pfp1 = await Canvas.loadImage(mention.avatarURL);
                 } else {
-                    if (!t1l1) {
-                        ctx.fillText(t2l1, 20, t1draw + 65);
-                        ctx.fillText(t2l2, 20, t1draw + 100);
-                    } else {
-                        ctx.fillText(t2l1, 20, t1draw + 120);
-                        ctx.fillText(t2l2, 20, t1draw + 150);
-                    };
+                    var pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                    var pfp2 = await Canvas.loadImage(mention.avatarURL);
                 };
+                await ctx.drawImage(pfp2, 30, 66, 220, 220);
+                await ctx.drawImage(pfp1, 550, 90, 80, 80);
+                return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
+                //30, 66 -> 220
+                //550, 90 -> 80
+                } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             };
-    
-            var attachment = new Discord.Attachment(canvas.toBuffer(), 'completed-meme.png');
-            return message.reply("Here you are!", attachment);
         };
     }
 };
