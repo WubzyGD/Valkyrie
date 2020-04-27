@@ -51,10 +51,10 @@ module.exports = {
                     };
                 } else if (message.mentions.users.size > 1) {
                     if (args[2] == "flip") {
-                        var pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp2 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
                         var pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
                     } else {
-                        var pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                        var pfp1 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
                         var pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
                     };
                 } else {
