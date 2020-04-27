@@ -35,7 +35,7 @@ module.exports = {
         else if (args[0] == "avatar") {
             var meme = args[1];
             if (meme == "roloshoot") {
-                if (!mention || !args.shift().shift().length) {return message.reply("You have to mention someone else for this meme!");};
+                if (!mention || args.length < 3) {return message.reply("You have to mention someone else for this meme!");};
                 message.delete();
                 try {const canvas = Canvas.createCanvas(630, 360);
 		        const ctx = canvas.getContext('2d');
