@@ -34,43 +34,43 @@ module.exports = {
         }
         else if (args[0] == "avatar") {
             if (args.length < 2) {return message.reply(`Syntax: \`${prefix}meme avatar <memeName> [flip] [@mention] [@mention]\`. For templates with two avatars, if you mention nobody, it will use your avatar and Valkyrie's avatar, If you mention one person, it will use your avatar and their avatar, and if you mention two people, it will use both of their avatars and not yours. For two-avatar templates, you can use "flip" after the meme name to swap avatar positions. To see valid template names, use \`${prefix}meme avatar list\``)};
+            var pfp1; var pfp2;
             async function twoAv() {
                 if (!mention) {
                     if (args[2] == "flip") {
-                        var pfp2 = await Canvas.loadImage(message.author.avatarURL);
-                        var pfp1 = await Canvas.loadImage(client.user.avatarURL);
+                        pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                        pfp1 = await Canvas.loadImage(client.user.avatarURL);
                     } else {
-                        var pfp1 = await Canvas.loadImage(message.author.avatarURL);
-                        var pfp2 = await Canvas.loadImage(client.user.avatarURL);
+                        pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                        pfp2 = await Canvas.loadImage(client.user.avatarURL);
                     };
                 } else if (message.mentions.users.size > 1) {
                     if (args[2] == "flip") {
-                        var pfp2 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
-                        var pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
+                        pfp2 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
+                        pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
                     } else {
-                        var pfp1 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
-                        var pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
+                        pfp1 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
+                        pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
                     };
                 } else {
                     if (args[2] == "flip") {
-                        var pfp2 = await Canvas.loadImage(message.author.avatarURL);
-                        var pfp1 = await Canvas.loadImage(mention.avatarURL);
+                        pfp2 = await Canvas.loadImage(message.author.avatarURL);
+                        pfp1 = await Canvas.loadImage(mention.avatarURL);
                     } else {
-                        var pfp1 = await Canvas.loadImage(message.author.avatarURL);
-                        var pfp2 = await Canvas.loadImage(mention.avatarURL);
+                        pfp1 = await Canvas.loadImage(message.author.avatarURL);
+                        pfp2 = await Canvas.loadImage(mention.avatarURL);
                     };
                 };
-                return [pfp1, pfp2];
             };
             var meme = args[1];
             if (meme == "roloshoot") {
-                var pfps = twoAv();
+                await twoAv();
                 try {const canvas = Canvas.createCanvas(630, 360);
 		        const ctx = canvas.getContext('2d');
 		        const background = await Canvas.loadImage('./images/templates/avatar/roloshoot.png');
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-                ctx.drawImage(pfps[1], 30, 66, 220, 220);
-                ctx.drawImage(pfps[0], 470, 95, 90, 90);
+                ctx.drawImage(pfp1, 30, 66, 220, 220);
+                ctx.drawImage(pfp2, 470, 95, 90, 90);
                 return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
                 } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             };
