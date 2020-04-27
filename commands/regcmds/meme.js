@@ -73,6 +73,16 @@ module.exports = {
                 ctx.drawImage(pfp2, 470, 95, 90, 90);
                 return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
                 } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
+            } else if (meme == "mhabattle") {
+                await twoAv();
+                try {const canvas = Canvas.createCanvas(700, 394);
+                const ctx = canvas.getContext("2d");
+                const background = Canvas.loadImage("./images/templates/avatar/mhabattle.jpg");
+                ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+                ctx.drawImage(pfp1, 210, 155, 55, 55);
+                ctx.drawImage(pfp2, 460, 155, 55, 55);
+                return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
+                } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             };
         };
     }
