@@ -54,7 +54,7 @@ module.exports = {
 		.addField("__Avatar__", "Syntax: `avatar [@member]`\n\nSends the user's full avatar. If nobody is mentioned, displays your avatar")
 		.addField("__Coinflip__", "Syntax: `coinflip`\n\nNot really much to say here...")
 		.addField("__Serverinfo__", "Syntax: `serverinfo`\n\nShows detailed statistics on the server.")
-		.addField("__Send__", "Syntax: `send <@username> <message>`\n\nSends that user a message and deletes the execution message. Glorified DMs")
+		//.addField("__Send__", "Syntax: `send <@username> <message>`\n\nSends that user a message and deletes the execution message. Glorified DMs")
 		.addField("__Delete__", "Syntax: `delete <count> [@member]`\n\nPurges a given number of messages from the channel, and optionally from only a specific member.")
 		.addField("__Announce__", "Syntax: `announce <options>`\n\nThis command is really just a glorified embed generator, and while it uses the admin prefix, as long as you have permissions to send a message to that channel, the command will work!\n\nTips:\n-Use `announce options` to see a list of customizability options")
 		//.addField("__Kick__", ".")

@@ -4,6 +4,7 @@ module.exports = {
     name: "send",
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
+		if (message.author.id !== "330547934951112705") {return;};
         if (mention == null) { message.channel.send(`No one to send your message to. \`${prefix}send <@username> <message>\``); return; }
 		message.delete();
 		var mentionMessage = message.content.slice(6).trim();
