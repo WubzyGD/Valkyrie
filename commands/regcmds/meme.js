@@ -91,8 +91,8 @@ module.exports = {
                 const ctx = canvas.getContext("2d");
                 const background = await Canvas.loadImage("./images/templates/avatar/mhabattle.jpg");
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-                ctx.drawImage(pfp1, 200, 155, 70, 70);
-                ctx.drawImage(pfp2, 460, 155, 70, 70);
+                ctx.drawImage(pfp1, 170, 135, 100, 100);
+                ctx.drawImage(pfp2, 430, 135, 100, 100);
                 return message.channel.send(`${fmsg}\nSender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
                 } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             } else if (meme == "list") {
