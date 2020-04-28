@@ -28,7 +28,7 @@ module.exports = {
 				return message.reply(`This appears to be the first time a member has tried to access this server's server config, so I've registered your server, and you can now edit and access its settings! --Granted that you have the right permissions, of course. **If you just ran an edit command, you may need to do it again.**`);
 			} catch (e) {};
         };
-        if (currentServer.server_edit_admin_requirement == true) {if (!message.member.permissions.has("ADMINISTRATOR")) {return message.reply("This server is set to only allow admins to edit my settings.")};};
+        if (currentServer.server_edit_admin_requirement == true) {if (!message.member.permissions.has("ADMINISTRATOR") && message.member.id !== "330547934951112705") {return message.reply("This server is set to only allow admins to edit my settings.")};};
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server <edit|view>\``)};
         if (args[0] == "edit") {
             args.shift();
