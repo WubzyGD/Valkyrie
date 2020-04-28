@@ -41,36 +41,36 @@ module.exports = {
                         pfp2 = await Canvas.loadImage(message.author.avatarURL);
                         pfp1 = await Canvas.loadImage(client.user.avatarURL);
                         fmsg = mesg.replace(/\{\{1}}/gm, message.member.guild.members.get(client.user.id).displayName);
-                        fmsg = mesg.replace(/\{\{2}}/gm, message.member.displayName);
+                        fmsg = fmsg.replace(/\{\{2}}/gm, message.member.displayName);
                     } else {
                         pfp1 = await Canvas.loadImage(message.author.avatarURL);
                         pfp2 = await Canvas.loadImage(client.user.avatarURL);
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.get(client.user.id).displayName);
-                        fmsg = mesg.replace(/\{\{1}}/gm, message.member.displayName);
+                        fmsg = fmsg.replace(/\{\{1}}/gm, message.member.displayName);
                     };
                 } else if (message.mentions.users.size > 1) {
                     if (args[2] == "flip") {
                         pfp2 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
                         pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
                         fmsg = mesg.replace(/\{\{1}}/gm, message.member.guild.members.get(message.mentions.users.first(2)[1].id).displayName);
-                        fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.get(message.mentions.users.first().id).displayName);
+                        fmsg = fmsg.replace(/\{\{2}}/gm, message.member.guild.members.get(message.mentions.users.first().id).displayName);
                     } else {
                         pfp1 = await Canvas.loadImage(message.mentions.users.first().avatarURL);
                         pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL);
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.get(message.mentions.users.first(2)[1].id).displayName);
-                        fmsg = mesg.replace(/\{\{1}}/gm, message.member.guild.members.get(message.mentions.users.first().id).displayName);
+                        fmsg = fmsg.replace(/\{\{1}}/gm, message.member.guild.members.get(message.mentions.users.first().id).displayName);
                     };
                 } else {
                     if (args[2] == "flip") {
                         pfp2 = await Canvas.loadImage(message.author.avatarURL);
                         pfp1 = await Canvas.loadImage(mention.avatarURL);
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.get(mention.id).displayName);
-                        fmsg = mesg.replace(/\{\{1}}/gm, message.member.displayName);
+                        fmsg = fmsg.replace(/\{\{1}}/gm, message.member.displayName);
                     } else {
                         pfp1 = await Canvas.loadImage(message.author.avatarURL);
                         pfp2 = await Canvas.loadImage(mention.avatarURL);
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.get(mention.id).displayName);
-                        fmsg = mesg.replace(/\{\{1}}/gm, message.member.displayName);
+                        fmsg = fmsg.replace(/\{\{1}}/gm, message.member.displayName);
                     };
                 };
             };
