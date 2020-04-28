@@ -92,11 +92,18 @@ module.exports = {
                 const background = await Canvas.loadImage("./images/templates/avatar/mhabattle.jpg");
                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
                 ctx.drawImage(pfp1, 170, 135, 100, 100);
-                ctx.drawImage(pfp2, 430, 135, 100, 100);
+                ctx.drawImage(pfp2, 450, 135, 100, 100);
                 return message.channel.send(`${fmsg}\nSender: ${message.member.displayName}`, new Discord.Attachment(canvas.toBuffer(), 'valk-meme-roloshoot.png'));
                 } catch (e) {console.log(e); return message.reply("Huh... something went wrong there. Try again maybe?");};
             } else if (meme == "list") {
                 return message.reply("Two-Avatar flags: `roloshoot`, `mhabattle`")
+            };
+
+            var myObject = {
+                "example": {"somestuff": "data", "otherstuff": "otherdata"},
+                "blahBlah": {"bonks": "data", "stonks": "otherdata"},
+                "e.exe": {"yoink": false, "not stonks": "otherdata"},
+                "meme.mp4": {"shit": 420, "lololol": "otherdata"}
             };
         };
     }
