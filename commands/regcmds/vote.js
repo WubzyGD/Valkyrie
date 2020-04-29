@@ -1,4 +1,4 @@
-const Discord = require("discord.js");
+/*const Discord = require("discord.js");
 
 const gbl = require("gblapi.js");
 const GBLValk = new gbl("619305062900039726", 'XA-ecf51d0686fd4f6f8232f16f835367a8', false, false);
@@ -58,4 +58,4 @@ module.exports = {
             return message.reply(`${botStats.all_time_votes} total votes.`);
         } else {return message.reply("Yeah chief that wasn't a good arg. Try `server`, `has`, `monthly`, `total`.");};
     }
-};
+};*/
