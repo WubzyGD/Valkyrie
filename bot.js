@@ -126,7 +126,7 @@ client.on('guildMemberAdd', async member => {
 		//console.log(role, thisServerSettings.join_role);
 		if (!role) {/*console.log("other vere bad here");*/ serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
-	if (!thisServerSettings.welcome_message_channel !== "none") {
+	if (thisServerSettings.welcome_message_channel !== "none") {
 		//console.log("i am here. also good here.");
 		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
 		//console.log(channel, thisServerSettings.welcome_message_channel);
