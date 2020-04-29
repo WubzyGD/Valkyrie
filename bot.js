@@ -2,6 +2,7 @@
 const config = require("./config.json");
 const client = new Discord.Client();
 const Canvas = require("canvas");
+const gbl = require("gblapi.js");
 
 const fs = require("fs");
 client.commands = new Discord.Collection();
@@ -26,6 +27,8 @@ function wait(time) {
 		}, time);
 	});
 };
+
+const GBLValk = new gbl(client.user.id, 'XA-ecf51d0686fd4f6f8232f16f835367a8', false);
 
 var cmdcount = 0;
 
@@ -99,6 +102,10 @@ client.on("ready", async () => {
 	,`in ${client.guilds.size} servers...`, );
 	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
 	} catch (e) {};
+});
+
+client.on('guildCreate', async (guild) => {
+    GBLValk.updateStats(client.guilds.size);
 });
 
 client.on('guildMemberAdd', async member => {
