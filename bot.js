@@ -249,7 +249,7 @@ client.on("message", async message => {
 		if (!thisServerSettings) {
 		await serverSettings.create({guild_name: message.member.guild.name, guild_id: String(message.member.guild.id)});
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: message.member.guild.id}});};
-		if (thisServerSettings.level_update == true) {message.channel.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);};
+		//if (thisServerSettings.level_update == true) {message.channel.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);};
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});

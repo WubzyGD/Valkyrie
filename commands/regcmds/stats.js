@@ -62,7 +62,7 @@ module.exports = {
 		var pstatsembed = new Discord.RichEmbed()
 		.setTitle(`${person.displayName}'s Stats`)
 		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
-		.setThumbnail(message.author.avatarURL)
+		.setThumbnail(client.users.get(person.id).avatarURL)
 		.setColor("DC134C")
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
