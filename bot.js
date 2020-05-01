@@ -28,7 +28,7 @@ function wait(time) {
 	});
 };
 
-//const GBLValk = new gbl("619305062900039726", 'XA-ecf51d0686fd4f6f8232f16f835367a8', false);
+const GBLValk = new gbl("619305062900039726", 'XA-ecf51d0686fd4f6f8232f16f835367a8', false);
 
 var cmdcount = 0;
 
@@ -120,13 +120,13 @@ client.on('guildMemberAdd', async member => {
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	};
 	try {
-	if (thisServerSettings.join_role !== "none") {
+	if (thisServerSettings.join_role != "none") {
 		//console.log("i am here. good here.");
 		var role = member.guild.roles.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
 		//console.log(role, thisServerSettings.join_role);
 		if (!role) {/*console.log("other vere bad here");*/ serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
-	if (thisServerSettings.welcome_message_channel !== "none") {
+	if (thisServerSettings.welcome_message_channel != "none") {
 		//console.log("i am here. also good here.");
 		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
 		//console.log(channel, thisServerSettings.welcome_message_channel);
