@@ -1,4 +1,4 @@
 git add .
 git commit -m "Initialise Bot"
-git pull
+git pull origin master
 git push origin master
