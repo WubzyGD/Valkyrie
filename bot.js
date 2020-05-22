@@ -83,10 +83,10 @@ fs.access("./database.sqlite", fs.F_OK, (err) => {
 client.on("ready", async () => {
 	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
-	console.log("Logged in at " + date +"!");
-	console.log("Logged in as " + client.user.username);
-	console.log("Client ID: " + client.user.id);
-	console.log("Running on " + client.guilds.size + " guilds and serving " + client.users.size + " members.");
+	console.log(`Logged in at ${date}!`);
+	console.log(`Logged in as ${client.user.username}`);
+	console.log(`Client ID: ${client.user.id}`);
+	console.log(`Running on ${client.guilds.size} guilds and serving ${client.users.size} members.`);
 
 	console.log("\nSuccessfully loaded Sequelize database(s)");
 	
@@ -112,7 +112,6 @@ client.on('guildMemberAdd', async member => {
 	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 	if (!thisServerSettings) {
-		//console.log("i am here. bad here.");
 		await serverSettings.create({
 			guild_name: member.guild.name,
 			guild_id: String(member.guild.id),
@@ -121,16 +120,12 @@ client.on('guildMemberAdd', async member => {
 	};
 	try {
 	if (thisServerSettings.join_role != "none") {
-		//console.log("i am here. good here.");
 		var role = member.guild.roles.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
-		//console.log(role, thisServerSettings.join_role);
-		if (!role) {/*console.log("other vere bad here");*/ serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
+		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	if (thisServerSettings.welcome_message_channel != "none") {
-		//console.log("i am here. also good here.");
 		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
-		//console.log(channel, thisServerSettings.welcome_message_channel);
-		if (!channel) {/*console.log("vere bad here");*/ serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
+		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	console.log(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim(), thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
 	if (role != "none") {console.log(role); member.addRole(role.id).catch(console.error);};
@@ -240,8 +235,10 @@ client.on("message", async message => {
 	};
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
 		if (message.channel.type == "text" && message.channel.guild.id == "679127746592636949") {var guildBoost = 1.5;} else {var guildBoost = 1;};
-		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.money}, {where: {user_id: message.author.id}});
-		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.xp}, {where: {user_id: message.author.id}});
+		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.money}, 
+		{where: {user_id: message.author.id}});
+		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.xp}, 
+		{where: {user_id: message.author.id}});
 		await userGameData.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {
@@ -253,7 +250,8 @@ client.on("message", async message => {
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
-		//if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
+		if (client.guilds.get("679127746592636949").members.has(message.author.id)) 
+		{client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
 	};
 
 	async function spawnTreasure() {
