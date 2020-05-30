@@ -235,23 +235,19 @@ client.on("message", async message => {
 	};
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
 		if (message.channel.type == "text" && message.channel.guild.id == "679127746592636949") {var guildBoost = 1.5;} else {var guildBoost = 1;};
-		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.money}, 
-		{where: {user_id: message.author.id}});
-		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.xp}, 
-		{where: {user_id: message.author.id}});
+		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.money}, {where: {user_id: message.author.id}});
+		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.xp}, {where: {user_id: message.author.id}});
 		await userGameData.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
 	};
 	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: message.member.guild.id}});
-		if (!thisServerSettings) {
-		await serverSettings.create({guild_name: message.member.guild.name, guild_id: String(message.member.guild.id)});
+		if (!thisServerSettings) {await serverSettings.create({guild_name: message.member.guild.name, guild_id: String(message.member.guild.id)});
 		var thisServerSettings = await serverSettings.findOne({where: {guild_id: message.member.guild.id}});};
 		//if (thisServerSettings.level_update == true) {message.channel.send(`Congratulations ${message.member.displayName} on reaching Level ${pstats.level + 1}`);};
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
-		//if (client.guilds.get("679127746592636949").members.has(message.author.id)) 
-		//{client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
+		//if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
 	};
 
 	async function spawnTreasure() {
