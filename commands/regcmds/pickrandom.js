@@ -16,7 +16,9 @@ module.exports = {
 					title += `${i} `;
 				} else if (reading == "text") {
 					text += `${i} `;
-				} else {
+				} else if (reading == "option" || reading == "o" || reading == "op") {
+                    tempoption += `${i} `;
+                } else {
 					var warn = await message.reply(`\`${i}\` is not a valid option. Use \`${adminPrefix}announce options\` to see a list of valid options.`);
 					warn.delete(10000);
 				};
