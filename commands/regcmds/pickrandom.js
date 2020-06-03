@@ -28,6 +28,6 @@ module.exports = {
                 if (reading == "option" && tempoption !== "") {options.push(tempoption); tempoption = "";};
 			};
         };
-        return message.channel.send(new Discord.RichEmbed().setAuthor("Random Item", message.author.avatarURL).setDescription(args[Math.floor(Math.random() * args.length)]).setColor("DC134C"));
+        return message.channel.send(new Discord.RichEmbed().setAuthor("Random Item", message.author.avatarURL).setDescription(options[Math.floor(Math.random() * options.length)]).setColor("DC134C"));
     }
 };
