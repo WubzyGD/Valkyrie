@@ -9,6 +9,7 @@ module.exports = {
         text = "";
         tempoption = "";
         options = [];
+        reading = false;
         for (t = 0; t < args.length; t++) {
 			i = args[t];
 			if ((!reading == false) && (!i.startsWith("$"))) {
