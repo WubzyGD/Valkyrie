@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: "rolldicenew",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}rolldicenew $<option> $[option] [etc...]\`. For a list of options, use \`v.rolldicenew options\`. This command is in beta development, and will shift and change over time. The \`rolldice\` command will remain the same until this version is finalized.`);};
         for (t = 0; t < args.length; t++) {
             i = args[t];
