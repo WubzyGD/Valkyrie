@@ -28,7 +28,7 @@ function wait(time) {
 	});
 };
 
-//const GBLValk = new gbl("619305062900039726", 'XA-ecf51d0686fd4f6f8232f16f835367a8', false);
+const GBLValk = new gbl("619305062900039726", 'XA-46200ce4794741d3bf7216dcb3f725b1', false);
 
 var cmdcount = 0;
 
