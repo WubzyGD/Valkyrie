@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 
 const gbl = require("gblapi.js");
-const GBLValk = new gbl("619305062900039726", 'XA-46200ce4794741d3bf7216dcb3f725b1', false, false);
+const GBLValk = new gbl("619305062900039726", 'XA-46200ce4794741d3bf7216dcb3f725b1', false);
 
 const Sequelize = require('sequelize');
 
