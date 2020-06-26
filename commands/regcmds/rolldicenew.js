@@ -9,7 +9,6 @@ module.exports = {
             i = args[t];
             var reason = "";
             var modifiers = [];
-            var 
 			if ((!reading == false) && (!i.startsWith("$"))) {
 				if (reading == "reason" || reading == "r") {
 					title += `${i} `;
