@@ -86,7 +86,7 @@ client.on("ready", async () => {
 	console.log(`Logged in at ${date}!`);
 	console.log(`Logged in as ${client.user.username}`);
 	console.log(`Client ID: ${client.user.id}`);
-	console.log(`Running on ${client.guilds.size} guilds and serving ${client.users.size} members.`);
+	console.log(`Running on ${client.guilds.cache.size} guilds and serving ${client.users.cache.size} members.`);
 
 	console.log("\nSuccessfully loaded Sequelize database(s)");
 	
@@ -99,13 +99,13 @@ client.on("ready", async () => {
 	"I'm self-aware now...", "with newfound boredom...", "with a will to die...", "with stonks...", "with a deagle...",
 	"with your server ;)...", "in a lava pool...", "piano, just badly...", "for only myself...", "with the odds...",
 	"in purgatory...", "..."
-	,`in ${client.guilds.size} servers...`, );
+	,`in ${client.guilds.cache.size} servers...`, );
 	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
 	} catch (e) {};
 });
 
 client.on('guildCreate', async (guild) => {
-    GBLValk.updateStats(client.guilds.size);
+    GBLValk.updateStats(client.guilds.cache.size);
 });
 
 client.on('guildMemberAdd', async member => {
@@ -128,7 +128,7 @@ client.on('guildMemberAdd', async member => {
 		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	console.log(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim(), thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
-	if (role != "none") {console.log(role); member.addRole(role.id).catch(console.error);};
+	if (role != "none") {console.log(role); member.roles.add(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
 	"Be warned, the wizard is a little irritable, he just rolled pretty low.", "Careful, dice rolls are a little low today.", 
 	"Look on the bright side, finally someone other than the dragonborn can help take care of the goblins.", 
@@ -163,7 +163,7 @@ client.on('guildMemberAdd', async member => {
 		ctx.closePath();
 		ctx.clip();
 
-		const avatar = await Canvas.loadImage(member.guild.iconURL);
+		const avatar = await Canvas.loadImage(member.guild.iconURL());
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
@@ -208,7 +208,7 @@ client.on("message", async message => {
 	if (message.content === '!join') {
 		if (message.author.id != Wubzy) {return;};
 		message.channel.send("Simulating member join...");
-		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
+		client.emit('guildMemberAdd', message.member || message.guild.members.cache.get(message.author));
 	};
 
 	if (msg.startsWith(prefix)) {cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.MessageEmbed().SetAuthor("Commands Executed since last restart", client.user.avatarURL()).setDescription(`${cmdcount} commands.`));};
@@ -247,7 +247,7 @@ client.on("message", async message => {
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
-		//if (client.guilds.get("679127746592636949").members.has(message.author.id)) {client.guilds.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
+		//if (client.guilds.cache.get("679127746592636949").members.has(message.author.id)) {client.guilds.cache.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
 	};
 
 	async function spawnTreasure() {
