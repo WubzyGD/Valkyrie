@@ -70,7 +70,7 @@ module.exports = {
 			} catch (e) {};
 		};
 		if (reasonIncluded == false) {
-			var finaldice = new Discord.RichEmbed()
+			var finaldice = new Discord.MessageEmbed()
 			.setTitle("Standard Dice Roll")
 			.setDescription(`Reason ommited; ${dicerolls.length} rolls.`)
 			.addField("Roller", `${message.member.displayName}`)
@@ -81,7 +81,7 @@ module.exports = {
 
 			return(message.channel.send(finaldice));
 		} else {
-			var finaldice = new Discord.RichEmbed()
+			var finaldice = new Discord.MessageEmbed()
 			.setTitle("Dice Roll with Reason")
 			.setDescription(`Reason included; ${dicerolls.length} rolls.`)
 			.addField("Roller", `${message.member.displayName}`)

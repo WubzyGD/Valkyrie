@@ -18,7 +18,7 @@ module.exports = {
     name: "vote",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.channel.send(new Discord.RichEmbed().setTitle("Vote for me!").setDescription("You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)! In the future, this will give you a giant amount of XP and possibly exclusive commands.").setColor("DC134C"));};
+        if (!args.length) {return message.channel.send(new Discord.MessageEmbed().setTitle("Vote for me!").setDescription("You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)! In the future, this will give you a giant amount of XP and possibly exclusive commands.").setColor("DC134C"));};
         var e = process.argv.includes('--force') || process.argv.includes('-f');
         sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (args[0] == "server") {
@@ -34,7 +34,7 @@ module.exports = {
                 };
             };
             votedString += "\nYou can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";
-            return message.channel.send(new Discord.RichEmbed()
+            return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Server Vote Pulse", message.member.guild.iconURL)
             .setDescription(votedString)
             .setColor("DC134C")
@@ -44,7 +44,7 @@ module.exports = {
             var votedString = "";
             var voted = await GBLValk.hasVoted(member.id);
             if (voted) {votedString = "You have voted! Thank you very much!";} else {votedString = "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"}
-            return message.channel.send(new Discord.RichEmbed()
+            return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Vote Check", message.member.guild.iconURL)
             .setDescription(votedString)
             .setColor("DC134C")

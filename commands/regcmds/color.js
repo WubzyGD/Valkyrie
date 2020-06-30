@@ -50,7 +50,7 @@ module.exports = {
 
         var colorIm = new Discord.Attachment(canvas.toBuffer(), "color.png");
 
-        var colorEmbed = new Discord.RichEmbed()
+        var colorEmbed = new Discord.MessageEmbed()
         .setAuthor("Generated Color", message.author.avatarURL)
         .setDescription(`Hex Value: #${hex}`)
         .addField("Red", rv, true)

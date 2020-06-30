@@ -65,7 +65,7 @@ module.exports = {
         };
         if (secret) {dm = true;};
         if (!tempoption == "") {options.push(tempoption); tempoption = "";};
-		var pollEmbed = new Discord.RichEmbed()
+		var pollEmbed = new Discord.MessageEmbed()
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
 		text.trim().replace("\\\\n", "\n");
@@ -132,7 +132,7 @@ module.exports = {
             for (i = 0; i < Object.keys(votes).length; i++) {
                 if (Object.values(votes)[i][0] !== undefined) {resultsstr += `${i + 1}. ${Object.values(votes)[i][0].trim()}: ${Object.values(votes)[i][1]} votes\n`};
             };
-            var resultEmbed = new Discord.RichEmbed()
+            var resultEmbed = new Discord.MessageEmbed()
             .setTitle("Poll Results")
             .setDescription(title)
             .addField("Results", resultsstr)

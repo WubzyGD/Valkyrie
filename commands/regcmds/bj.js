@@ -16,7 +16,7 @@ module.exports = {
             .setTitle("Blackjack Started")
             .setDescription(`__${p1.username}__ vs __${p2.username}__`)
             .setColor("DC134C")
-            .setFooter("Valkyrie", client.user.avatarURL)
+            .setFooter("Valkyrie", client.user.avatarURL())
             .setTimestamp();
 
             var game = await message.channel.send(startEmbed);
@@ -64,7 +64,7 @@ module.exports = {
                     .addField(p1.displayName, `Hand: ${hands[p1n]}`)
                     .addField(p2.displayName, `Hand: ${hands[p2n]}`)
                     .setColor("DC134C")
-                    .setFooter("Valkyrie", client.user.avatarURL)
+                    .setFooter("Valkyrie", client.user.avatarURL())
                     .setTimestamp();
 
                     try {

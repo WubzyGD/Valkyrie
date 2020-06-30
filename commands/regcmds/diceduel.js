@@ -118,7 +118,7 @@ module.exports = {
 		};
 
 		if (reasonIncluded == false) {
-			var finaldie = new Discord.RichEmbed()
+			var finaldie = new Discord.MessageEmbed()
 			.setTitle("Standard Dice Duel")
 			.setAuthor("Dice Rolling Engine v2")
 			.setDescription("Reason ommited")
@@ -133,7 +133,7 @@ module.exports = {
 
 			return(message.channel.send(finaldie));
 		} else {
-			var finaldie = new Discord.RichEmbed()
+			var finaldie = new Discord.MessageEmbed()
 			.setTitle("Dice Duel with Reason")
 			.setDescription("Reason included")
 			.addField("Roller", `${message.member.displayName}`)

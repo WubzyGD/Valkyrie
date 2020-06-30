@@ -52,13 +52,13 @@ module.exports = {
 				var filter = m => m.content.toLowerCase().startsWith("battle accept") && m.mentions.members.first().id == message.author.id;
 				var response = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
 				if (!response.first()) {openBattle.delete(); return message.reply("Nobody accepted your battle! Maybe try again, or mention someone?");};
-				var p1 = message.member; var p2 = message.member.guild.members.get(response.first().author.id);
+				var p1 = message.member; var p2 = message.member.guild.members.cache.get(response.first().author.id);
 			} else {
 				var closedBattle = await message.channel.send(`${message.member.guild.members.get(mention.id).displayName}, you have been challenged to battle by ${message.member.displayName}! To accept, type \`battle accept @${message.member.displayName}\`, and do not use my prefix!`);
 				var filter = m => m.content.toLowerCase().startsWith("battle accept") && m.author.id == message.mentions.members.first().id && m.mentions.members.first().id == message.author.id;
 				var response = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
 				if (!response.first()) {closedBattle.delete(); return message.reply("Nobody accepted your battle! Maybe try again?");};
-				var p1 = message.member; var p2 = message.member.guild.members.get(response.first().author.id);
+				var p1 = message.member; var p2 = message.member.guild.members.cache.get(response.first().author.id);
 			};
 			var coin = Math.ceil(Math.random() * 2);
 			if (coin == 1) {
@@ -74,7 +74,7 @@ module.exports = {
 			.setThumbnail(thumb)
 			.addField("Coin Flip", `Result: \`${coin}\``)
 			.addField("The first player is", `**${first.displayName}**`)
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setColor("DC134C")
 			.setTimestamp();
 			var coinFlipMsg = await message.channel.send(coinflipEmbed); coinFlipMsg.delete(10000);
@@ -100,7 +100,7 @@ module.exports = {
 				console.log(`${p.displayName} has started their turn.`);
 				var inst = `React to this message with a :crossed_swords: to attack the other player, and react to it with a :fish: to get better materials. Or, react to it with an :x: to just be a plain coward and get oofed instantly.`;
 				var battleEmbed = new Discord.RichEmbed()
-				.setAuthor("1v1 Duel", client.users.get(p.id).avatarURL)
+				.setAuthor("1v1 Duel", client.users.cache.get(p.id).avatarURL())
 				.setDescription(`${p1n} vs ${p2n}`)
 				.addField("Turn", `It is currently ${p.displayName}'s turn.\n\n${inst}`)
 				.addField("In the last turn...", lastTurn)
@@ -239,7 +239,7 @@ module.exports = {
 			};
 			async function win(wpn) {
 				var battleEmbed = new Discord.RichEmbed()
-				.setAuthor("1v1 Duel", client.users.get(p.id).avatarURL)
+				.setAuthor("1v1 Duel", client.users.cache.get(p.id).avatarURL())
 				.setDescription(`${p1n} vs ${p2n}`)
 				.addField("Winner", `The **winner** of the battle is **${p.displayName}**!`)
 				.addField("In the last turn...", lastTurn)

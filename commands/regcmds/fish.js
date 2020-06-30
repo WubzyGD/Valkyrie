@@ -57,7 +57,7 @@ module.exports = {
         } else if (topCat.name == "fish") {
             var fishes = itemIndex.fish.fish;
             var fish = fishes[Math.floor(Math.random() * fishes.length)];
-            var fishEmbed = new Discord.RichEmbed()
+            var fishEmbed = new Discord.MessageEmbed()
             .setTitle(`${message.member.displayName} fished a fish!`)
             .setDescription(`Using \`${prefix}fish\``)
             .addField(`${fish.size} ${fish.name}`, `__Stats:__\n\n-Name: ${fish.name}\n-Size: ${fish.size}\n-Hunger Regeneration: ${fish.hunger}`)
@@ -81,7 +81,7 @@ module.exports = {
             hitDice = hitDice.slice(0, (hitDice.length - 2));
             if (hitDiceMod >= 0) {hitDiceMod = `+${hitDiceMod}`;} else {hitDiceMod = `-${hitDiceMod}`;};
             hitDice += `\n-Modifier: ${hitDiceMod}`;
-            var fishEmbed = new Discord.RichEmbed()
+            var fishEmbed = new Discord.MessageEmbed()
             .setTitle(`${message.member.displayName} fished a weapon!`)
             .setDescription(`Using \`${prefix}fish\``)
             .addField(`${weapon.name}`, `__Stats:__\n\n-Name: ${weapon.name}\n-Rarity: ${weapon.rarity}\n\n-Hit Dice: ${hitDice}`)
@@ -98,7 +98,7 @@ module.exports = {
             if (typeof(armor.defense) == "float") {
                 throw new Error("itemIndex JSON Error: Armor type \"defense\" must not be float. Allowed str and int\nArmor piece: " + armor.name + ", Armor Set: " + armorSet.name);
             };
-            var fishEmbed = new Discord.RichEmbed()
+            var fishEmbed = new Discord.MessageEmbed()
             .setTitle(`${message.member.displayName} fished an armor piece!`)
             .setDescription(`Using \`${prefix}fish\`.`)
             .addField(armor.name, `__Stats:__\n\n-**Name:** ${armor.name}\n-**Rarity:** ${armor.rarity}\n-**Defense:** ${armor.defense}`)
@@ -109,7 +109,7 @@ module.exports = {
         } else if (topCat.name == "money") {
             var coins = itemIndex.money.coins;
             var coin = coins[Math.floor(Math.random() * coins.length)];
-            var fishEmbed = new Discord.RichEmbed()
+            var fishEmbed = new Discord.MessageEmbed()
             .setTitle(`${message.member.displayName} fished a coin!`)
             .setDescription(`Using \`${prefix}fish\`.`)
             .addField(coin.name, `${coin.name} is a coin worth ${coin.belowWorth}, the coin valued below it.`)

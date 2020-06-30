@@ -9,7 +9,7 @@ module.exports = {
 		message.delete();
 		var mentionMessage = message.content.slice(6).trim();
 		var messageToSend = mentionMessage.split(" ").slice(1).join(" ");
-		var privateEmbed = new Discord.RichEmbed()
+		var privateEmbed = new Discord.MessageEmbed()
 		.setTitle("Sent you a message from **"+message.member.guild.name+"**!")
 		.setAuthor(message.member.displayName)
 		.addField("---------------------------------------------", messageToSend+"\n --------------------------------------------")

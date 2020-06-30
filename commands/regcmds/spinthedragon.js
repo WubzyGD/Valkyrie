@@ -34,7 +34,7 @@ module.exports = {
         } else if (args[0] == "limit") {
 
         } else {return message.reply("You must use either `create` or `limit`.");};
-        var gameEmbed = new Discord.RichEmbed()
+        var gameEmbed = new Discord.MessageEmbed()
         .setTitle("Spin the Dragon Match Created")
         .setDescription(`Created by ${message.member.displayName}`)
         .addField("What is the game?", "Spin the dragon is an elimination-roullette-type game where players take turns spinning the dragon on a platform. The dragon can hit a player with its tail, which will take some HP, it can breathe fire, which takes HP from multiple ")

@@ -39,7 +39,7 @@ module.exports = {
 			var text = `With a score of \`${zeroN}\`, You are indeed **Zero**. You don your mask and costume and rally the Black Knights to fight against the tyrannous Britannia, doing whatever is necessary in the process.`;
 		};
 		text += "\n\nSource: Code Geass - 2007 Anime...\n~~please watch it~~";
-		var zeroSend = new Discord.RichEmbed()
+		var zeroSend = new Discord.MessageEmbed()
 		.setTitle(`${message.member.displayName}'s Score: ${zeroN}`)
 		.setDescription(text)
 		.setImage(image)

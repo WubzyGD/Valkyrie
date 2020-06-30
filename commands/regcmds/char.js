@@ -192,7 +192,7 @@ module.exports = {
                 if (charIntKey.includes(".")) {
                     try {
                         var dispChar = await RpChars.findOne({where: {combo_key_int: charIntKey}});
-                        var rpcharembed = new Discord.RichEmbed()
+                        var rpcharembed = new Discord.MessageEmbed()
                         .setTitle(`Character Sheet for ${dispChar.name}`)
                         .setDescription(`Created by `) 
                     } catch (e) {

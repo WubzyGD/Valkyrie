@@ -4,7 +4,7 @@ module.exports = {
     name: "serverinfo",
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
-        var serverInfoEmbed = new Discord.RichEmbed()
+        var serverInfoEmbed = new Discord.MessageEmbed()
 		.setTitle(message.member.guild.name)
 		.setDescription("Server info card")
 		.setThumbnail(message.member.guild.iconURL)

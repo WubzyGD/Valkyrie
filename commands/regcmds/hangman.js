@@ -47,7 +47,7 @@ module.exports = {
         var bottT = "Send one letter to make a guess!";
         var filter = m => m.author.id === message.author.id;
 
-        var hangmanEmbed = new Discord.RichEmbed()
+        var hangmanEmbed = new Discord.MessageEmbed()
         .setAuthor("Hangman", message.author.avatarURL)
         .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
         .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
@@ -64,7 +64,7 @@ module.exports = {
                 if (disp == secret) {
                     bottT = `You won! Yay! The word was ${secret}.`; 
                     done = true; 
-                    var hangmanEmbed = new Discord.RichEmbed()
+                    var hangmanEmbed = new Discord.MessageEmbed()
                     .setAuthor("Hangman", message.author.avatarURL)
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                     .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
@@ -102,7 +102,7 @@ module.exports = {
                         };
                         letters.push(guess);
                     };
-                    var hangmanEmbed = new Discord.RichEmbed()
+                    var hangmanEmbed = new Discord.MessageEmbed()
                     .setAuthor("Hangman", message.author.avatarURL)
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                     .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
@@ -113,7 +113,7 @@ module.exports = {
                 } else {
                     bottT = "You ran out of gueses! Game over. The word was " + secret;
                     done = true;
-                    var hangmanEmbed = new Discord.RichEmbed()
+                    var hangmanEmbed = new Discord.MessageEmbed()
                     .setAuthor("Hangman", message.author.avatarURL)
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                     .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
@@ -125,7 +125,7 @@ module.exports = {
             } catch (err) {
                 bottT = "You ran out of time!";
                 done = true;
-                var hangmanEmbed = new Discord.RichEmbed()
+                var hangmanEmbed = new Discord.MessageEmbed()
                 .setAuthor("Hangman", message.author.avatarURL)
                 .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                 .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)

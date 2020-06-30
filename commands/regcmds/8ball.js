@@ -12,8 +12,8 @@ module.exports = {
 		"The dice say so, so yes.", "Absofrickinlutely not.", "For sure", "Definitely.", "We flipped a dead skeleton's bone, it said no.",
 		"Go wake up that hellhound over there. If you live, it's a yes, if you die, it's a no.");
 		var result = Math.floor(Math.random() * responses.length);
-		var embedtosend = new Discord.RichEmbed()
-		.setAuthor("8ball Question", message.author.avatarURL)
+		var embedtosend = new Discord.MessageEmbed()
+		.setAuthor("8ball Question", message.author.avatarURL())
 		.addField("Question: \"*" + message.content.slice(prefix.length + 6) + "*\"", `\n\nAnswer: ${responses[result]}`)
 		.setFooter(`Asked by ${message.member.displayName}`)
 		.setColor("DC134C")

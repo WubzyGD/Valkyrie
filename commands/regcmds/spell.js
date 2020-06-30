@@ -6,7 +6,7 @@ module.exports = {
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Yeah that's wrong :(. Syntax: \`${prefix}spell <list|info|cast|create> <name>\``)};
 		function defSpells(name, type, hitType, hitTypeInt, mana, dice, range, description, castText, origin, otherStats, difficulty, altNames, made) {
-			var spellInfo = new Discord.RichEmbed()
+			var spellInfo = new Discord.MessageEmbed()
 			.setTitle(name)
 			.setDescription(`Cassliamastro's Magic and Monsters - Vol. 2`)
 			.addField("Name", name)
@@ -112,7 +112,7 @@ module.exports = {
 			};
 			message.channel.send(spellCast.castText);
 
-			var castToSend = new Discord.RichEmbed()
+			var castToSend = new Discord.MessageEmbed()
 			.setTitle(`${spellCast.name} Cast`)
 			.setDescription("Cassliamastro's Magic and Monsters - Vol. 2")
 			.addField("Rolls", rollresults)
@@ -208,14 +208,14 @@ module.exports = {
 				up17.delete(20000)
 				var test = await message.channel.awaitMessages(filter, {time: 1000000, max: 1})
 				requestedSpell.otherStats = test.first().content
-				var spellComplete = new Discord.RichEmbed()
+				var spellComplete = new Discord.MessageEmbed()
 				.setTitle("Spell Complete!")
 				.setDescription("Your spell will be sent to WubzyGD where he will then process it and then add it (probably).")
 				.setColor("DC134C")
 				.setFooter("Valkyrie", client.user.avatarURL)
 				.setTimestamp();
 				message.channel.send(spellComplete);
-				var spellCreated = new Discord.RichEmbed()
+				var spellCreated = new Discord.MessageEmbed()
 				.setTitle("New Spell Request")
 				.setDescription(`Sent from ${message.member.guild.name} by ${message.author.username}#${message.author.discriminator}.`)
 				.addField("Name", requestedSpell.name)

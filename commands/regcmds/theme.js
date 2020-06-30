@@ -27,7 +27,7 @@ module.exports = {
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}theme <create|help|get>\``);};
         if (args[0] == "help") {
-            var helpEmbed = new Discord.RichEmbed()
+            var helpEmbed = new Discord.MessageEmbed()
             .setTitle("Themes")
             .setDescription("This requires Better Discord.")
             .addField("Creation", `Use \`${prefix}theme create\` to make a theme.`)

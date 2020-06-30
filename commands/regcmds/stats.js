@@ -59,7 +59,7 @@ module.exports = {
 
 		const attachment = new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
 
-		var pstatsembed = new Discord.RichEmbed()
+		var pstatsembed = new Discord.MessageEmbed()
 		.setTitle(`${person.displayName}'s Stats`)
 		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
 		.setThumbnail(client.users.get(person.id).avatarURL)

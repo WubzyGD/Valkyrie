@@ -13,7 +13,7 @@ module.exports = {
 			message.channel.bulkDelete(Number(args[0]) + 1);
 		} else {
 			if (!mention) {return(message.channel.send("You have to mention someone, silly."))}
-			message.channel.fetchMessages({limit: 100}).then((messages) => {
+			message.channel.messages.fetch({limit: 100}).then((messages) => {
 				var filterBy = mention ? mention.id : Client.mention.id;
 				messages = messages.filter(m => m.author.id === filterBy).array().slice(0, Number(args[0]));
 				message.channel.bulkDelete(messages).catch(console.error);

@@ -105,7 +105,7 @@ module.exports = {
                 } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
             } else {return message.reply(`Invalid syntax/option provided. Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole|welcomerole|levelmessage>\``);};
         } else if (args[0] == "view") {
-            var serverSettingsEmbed = new Discord.RichEmbed()
+            var serverSettingsEmbed = new Discord.MessageEmbed()
             .setAuthor("Server Settings", message.member.guild.iconURL)
             .setDescription(`Server: ${message.member.guild.name}`)
             .addField("Admin-only Settings-Changing", currentServer.server_edit_admin_requirement)

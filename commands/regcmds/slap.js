@@ -31,7 +31,7 @@ module.exports = {
 			var person = message.guild.member(mention);
 			var person = person.displayName;
 		};
-		var slapSend = new Discord.RichEmbed()
+		var slapSend = new Discord.MessageEmbed()
 		.setTitle(`${message.member.displayName} slaps ${person}`)
 		.setImage(slap)
 		.setColor("DC134C")

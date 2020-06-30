@@ -4,7 +4,7 @@ module.exports = {
     name: "info",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        var infoEmbed = new Discord.RichEmbed()
+        var infoEmbed = new Discord.MessageEmbed()
 		.setTitle("Valkyrie's Info")
 		.setDescription("I'm a bot made for RPG-oriented Discord servers. Although you can have me roll dice for you in any server :)")
 		.addField("Author:", "WubzyGD#8766, with special thanks to Hellcat007 for providing technical support.")

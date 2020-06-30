@@ -4,7 +4,7 @@ module.exports = {
     name: "help",
     description: "Valk's command-listing",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-		var infoEmbed = new Discord.RichEmbed()
+		var infoEmbed = new Discord.MessageEmbed()
 		.setTitle("Valkyrie's Info")
 		.setDescription("I'm a bot made for RPG-oriented Discord servers. Although you can have me roll dice for you in any server :)")
 		.addField("Author:", "WubzyGD#8766, with special thanks to Hellcat007 for providing technical support.")
@@ -18,7 +18,7 @@ module.exports = {
 		.setFooter("Valkyrie", client.user.avatarURL)
 		.setTimestamp();
 
-		var help1 = new Discord.RichEmbed()
+		var help1 = new Discord.MessageEmbed()
 		.setTitle("RPG-Related Commands")
 		.setDescription("All of my important RPG commands.")
 		.addField("Valid Dice", "Valid dice inputs are:\n-d4\n-d6\n-d8\n-d10\n-d12\n-d20\n-d100\n\n**Dice commands only accept these.**")
@@ -31,7 +31,7 @@ module.exports = {
 		.setFooter("Valkyrie | Page 1 of 3", client.user.avatarURL)
 		.setTimestamp();
 
-		var help2 = new Discord.RichEmbed()
+		var help2 = new Discord.MessageEmbed()
 		.setTitle("Fun Commands")
 		.setDescription("Commands built for entertainment purposes.")
 		.addField("__8ball__", "Syntax: `8ball <question>`\n\nGives you a ~~random~~ totally accurate reply to your question.")
@@ -44,7 +44,7 @@ module.exports = {
 		.setFooter("Valkyrie | Page 2 of 3", client.user.avatarURL)
 		.setTimestamp();
 
-		var help3 = new Discord.RichEmbed()
+		var help3 = new Discord.MessageEmbed()
 		.setTitle("Other Commands/Moderation Commands")
 		.setDescription("Anything not \"fun\" or RPG. All moderative commands such as announce and delete use the prefix `adm.`")
 		.addField("__Calc__", "Syntax: `calc <num> <+|-|*|/> <num>`\n\nReturns the calculated number")
