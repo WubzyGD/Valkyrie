@@ -120,11 +120,11 @@ client.on('guildMemberAdd', async member => {
 	};
 	try {
 	if (thisServerSettings.join_role != "none") {
-		var role = member.guild.roles.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
+		var role = member.guild.roles.cache.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
 		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	if (thisServerSettings.welcome_message_channel != "none") {
-		var channel = member.guild.channels.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
+		var channel = member.guild.channels.cache.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
 		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 	};
 	console.log(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim(), thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
@@ -166,7 +166,7 @@ client.on('guildMemberAdd', async member => {
 		const avatar = await Canvas.loadImage(member.guild.iconURL);
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'welcome-image.png');
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
 		if (channel !== "none") {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
 	} catch (error) {console.log(error);};} catch (e) {console.log(e);};
@@ -184,7 +184,7 @@ client.on('guildMemberRemove', async member => {
 			var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
 		};
 		if (thisServerSettings.leave_message_channel !== "none") {
-			var channel = member.guild.channels.get(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim());
+			var channel = member.guild.channels.cache.get(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim());
 			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
 		};
 		if (channel !== "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
@@ -211,7 +211,7 @@ client.on("message", async message => {
 		client.emit('guildMemberAdd', message.member || await message.guild.fetchMember(message.author));
 	};
 
-	if (msg.startsWith(prefix)) {cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.RichEmbed().setAuthor("Commands Executed since last restart", client.user.avatarURL).setDescription(`${cmdcount} commands.`));};
+	if (msg.startsWith(prefix)) {cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.MessageEmbed().SetAuthor("Commands Executed since last restart", client.user.avatarURL()).setDescription(`${cmdcount} commands.`));};
 
 	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (cmd !== "shop") && (message.author.id !== Wubzy)) {return message.delete();};
 
@@ -253,16 +253,15 @@ client.on("message", async message => {
 	async function spawnTreasure() {
 		var xpintreasure = (Math.ceil(Math.random() * 1300)) + 200;
 		var moneyintreasure = (Math.ceil(Math.random() * 1300)) + 200;
-		var chestEmbed = new Discord.RichEmbed()
-		.setTitle("Treasure Chest")
+		var chestEmbed = new Discord.MessageEmbed().setAuthor("Treasure Chest")
 		.setDescription("A Treasure Chest has spawned!\n\nSay \"claim\" to get the chest! Only one person can claim it, and you'll have an hour from before it expires.")
 		.addField("In the chest", `**${xpintreasure} XP**\n**${moneyintreasure} Coins**`)
 		.setColor("DC134C")
-		.setFooter("Valkyrie", client.user.avatarURL)
+		.setFooter("Valkyrie", client.user.avatarURL())
 		.setTimestamp();
-		client.guilds.get("679127746592636949").channels.get("691149517021511722").send(chestEmbed);
+		client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").send(chestEmbed);
 		try {var filter = m => m.channel.id == "691149517021511722" && m.content.toLowerCase().includes("claim");
-		var claimed = await client.guilds.get("679127746592636949").channels.get("691149517021511722").awaitMessages(filter, {time: (60 * 10000), max: 1});
+		var claimed = await client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").awaitMessages(filter, {time: (60 * 10000), max: 1});
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}}); if (!tpstats) {
 		await userGameData.create({
 			user_id: message.author.id, username: message.author.username,
@@ -272,8 +271,8 @@ client.on("message", async message => {
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}});};
 		await userGameData.update({xp: Math.floor(xpintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 2) * .5)) + tpstats.xp}, {where: {user_id: tpstats.user_id}});
 		await userGameData.update({money: Math.floor(moneyintreasure * (tpstats.lost_remnants + 1) * ((tpstats.prestige + 2) * .5)) + tpstats.money}, {where: {user_id: tpstats.user_id}});
-		return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("The chest has been claimed!");
-		} catch (e) {return client.guilds.get("679127746592636949").channels.get("691149517021511722").send("Ope! Looks like nobody claimed the chest. Whelp Asher, all yours.");};
+		return client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").send("The chest has been claimed!");
+		} catch (e) {return client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").send("Ope! Looks like nobody claimed the chest. Whelp Asher, all yours.");};
 	};
 	if (((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) && Math.floor(Math.random() * 100) <= 1) {spawnTreasure(); last_treasureRoll = new Date().toString();}
 	else if ((new Date().getTime() - new Date(last_treasureRoll).getTime()) / 1000 >= 60) {last_treasureRoll = new Date().toString();};
@@ -282,7 +281,7 @@ client.on("message", async message => {
 		if (tempDieCount) {return message.reply(`You have rolled dice ${tempDieCount.dice_rolled} times.`);}
 		else {return message.reply("You haven't rolled any dice yet!");};
 	} else if (msg.startsWith(prefix) && (cmd == "getdata") && message.author.id === Wubzy) {
-		client.users.get(Wubzy).send({file: "./database.sqlite"});
+		client.users.cache.get(Wubzy).send({file: "./database.sqlite"});
 	} else if (msg.startsWith(prefix) && (cmd == "spawntreasure") && message.author.id === Wubzy) {
 		message.delete();
 		return spawnTreasure();
@@ -309,8 +308,8 @@ client.on("message", async message => {
 	} catch (err) {
 		console.error(err);
 		message.reply("Really not sure what happened, but something you did (or something Wubzy sucks at doing) broke it. Please report this to WubzyGD#8766.")
-		client.users.get(Wubzy).send("There was a fatal error in " + message.member.guild.name);
-		client.users.get(Wubzy).send(err);
+		client.users.cache.get(Wubzy).send("There was a fatal error in " + message.member.guild.name);
+		client.users.cache.get(Wubzy).send(err);
 	};
 	} catch (e) {console.log(e);};
 

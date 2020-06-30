@@ -40,9 +40,9 @@ module.exports = {
 				} else if (reading == "image") {
 					image = i;
 				} else if (reading == "servericonimage") {
-					image = message.member.guild.iconURL;
+					image = message.member.guild.iconURL();
 				} else if (reading == "servericonthumbnail") {
-					thumbnail = message.member.guild.iconURL;
+					thumbnail = message.member.guild.iconURL();
 				} else {
 					var warn = await message.reply(`\`${i}\` is not a valid option. Use \`${adminPrefix}announce options\` to see a list of valid options.`);
 					warn.delete(10000);
@@ -53,31 +53,31 @@ module.exports = {
 				if (i == "fieldtext" && tempft !== "") {fieldText.push(tempft); tempft = "";};
 				reading = i;
 				if (reading == "servericonimage") {thumbnail = i;};
-				if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL;};
+				if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL();};
 			};
 		};
 		if (fieldNames.length !== fieldText.length) {return message.reply("You must make your field titles and field content tags equal to each other, so that every field has a title and text")}
 		if (tempfn !== "") {fieldNames.push(tempfn);};
 		if (tempft !== "") {fieldText.push(tempft);};
-		var announceEmbedNorm = new Discord.RichEmbed()
-		.setFooter("Valkyrie", client.user.avatarURL)
+		var announceEmbedNorm = new Discord.MessageEmbed()
+		.setFooter("Valkyrie", client.user.avatarURL())
 		.setTimestamp();
 		text.trim().replace("\\\\n", "\n");
 		title.trim();
-		if (title.length >= 1) {announceEmbedNorm.setAuthor(title, message.author.avatarURL);} else {announceEmbedNorm.setAuthor(message.member.displayName, message.author.avatarURL);};
+		if (title.length >= 1) {announceEmbedNorm.setAuthor(title, message.author.avatarURL());} else {announceEmbedNorm.setAuthor(message.member.displayName, message.author.avatarURL());};
 		if (!text.length >= 1) {return message.reply("You must include text in your announcement.");} else {announceEmbedNorm.setDescription(text);};
 		if (color) {announceEmbedNorm.setColor(color);} else {announceEmbedNorm.setColor("DC134C");};
 		if (!channel) {channel = message.channel.id;};
 		if (fieldNames.length > 10) {return message.reply("You can't have more than 10 fields!");};
 		if (text.search(`<@${message.member.guild.id}>`) !== -1 || text.search("@everyone") !== -1) {
-			if (!message.member.guild.channels.get(channel).permissionsFor(message.member.highestRole).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
+			if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
 			message.channel.send("@everyone");
 			var everyonesent = true;
 		};
 		for (i = 0; i < fieldText.length; i++) {
 			var tempText = fieldText[i];
 			if (tempText.search(`<@${message.member.guild.id}>`) !== -1 || tempText.search("@everyone") !== -1) {
-				if (!message.member.guild.channels.get(channel).permissionsFor(message.member.highestRole).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
+				if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
 				if (!everyonesent) {message.channel.send("@everyone");};
 			};
 		};
@@ -89,8 +89,8 @@ module.exports = {
 		if (thumbnail) {announceEmbedNorm.setThumbnail(thumbnail);};
 		if (image) {announceEmbedNorm.setImage(image);};
 		try {
-			if (!message.member.guild.channels.get(channel).permissionsFor(message.member.highestRole).has("SEND_MESSAGES")) {return message.channel.send("You don't have the right permissions for that.");};
-			return message.guild.channels.get(channel).send(announceEmbedNorm);
+			if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("SEND_MESSAGES")) {return message.channel.send("You don't have the right permissions for that.");};
+			return message.guild.channels.cache.get(channel).send(announceEmbedNorm);
 		} catch (e) {
 			console.log("Announce cmd error; Likely channel find.", e);
 			return message.reply("Something happened while trying to create your announcement that didn't work. You may have input too many characters somewhere.");
