@@ -33,7 +33,7 @@ module.exports = {
 		if (pstats.xp == 0) {var lvlpercent = 0;}
 		else {var lvlpercent = (((pstats.xp) / ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) * 100);};
 
-		if (!mention) {var person = message.member;} else {var person = message.member.guild.members.get(mention.id);};
+		if (!mention) {var person = message.member;} else {var person = message.member.guild.members.cache.get(mention.id);};
 
 		const canvas = Canvas.createCanvas(700, 250);
 		const ctx = canvas.getContext('2d');
@@ -54,17 +54,17 @@ module.exports = {
 		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
-		const avatar = await Canvas.loadImage(client.users.get(person.id).avatarURL);
+		const avatar = await Canvas.loadImage(client.users.cache.get(person.id).avatarURL());
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
-		const attachment = new Discord.Attachment(canvas.toBuffer(), 'user-stats.png');
+		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'user-stats.png');
 
 		var pstatsembed = new Discord.MessageEmbed()
 		.setTitle(`${person.displayName}'s Stats`)
 		.addField("Base Stats", `Level: ${pstats.level}\nXP: [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level)))}]\nCash: ${pstats.money} Gold Pieces`)
-		.setThumbnail(client.users.get(person.id).avatarURL)
+		.setThumbnail(client.users.cache.get(person.id).avatarURL())
 		.setColor("DC134C")
-		.setFooter("Valkyrie", client.user.avatarURL)
+		.setFooter("Valkyrie", client.user.avatarURL())
 		.setTimestamp();
 
 		if (message.channel.id == "691178546097553418" && message.channel.guild.id == "679127746592636949") {

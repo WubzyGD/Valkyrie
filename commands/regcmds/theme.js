@@ -34,7 +34,7 @@ module.exports = {
             .addField("See other themes", `Use \`${prefix}theme get names\`.`)
             .addField("Credit", "puckzxz on Discord for allowing me to use a CSS template. Support the original theme here: https://github.com/puckzxz/NotAnotherAnimeTheme")
             .setColor("DC134C")
-            .setFooter("Valkyre", client.user.avatarURL)
+            .setFooter("Valkyre", client.user.avatarURL())
             .setTimestamp();
             return message.channel.send(helpEmbed);
         };
@@ -85,14 +85,14 @@ module.exports = {
             const ctx = canvas.getContext('2d');
             ctx.fillStyle = `#${hex}`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            var colorIm = new Discord.Attachment(canvas.toBuffer(), "color.png");
+            var colorIm = new Discord.MessageAttachment(canvas.toBuffer(), "color.png");
             await message.channel.send("Your color:", colorIm);
             
             message.channel.send("Send a link for an image to use for the friends icon, or type \"pfp\" to use your profile picture as the friends icon.");
             var fricon = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
             fricon = fricon.first().content;
             if (fricon.toLowerCase() == "skip") {fricon = "https://cdn.discordapp.com/attachments/619375459737534474/675414009524125696/received_179372666720019.gif";};
-            if (fricon.toLowerCase() == "pfp") {fricon = message.author.avatarURL;};
+            if (fricon.toLowerCase() == "pfp") {fricon = message.author.avatarURL();};
             
             message.channel.send("Give your theme a name. Must not exceed 25 characters.");
             var themename = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
@@ -112,7 +112,7 @@ module.exports = {
             themetxt = themetxt.replace(/{{friends-icon}}/g, `url(${fricon})`);
             
             var buffer = Buffer.from(themetxt, "utf-8"); 
-            message.reply("Here's your completed theme!", new Discord.Attachment(buffer, `${themename}.theme.css`));
+            message.reply("Here's your completed theme!", new Discord.MessageAttachment(buffer, `${themename}.theme.css`));
             txtfile = 0; buffer = 0; return themetxt = 0;
             } catch (e) {
                 message.reply("Looks like you ran out of time. --If you're certain that you didn't take more than about 100 seconds, contact my creator.");

@@ -13,7 +13,7 @@ module.exports = {
                 var lastm = await message.channel.fetchMessages({limit: 1});
                 await lastm.react(emoji);
             } else if (toDo == "send") {
-                message.channel.send(client.emojis.get(emoji).name);
+                message.channel.send(client.emojis.cache.get(emoji).name);
             } /*else if (toDo == "addtoserver") {
                 if (!message.member.hasPermission("MANAGE_EMOJIS")) {return message.reply("You don't have the rigt permissions for that.");};
                 message.member.guild.createEmoji

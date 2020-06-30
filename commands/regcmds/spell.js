@@ -23,7 +23,7 @@ module.exports = {
 			.addField("Credit", `Spell requested/made by ${made}.`)
 			.addField(`Spell Info Card`, `Requested by ${message.member.displayName}`)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setTimestamp();
 
 			return({
@@ -119,7 +119,7 @@ module.exports = {
 			.addField(spellCast.type, totalRoll)
 			.addField("Caster", message.member.displayName)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setTimestamp();
 			
 			message.channel.send(castToSend);
@@ -212,7 +212,7 @@ module.exports = {
 				.setTitle("Spell Complete!")
 				.setDescription("Your spell will be sent to WubzyGD where he will then process it and then add it (probably).")
 				.setColor("DC134C")
-				.setFooter("Valkyrie", client.user.avatarURL)
+				.setFooter("Valkyrie", client.user.avatarURL())
 				.setTimestamp();
 				message.channel.send(spellComplete);
 				var spellCreated = new Discord.MessageEmbed()
@@ -231,9 +231,9 @@ module.exports = {
 				.addField("Other Names", requestedSpell.altNames)
 				.addField("Other Stats", requestedSpell.otherStats)
 				.setColor("DC134C")
-				.setFooter("Valkyrie", client.user.avatarURL)
+				.setFooter("Valkyrie", client.user.avatarURL())
 				.setTimestamp();
-				client.users.get("330547934951112705").send(spellCreated);
+				client.users.cache.get("330547934951112705").send(spellCreated);
 				var up18 = await message.channel.send(spellCreated)
 				up18.delete(30000)
 			} catch (error) {

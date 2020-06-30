@@ -48,11 +48,11 @@ module.exports = {
         var filter = m => m.author.id === message.author.id;
 
         var hangmanEmbed = new Discord.MessageEmbed()
-        .setAuthor("Hangman", message.author.avatarURL)
+        .setAuthor("Hangman", message.author.avatarURL())
         .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
         .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
         .setColor("DC134C")
-        .setFooter("Valkyre", client.user.avatarURL)
+        .setFooter("Valkyre", client.user.avatarURL())
         .setTimestamp();
 
         var he = await message.channel.send(hangmanEmbed);
@@ -65,18 +65,18 @@ module.exports = {
                     bottT = `You won! Yay! The word was ${secret}.`; 
                     done = true; 
                     var hangmanEmbed = new Discord.MessageEmbed()
-                    .setAuthor("Hangman", message.author.avatarURL)
+                    .setAuthor("Hangman", message.author.avatarURL())
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                     .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
                     .setColor("DC134C")
-                    .setFooter("Valkyre", client.user.avatarURL)
+                    .setFooter("Valkyre", client.user.avatarURL())
                     .setTimestamp();
                     return await he.edit(hangmanEmbed);
                 };
                 if (att > 0) {
                     var guessCollected = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
                     var guess = guessCollected.first().content.toLowerCase();
-                    message.channel.fetchMessages({limit: 10}).then((messages) => {
+                    message.channel.messages.fetch({limit: 10}).then((messages) => {
 				        var filterBy = message.author ? message.author.id : Client.message.author.id;
 				        messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 1);
 				        message.channel.bulkDelete(messages).catch(console.error);
@@ -103,22 +103,22 @@ module.exports = {
                         letters.push(guess);
                     };
                     var hangmanEmbed = new Discord.MessageEmbed()
-                    .setAuthor("Hangman", message.author.avatarURL)
+                    .setAuthor("Hangman", message.author.avatarURL())
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                     .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
                     .setColor("DC134C")
-                    .setFooter("Valkyre", client.user.avatarURL)
+                    .setFooter("Valkyre", client.user.avatarURL())
                     .setTimestamp();
                     await he.edit(hangmanEmbed);
                 } else {
                     bottT = "You ran out of gueses! Game over. The word was " + secret;
                     done = true;
                     var hangmanEmbed = new Discord.MessageEmbed()
-                    .setAuthor("Hangman", message.author.avatarURL)
+                    .setAuthor("Hangman", message.author.avatarURL())
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                     .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
                     .setColor("DC134C")
-                    .setFooter("Valkyre", client.user.avatarURL)
+                    .setFooter("Valkyre", client.user.avatarURL())
                     .setTimestamp();
                     return await he.edit(hangmanEmbed);
                 }
@@ -126,11 +126,11 @@ module.exports = {
                 bottT = "You ran out of time!";
                 done = true;
                 var hangmanEmbed = new Discord.MessageEmbed()
-                .setAuthor("Hangman", message.author.avatarURL)
+                .setAuthor("Hangman", message.author.avatarURL())
                 .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
                 .addField("Status", `Player: ${message.member.displayName}\nIncorrect Guesses Left: ${att}/8\n\n${bottT}`)
                 .setColor("DC134C")
-                .setFooter("Valkyre", client.user.avatarURL)
+                .setFooter("Valkyre", client.user.avatarURL())
                 .setTimestamp();
                 return he.edit(hangmanEmbed);
             };

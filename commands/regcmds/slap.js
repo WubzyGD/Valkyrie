@@ -28,7 +28,7 @@ module.exports = {
 		if (mention == null) {
 			var person = message.content.slice(prefix.length + cmd.length + 1);
 		} else {
-			var person = message.guild.member(mention);
+			var person = message.guild.members.cache.get(mention.id);
 			var person = person.displayName;
 		};
 		var slapSend = new Discord.MessageEmbed()

@@ -9,13 +9,13 @@ module.exports = {
 		.setDescription("I'm a bot made for RPG-oriented Discord servers. Although you can have me roll dice for you in any server :)")
 		.addField("Author:", "WubzyGD#8766, with special thanks to Hellcat007 for providing technical support.")
 		.addField("Programming Language:", "JavaScript/Discord.js")
-		.addField("Servers", `I'm in ${client.guilds.size} servers!`)
+		.addField("Servers", `I'm in ${client.guilds.cache.size} servers!`)
 		.addField("Prefix", `My prefix is \`${prefix}\``)
 		.addField("Help", `If you need help, use ${prefix}help.`)
 		.addField("Problems?", "If you're having issues, please contact WubzyGD#8766 via DM. Note that all commands are intended for servers, and may not function properly in a Direct Message.")
 		.addField("Support Server", `Use \`${prefix}supportserver\` to get an invite link to my official server, which has many features, one of which is an exclusive game with money and xp and prestiging, along with direct feature suggestions and places to give feedback and bug reports that are quicker accessed by Wubzy!`)
 		.setColor("DC134C")
-		.setFooter("Valkyrie", client.user.avatarURL)
+		.setFooter("Valkyrie", client.user.avatarURL())
 		.setTimestamp();
 
 		var help1 = new Discord.MessageEmbed()
@@ -28,7 +28,7 @@ module.exports = {
 		.addField("__Say__", "Syntax: `say <text>` or `say \"<text>\" <person>`\n\nDisplays the given text. If the text-person method is not used, the person will be the command initiator.\n\nTips:\n-Use this to indicate a character's dialogue, especially when using multiple characters.\n\nExamples:\nSimple syntax: `say Hello everyone!`\nSecond syntax: `say \"Hello everyone\" Timmy`")
 		.addField("__Dicecount__", "Syntax: `dicecount`\n\nDisplays how many dice you've rolled")
 		.setColor("DC134C")
-		.setFooter("Valkyrie | Page 1 of 3", client.user.avatarURL)
+		.setFooter("Valkyrie | Page 1 of 3", client.user.avatarURL())
 		.setTimestamp();
 
 		var help2 = new Discord.MessageEmbed()
@@ -41,7 +41,7 @@ module.exports = {
 		.addField("__Meme__", "Syntax: `meme use <name>` or use `meme use list` to see available memes/reaction images.\n\nSends the meme to chat for you. Now time to be a wizard with reaction images")
 		.addField("__Slap__", "Syntax: `slap <@member>`\n\nGives the mentioned member a nice firm *whack* to the face")
 		.setColor("DC134C")
-		.setFooter("Valkyrie | Page 2 of 3", client.user.avatarURL)
+		.setFooter("Valkyrie | Page 2 of 3", client.user.avatarURL())
 		.setTimestamp();
 
 		var help3 = new Discord.MessageEmbed()
@@ -63,7 +63,7 @@ module.exports = {
 		.addField("__Server__", "Syntax: `server <edit|view>`\n\nEdits your server settings for Valkyrie. For more help, send the command without any options to see more about it")
 		.addField("__Color__", "Syntax: `color <rgb|hex> <color>`\n\nSends the color you specified.\n\nTips:\n-For rgb colors, use this syntax: `color rgb 0 0 0`\n-For hex colors, use this syntax: `color hex dc134c`")
 		.setColor("DC134C")
-		.setFooter("Valkyrie | Page 3 of 3", client.user.avatarURL)
+		.setFooter("Valkyrie | Page 3 of 3", client.user.avatarURL())
 		.setTimestamp();
 		
 		message.reply("Calling in the reinforcements! Help is in your DM's.");

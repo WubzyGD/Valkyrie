@@ -13,10 +13,10 @@ module.exports = {
 			var thumb = "https://cdn.discordapp.com/attachments/563198656241598484/655514893033799700/SmartSelect_20191214-140108_Samsung_Internet.jpg";
 		};
 		var coinflip = new Discord.MessageEmbed()
-		.setAuthor(message.member.displayName, message.author.avatarURL)
+		.setAuthor(message.member.displayName, message.author.avatarURL())
 		.setThumbnail(thumb)
 		.addField("Coin Flip", `Result: \`${coin}\``)
-		.setFooter("Valkyrie", client.user.avatarURL)
+		.setFooter("Valkyrie", client.user.avatarURL())
 		.setColor("DC134C")
 		.setTimestamp();
 

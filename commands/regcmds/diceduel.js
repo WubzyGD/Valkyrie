@@ -113,7 +113,7 @@ module.exports = {
 		if (!mention) {
 			var person1 = person;
 		} else {
-			var person1 = message.guild.member(mention);
+			var person1 = message.guild.members.cache.get(mention.id);
 			var person1 = person1.displayName;
 		};
 
@@ -128,7 +128,7 @@ module.exports = {
 			.addField(`${person1}'s Roll`, `D${die} Roll: ${roll2}`)
 			.addField("Winner", `${winner}`)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setTimestamp();
 
 			return(message.channel.send(finaldie));
@@ -143,7 +143,7 @@ module.exports = {
 			.addField(`${person1}'s Roll`, `D${die} Roll: ${roll2}`)
 			.addField("Winner", `${winner}`)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setTimestamp();
 
 			return(message.channel.send(finaldie));

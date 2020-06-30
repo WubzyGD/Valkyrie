@@ -40,9 +40,9 @@ module.exports = {
 				} else if (reading == "image") {
 					image = i;
 				} else if (reading == "servericonimage") {
-					image = message.member.guild.iconURL;
+					image = message.member.guild.iconURL();
 				} else if (reading == "servericonthumbnail") {
-					thumbnail = message.member.guild.iconURL;
+					thumbnail = message.member.guild.iconURL();
 				} else if (reading == "secret") {
                     secret = true;
                 } else if (reading == "dm") {
@@ -58,7 +58,7 @@ module.exports = {
                 reading = i;
                 if (reading == "option" && tempoption !== "") {options.push(tempoption); tempoption = "";};
 				if (reading == "servericonimage") {thumbnail = i;};
-                if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL;};
+                if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL();};
                 if (reading == "secret") {secret = true;};
                 if (reading == "dm") {dm = true;};
             };
@@ -66,20 +66,20 @@ module.exports = {
         if (secret) {dm = true;};
         if (!tempoption == "") {options.push(tempoption); tempoption = "";};
 		var pollEmbed = new Discord.MessageEmbed()
-		.setFooter("Valkyrie", client.user.avatarURL)
+		.setFooter("Valkyrie", client.user.avatarURL())
 		.setTimestamp();
 		text.trim().replace("\\\\n", "\n");
         title.trim();
         if (!options) {return message.reply("You must include options in a poll, silly ;)");};
         if (text.length > 0) {pollEmbed.setDescription(text);};
-		if (title.length >= 1) {pollEmbed.setAuthor(title, message.author.avatarURL);} else {message.reply("You must have a poll title!");};
+		if (title.length >= 1) {pollEmbed.setAuthor(title, message.author.avatarURL());} else {message.reply("You must have a poll title!");};
         if (color.length > 0) {pollEmbed.setColor(color);} else {pollEmbed.setColor("DC134C");};
 		if (!channel) {channel = message.channel.id;};
         if (options.length > 9) {return message.reply("You can't have more than 9 options!");};
         if (time) {if (isNaN(time)) {return message.reply("Your time must be a number.");};} else {return message.reply("You must specify time in ms for the poll to last.");};
 		if (text.search(`<@${message.member.guild.id}>`) !== -1 || text.search("@everyone") !== -1) {
-			if (!message.member.guild.channels.get(channel).permissionsFor(message.member.highestRole).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
-			message.member.guild.channels.get(channel).send("@everyone");
+			if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
+			message.member.guild.channels.cache.get(channel).send("@everyone");
         };
         if (thumbnail) {pollEmbed.setThumbnail(thumbnail);};
         if (image) {pollEmbed.setImage(image);};
@@ -88,8 +88,8 @@ module.exports = {
         };
         pollEmbed.addField("Options", optionText);
         try {
-			if (!message.member.guild.channels.get(channel).permissionsFor(message.member.highestRole).has("SEND_MESSAGES")) {return message.channel.send("You don't have the right permissions for that.");};
-            var pollMessage = await message.guild.channels.get(channel).send(pollEmbed);
+			if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("SEND_MESSAGES")) {return message.channel.send("You don't have the right permissions for that.");};
+            var pollMessage = await message.guild.channels.cache.get(channel).send(pollEmbed);
 		} catch (e) {
 			console.log("Announce cmd error; Likely channel find.", e);
 			return message.reply("Something happened while trying to create your announcement that didn't work. You may have input too many characters somewhere, or... I dunno?.");
@@ -137,10 +137,10 @@ module.exports = {
             .setDescription(title)
             .addField("Results", resultsstr)
             .setColor(color)
-            .setFooter("Valkyrie", client.user.avatarURL)
+            .setFooter("Valkyrie", client.user.avatarURL())
             .setTimestamp();
             if (dm) {message.author.send(resultEmbed);};
-            if (!secret) {message.channel.guild.channels.get(channel).send(resultEmbed);};
+            if (!secret) {message.channel.guild.channels.cache.get(channel).send(resultEmbed);};
             pollMessage.delete();
         });
     }

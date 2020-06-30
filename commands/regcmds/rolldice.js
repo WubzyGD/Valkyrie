@@ -76,7 +76,7 @@ module.exports = {
 			.addField("Roller", `${message.member.displayName}`)
 			.addField("Results", `${rollresultsstring}`)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setTimestamp();
 
 			return(message.channel.send(finaldice));
@@ -88,7 +88,7 @@ module.exports = {
 			.addField("Reason", `${reason}`)
 			.addField("Results", `${rollresultsstring}`)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL)
+			.setFooter("Valkyrie", client.user.avatarURL())
 			.setTimestamp();
 
 			return(message.channel.send(finaldice));

@@ -29,9 +29,9 @@ module.exports = {
 				} else if (reading == "image") {
 					image = i;
 				} else if (reading == "servericonimage") {
-					image = message.member.guild.iconURL;
+					image = message.member.guild.iconURL();
 				} else if (reading == "servericonthumbnail") {
-					thumbnail = message.member.guild.iconURL;
+					thumbnail = message.member.guild.iconURL();
 				} else {
 					var warn = await message.reply(`\`${i}\` is not a valid option. Use \`${adminPrefix}announce options\` to see a list of valid options.`);
 					warn.delete(10000);
@@ -42,7 +42,7 @@ module.exports = {
 				if (i == "fieldtext" && tempft !== "") {fieldText.push(tempft); tempft = "";};
 				reading = i;
 				if (reading == "servericonimage") {thumbnail = i;};
-				if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL;};
+				if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL();};
 			};
 		};
     }

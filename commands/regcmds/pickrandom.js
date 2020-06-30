@@ -26,11 +26,8 @@ module.exports = {
 			} else if (i.startsWith("$")) {
 				i = i.toLowerCase().slice(1);
 				reading = i;
-				if (reading == "servericonimage") {thumbnail = i;};
-                if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL;};
-                if (reading == "option" && tempoption !== "") {options.push(tempoption); tempoption = "";};
 			};
         };
-        return message.channel.send(new Discord.MessageEmbed().setAuthor("Random Item", message.author.avatarURL).setDescription(options[Math.floor(Math.random() * options.length)]).setColor("DC134C"));
+        return message.channel.send(new Discord.MessageEmbed().setAuthor("Random Item", message.author.avatarURL()).setDescription(options[Math.floor(Math.random() * options.length)]).setColor("DC134C"));
     }
 };

@@ -48,10 +48,10 @@ module.exports = {
         ctx.fillStyle = `#${hex}`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        var colorIm = new Discord.Attachment(canvas.toBuffer(), "color.png");
+        var colorIm = new Discord.MessageAttachment(canvas.toBuffer(), "color.png");
 
         var colorEmbed = new Discord.MessageEmbed()
-        .setAuthor("Generated Color", message.author.avatarURL)
+        .setAuthor("Generated Color", message.author.avatarURL())
         .setDescription(`Hex Value: #${hex}`)
         .addField("Red", rv, true)
         .addField("Green", gv, true)

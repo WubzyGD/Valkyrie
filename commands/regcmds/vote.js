@@ -25,17 +25,17 @@ module.exports = {
             var votedString = "";
             var botStats = await GBLValk.getBot();
             for (vote of botStats.votes) {
-                if (message.member.guild.members.has(vote.id)) {
-                    var member = message.member.guild.members.get(vote.id);    
+                if (message.member.guild.members.cache.has(vote.id)) {
+                    var member = message.member.guild.members.cache.get(vote.id);    
                     var voted = await GBLValk.hasVoted(member.id);
                     if (voted) {
-                        if (client.users.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
+                        if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
                     };
                 };
             };
             votedString += "\nYou can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";
             return message.channel.send(new Discord.MessageEmbed()
-            .setAuthor("Server Vote Pulse", message.member.guild.iconURL)
+            .setAuthor("Server Vote Pulse", message.member.guild.iconURL())
             .setDescription(votedString)
             .setColor("DC134C")
             .setFooter("Valkyrie")
@@ -45,7 +45,7 @@ module.exports = {
             var voted = await GBLValk.hasVoted(member.id);
             if (voted) {votedString = "You have voted! Thank you very much!";} else {votedString = "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"}
             return message.channel.send(new Discord.MessageEmbed()
-            .setAuthor("Vote Check", message.member.guild.iconURL)
+            .setAuthor("Vote Check", message.member.guild.iconURL())
             .setDescription(votedString)
             .setColor("DC134C")
             .setFooter("Valkyrie")

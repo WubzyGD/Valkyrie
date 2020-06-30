@@ -62,7 +62,7 @@ module.exports = {
             .setDescription(`Using \`${prefix}fish\``)
             .addField(`${fish.size} ${fish.name}`, `__Stats:__\n\n-Name: ${fish.name}\n-Size: ${fish.size}\n-Hunger Regeneration: ${fish.hunger}`)
             .setColor("3387B7")
-            .setFooter("Valkyrie", client.user.avatarURL)
+            .setFooter("Valkyrie", client.user.avatarURL())
             .setTimestamp();
         } else if (topCat.name == "relics") {
 
@@ -86,7 +86,7 @@ module.exports = {
             .setDescription(`Using \`${prefix}fish\``)
             .addField(`${weapon.name}`, `__Stats:__\n\n-Name: ${weapon.name}\n-Rarity: ${weapon.rarity}\n\n-Hit Dice: ${hitDice}`)
             .setColor(rarityColors[weapon.rarity])
-            .setFooter("Valkyrie", client.user.avatarURL)
+            .setFooter("Valkyrie", client.user.avatarURL())
             .setTimestamp();
         } else if (topCat.name == "armor") {
             var armorSet = rarity[Math.floor(Math.random() * rarity.length)];
@@ -104,7 +104,7 @@ module.exports = {
             .addField(armor.name, `__Stats:__\n\n-**Name:** ${armor.name}\n-**Rarity:** ${armor.rarity}\n-**Defense:** ${armor.defense}`)
             .addField("Containing Set", `__Stats:__\n\n-**Name:** __${armorSet.name}__ set\n-**Set Type:** ${armorSet.setType}\n\n**Armor Set:** \n${armorSetPieces}`)
             .setColor(rarityColors[armor.rarity])
-            .setFooter("Valkyrie", client.user.avatarURL)
+            .setFooter("Valkyrie", client.user.avatarURL())
             .setTimestamp();
         } else if (topCat.name == "money") {
             var coins = itemIndex.money.coins;
@@ -114,7 +114,7 @@ module.exports = {
             .setDescription(`Using \`${prefix}fish\`.`)
             .addField(coin.name, `${coin.name} is a coin worth ${coin.belowWorth}, the coin valued below it.`)
             .setColor("DC134C")
-            .setFooter("Valkyrie", client.user.avatarURL)
+            .setFooter("Valkyrie", client.user.avatarURL())
             .setTimestamp();
         };
         return message.channel.send(fishEmbed);
