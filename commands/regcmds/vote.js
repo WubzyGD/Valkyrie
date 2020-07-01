@@ -42,7 +42,7 @@ module.exports = {
             .setTimestamp());
         } else if (args[0] == "has") {
             var votedString = "";
-            var voted = await GBLValk.hasVoted(message.member.id);
+            if (mention) {var voted = await GBLValk.hasVoted(mention.id);} else {var voted = await GBLValk.hasVoted(message.member.id);};
             if (voted) {votedString = "You have voted! Thank you very much!";} else {votedString = "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"}
             return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Vote Check", message.member.guild.iconURL())
