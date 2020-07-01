@@ -43,7 +43,7 @@ module.exports = {
         } else if (args[0] == "has") {
             var votedString = "";
             if (mention) {var voted = await GBLValk.hasVoted(mention.id);} else {var voted = await GBLValk.hasVoted(message.member.id);};
-            if (voted) {votedString = "You have voted! Thank you very much!";} else {votedString = "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"}
+            if (voted) {if (mention) {votedString = "They have voted! Thank you!"} else {votedString = "You have voted! Thank you very much!";};} else {if (mention) {var votedString = "It doesn't look like that person has voted. Vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"} else {votedString = "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";};};
             return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Vote Check", message.member.guild.iconURL())
             .setDescription(votedString)
