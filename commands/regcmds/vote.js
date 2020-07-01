@@ -24,12 +24,11 @@ module.exports = {
         if (args[0] == "server") {
             var votedString = "";
             var botStats = await GBLValk.getBot();
-            for (member of message.member.guild.members.cache.keys()) {
-                var hasVoted = await GBLValk.hasVoted(member.id);
+            var voted = message.member.guild.members.cache.partition(m => {var hasVoted = await GBLValk.hasVoted(m.id);
                 if (hasVoted) {
-                    if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
+                    if (client.users.cache.get(m.id).username == m.displayName) {votedString += `<@${m.id}>, `;} else {votedString += `<@!${m.id}>, `;};
                 };
-            };
+            });
             votedString += "\nYou can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";
             return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Server Vote Pulse", message.member.guild.iconURL())
