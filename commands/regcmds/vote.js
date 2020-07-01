@@ -24,13 +24,10 @@ module.exports = {
         if (args[0] == "server") {
             var votedString = "";
             var botStats = await GBLValk.getBot();
-            for (vote of botStats.votes) {
-                if (message.member.guild.members.cache.has(vote.id)) {
-                    var member = message.member.guild.members.cache.get(vote.id);    
-                    var voted = await GBLValk.hasVoted(member.id);
-                    if (voted) {
-                        if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
-                    };
+            for (member of message.member.guild.members.cache) {
+                var hasVoted = await GBLValk.hasVoted(member.id);
+                if (hasVoted) {
+                    if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
                 };
             };
             votedString += "\nYou can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";
