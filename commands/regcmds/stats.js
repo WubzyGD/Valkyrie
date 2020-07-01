@@ -54,7 +54,7 @@ module.exports = {
 		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
 		ctx.closePath();
 		ctx.clip();
-		const avatar = await Canvas.loadImage(client.users.cache.get(person.id).avatarURL());
+		const avatar = await Canvas.loadImage(client.users.cache.get(person.id).avatarURL({format: "png", dynamic: false, size: 2048}));
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'user-stats.png');
