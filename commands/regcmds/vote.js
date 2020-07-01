@@ -52,10 +52,10 @@ module.exports = {
             .setTimestamp());
         } else if (args[0] == "monthly") {
             var botStats = await GBLValk.getBot();
-            return message.reply(`${botStats.monthly_votes} monthly votes.`);
+            return message.reply(`${botStats.monthly_upvotes} monthly votes.`);
         } else if (args[0] == "total") {
             var botStats = await GBLValk.getBot();
-            return message.reply(`${botStats.all_time_votes} total votes.`);
+            return message.reply(`${botStats.all_time_upvotes} total votes.`);
         } else {return message.reply("Yeah chief that wasn't a good arg. Try `server`, `has`, `monthly`, `total`.");};
     }
 };
