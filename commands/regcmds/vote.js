@@ -24,7 +24,7 @@ module.exports = {
         if (args[0] == "server") {
             var votedString = "";
             var botStats = await GBLValk.getBot();
-            for (member of message.member.guild.members.cache) {
+            for (member of message.member.guild.members.cache.first(message.member.guild.members.cache.size)) {
                 var hasVoted = await GBLValk.hasVoted(member.id);
                 if (hasVoted) {
                     if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
