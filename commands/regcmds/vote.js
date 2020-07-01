@@ -24,7 +24,7 @@ module.exports = {
         if (args[0] == "server") {
             var votedString = "";
             var botStats = await GBLValk.getBot();
-            var voted = message.member.guild.members.cache.partition(async m => await GBLValk.hasVoted(m.id));
+            var voted = message.member.guild.members.cache.partition(async m => await GBLValk.hasVoted(m.id)); console.log(voted);
             for (member of voted) {if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};};
             votedString += "\nYou can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";
             return message.channel.send(new Discord.MessageEmbed()
