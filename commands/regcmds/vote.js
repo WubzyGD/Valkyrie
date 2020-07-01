@@ -25,7 +25,6 @@ module.exports = {
             var votedString = "";
             var botStats = await GBLValk.getBot();
             message.member.guild.members.cache.forEach(async member => {
-                console.log(member.id);
                 var hasVoted = await GBLValk.hasVoted(member.id);
                 if (hasVoted) {
                     if (client.users.cache.get(member.id).username == member.displayName) {votedString += `<@${member.id}>, `;} else {votedString += `<@!${member.id}>, `;};
@@ -54,6 +53,23 @@ module.exports = {
         } else if (args[0] == "total") {
             var botStats = await GBLValk.getBot();
             return message.reply(`${botStats.total_upvotes} total votes.`);
-        } else {return message.reply("Yeah chief that wasn't a good arg. Try `server`, `has`, `monthly`, `total`.");};
+        } else if (args[0] == "stats") {
+            var botStats = await GBLValk.getBot();
+            return message.channel.send(new Discord.MessageEmbed()
+            .setAuthor("Bot List Stats", client.users.cache.get("330547934951112705").avatarURL())
+            .setThumbnail(client.user.avatarURL())
+            .setDescription("Some of these stats are retrieved from [Glenn Bot List](https://glennbotlist.xyz/bot/619305062900039726/vote)")
+            .addField("Monthly Votes", botStats.monthly_upvotes, true)
+            .addField("Total Votes", botStats.total_upvotes, true)
+            .addField("Vote", "[Vote Here!](https://glennbotlist.xyz/bot/619305062900039726/vote) It helps a lot!", false)
+            .addField("Invite", `[Invite me](${botStats.invite_url}) to your server`, true)
+            .addField("Support Server", `Join the [official Valkyrie Server](${botStats.support_server})`, true)
+            .addField("Submit Feedback", `Feedback/Suggestions/Bugs? Fill out [the form](https://docs.google.com/forms/d/e/1FAIpQLSeJYUvmHURJXJZ_G99LHvAr002kN-EkmWbTDg7y1w7k3MOXKw/viewform?usp=sf_link)`, true)
+            .addField("Servers", `Currently in ${botStats.server_count} servers`, true)
+            .addField("Users", `Serving approximately ${client.users.cache.size} people`, true)
+            .setColor("DC134C")
+            .setFooter("Valkyrie")
+            .setTimestamp());
+        } else {return message.reply("Yeah chief that wasn't a good arg. Try `server`, `has`, `monthly`, `total`, or `stats`.");};
     }
 };
