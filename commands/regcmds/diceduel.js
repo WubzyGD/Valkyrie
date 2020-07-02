@@ -81,6 +81,7 @@ module.exports = {
 			};
 			var reasonIncluded = false;
 		};
+		
 		if (isNaN(Number(die))) {return message.reply("Now listen here, I'm gonna need a real number from ya there chief.");};
 		die = Number(die);
 		if  (die != 4 && die != 6 && die != 8 && die != 10 && die != 12 && die != 20 && die != 100) {return message.reply("Your die is not actually a die! You have to use 4, 6, 8, 10, 12, 20, or 100!");};
