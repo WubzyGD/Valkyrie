@@ -9,8 +9,8 @@ module.exports = {
         message.delete();
         if (args[0] == "use") {
             var meme = args[1];
-            if (meme == "list") {return message.reply("Memes/Reaction image flags are: `shut`, `yikes`, `brain`, `tompaper`, `excusewtf`" + 
-            ", `considerthefollow`, `thomasbs`, `bigno`, `doot`, `chacha`, `yessir`, `shockok`, `dogseize`, "
+            if (meme == "list") {return message.reply("Memes/Reaction image flags are: `shut`, `yikes`, `tompaper`, `excusewtf`" + 
+            ", `thomasbs`, `bigno`, `doot`, `chacha`, `yessir`, `shockok`, `dogseize`, "
             + "`fukusay`, `noaccidents`, `bonehurtjuice`, `f`.");};
             if (meme == "shut") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674081841778524160/IMG_20200120_012215_921.jpg"};
             if (meme == "yikes") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674082003137724416/received_474102026641520.jpeg"};
@@ -38,37 +38,37 @@ module.exports = {
             async function twoAv(mesg) {
                 if (!mention) {
                     if (args[2] == "flip") {
-                        pfp2 = await Canvas.loadImage(message.author.avatarURL());
-                        pfp1 = await Canvas.loadImage(client.user.avatarURL());
+                        pfp2 = await Canvas.loadImage(message.author.avatarURL({format: 'png', size: 2048}));
+                        pfp1 = await Canvas.loadImage(client.user.avatarURL({format: 'png', size: 2048}));
                         fmsg = mesg.replace(/\{\{1}}/gm, message.member.guild.members.cache.get(client.user.id).displayName);
                         fmsg = fmsg.replace(/\{\{2}}/gm, message.member.displayName);
                     } else {
-                        pfp1 = await Canvas.loadImage(message.author.avatarURL());
-                        pfp2 = await Canvas.loadImage(client.user.avatarURL());
+                        pfp1 = await Canvas.loadImage(message.author.avatarURL({format: 'png', size: 2048}));
+                        pfp2 = await Canvas.loadImage(client.user.avatarURL({format: 'png', size: 2048}));
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.cache.get(client.user.id).displayName);
                         fmsg = fmsg.replace(/\{\{1}}/gm, message.member.displayName);
                     };
                 } else if (message.mentions.users.size > 1) {
                     if (args[2] == "flip") {
-                        pfp2 = await Canvas.loadImage(message.mentions.users.first().avatarURL());
-                        pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL());
+                        pfp2 = await Canvas.loadImage(message.mentions.users.first().avatarURL({format: 'png', size: 2048}));
+                        pfp1 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL({format: 'png', size: 2048}));
                         fmsg = mesg.replace(/\{\{1}}/gm, message.member.guild.members.cache.get(message.mentions.users.first(2)[1].id).displayName);
                         fmsg = fmsg.replace(/\{\{2}}/gm, message.member.guild.members.cache.get(message.mentions.users.first().id).displayName);
                     } else {
-                        pfp1 = await Canvas.loadImage(message.mentions.users.first().avatarURL());
-                        pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL());
+                        pfp1 = await Canvas.loadImage(message.mentions.users.first().avatarURL({format: 'png', size: 2048}));
+                        pfp2 = await Canvas.loadImage(message.mentions.users.first(2)[1].avatarURL({format: 'png', size: 2048}));
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.cache.get(message.mentions.users.first(2)[1].id).displayName);
                         fmsg = fmsg.replace(/\{\{1}}/gm, message.member.guild.members.cache.get(message.mentions.users.first().id).displayName);
                     };
                 } else {
                     if (args[2] == "flip") {
-                        pfp2 = await Canvas.loadImage(message.author.avatarURL());
-                        pfp1 = await Canvas.loadImage(mention.avatarURL());
+                        pfp2 = await Canvas.loadImage(message.author.avatarURL({format: 'png', size: 2048}));
+                        pfp1 = await Canvas.loadImage(mention.avatarURL({format: 'png', size: 2048}));
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.cache.get(mention.id).displayName);
                         fmsg = fmsg.replace(/\{\{1}}/gm, message.member.displayName);
                     } else {
-                        pfp1 = await Canvas.loadImage(message.author.avatarURL());
-                        pfp2 = await Canvas.loadImage(mention.avatarURL());
+                        pfp1 = await Canvas.loadImage(message.author.avatarURL({format: 'png', size: 2048}));
+                        pfp2 = await Canvas.loadImage(mention.avatarURL({format: 'png', size: 2048}));
                         fmsg = mesg.replace(/\{\{2}}/gm, message.member.guild.members.cache.get(mention.id).displayName);
                         fmsg = fmsg.replace(/\{\{1}}/gm, message.member.displayName);
                     };
