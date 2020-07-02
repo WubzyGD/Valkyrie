@@ -34,7 +34,7 @@ module.exports = {
 					thumbnail = message.member.guild.iconURL();
 				} else {
 					var warn = await message.reply(`\`${i}\` is not a valid option. Use \`${adminPrefix}announce options\` to see a list of valid options.`);
-					warn.delete(10000);
+					warn.delete({timeout: 10000});
 				};
 			} else if (i.startsWith("$")) {
 				i = i.toLowerCase().slice(1);

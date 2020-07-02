@@ -28,7 +28,7 @@ module.exports = {
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         var up1 = await message.reply("You've initiated Hangman!");
-        up1.delete(10000);
+        up1.delete({timeout: 10000});
 
         var secret = words[Math.floor(Math.random() * words.length)];
         var disp = "";

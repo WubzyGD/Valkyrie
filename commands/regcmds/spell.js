@@ -149,63 +149,63 @@ module.exports = {
 				};
 				var filter = m => m.author.id === message.author.id
 				var up1 = await message.reply("First: " + text)
-				up1.delete(20000)
+				up1.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.name = test.first().content
 				var up2 = await message.reply(`You chose ${requestedSpell.name} for your spell name.`)
 				var up3 = await message.reply("Now, describe your spell. What does it look like to cast, that kinda stuff.")
-				up2.delete(20000)
-				up3.delete(20000)
+				up2.delete({timeout: 20000})
+				up3.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 1000000, max: 1})
 				requestedSpell.description = test.first().content
 				var up4 = await message.reply(`Description: ${requestedSpell.description}`)
-				up4.delete(20000)
+				up4.delete({timeout: 20000})
 				var up5 = await message.reply("What type or elemental is your spell? E.g. Fire or Wind")
-				up5.delete(20000)
+				up5.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.type = test.first().content
 				var up6 = await message.reply(`${requestedSpell.name} is type \`${requestedSpell.type}\`.`)
 				var up7 = await message.reply("What does the spell do when it hits? E.g. Damage or Heal")
-				up6.delete(20000)
-				up7.delete(20000)
+				up6.delete({timeout: 20000})
+				up7.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.hitType = test.first().content
 				var up8 = await message.reply(`How much ${requestedSpell.hitType} will ${requestedSpell.name} do?`)
-				up8.delete(20000)
+				up8.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.hitTypeInt = test.first().content
 				var up9 = await message.reply(`${requestedSpell.name} does ${requestedSpell.hitTypeInt} ${requestedSpell.hitType}.`)
 				var up10 = await message.reply("And how much mana will that take?")
-				up9.delete(20000)
-				up10.delete(20000)
+				up9.delete({timeout: 20000})
+				up10.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.mana = test.first().content
 				var up11 = await message.reply("What dice do you need to roll for this spell? (You may opt to type \"skip\".)")
-				up11.delete(20000)
+				up11.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.dice = test.first().content
 				var up12 = await message.reply("What is the spell's range, in feet?")
-				up12.delete(20000)
+				up12.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.range = test.first().content
 				var up13 = await message.reply("What happens when you cast the spell? E.g. Your hands glow orange and send out a flaming ball.")
-				up13.delete(20000)
+				up13.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 1000000, max: 1})
 				requestedSpell.castText = test.first().content
 				var up14 = await message.reply("What race created the spell?")
-				up14.delete(20000)
+				up14.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.origin = test.first().content
 				var up15 = await message.reply("How difficult is the spell to cast?")
-				up15.delete(20000)
+				up15.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.difficulty = test.first().content
 				var up16 = await message.reply("What are some other names for your spell?")
-				up16.delete(20000)
+				up16.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 200000, max: 1})
 				requestedSpell.altNames = test.first().content
 				var up17 = await message.reply("Lastly, please provide any other statistics you may find necessary.")
-				up17.delete(20000)
+				up17.delete({timeout: 20000})
 				var test = await message.channel.awaitMessages(filter, {time: 1000000, max: 1})
 				requestedSpell.otherStats = test.first().content
 				var spellComplete = new Discord.MessageEmbed()
@@ -235,7 +235,7 @@ module.exports = {
 				.setTimestamp();
 				client.users.cache.get("330547934951112705").send(spellCreated);
 				var up18 = await message.channel.send(spellCreated)
-				up18.delete(30000)
+				up18.delete({timeout: 30000})
 			} catch (error) {
 				message.reply("Something happened there. You probably ran out of time.\nTry using the command again?");
 				console.log(error);
