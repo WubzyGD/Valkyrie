@@ -10,8 +10,9 @@
         "discord.js": "^12.2.0",
         "gblapi.js": "^2.0.5",
         "heroku": "^7.42.1",
-        "sequelize": "^5.22.1",
-        "sqlite3": "^4.1.1",
+        "node-fetch": "^2.6.0",
+        "sequelize": "^5.22.3",
+        "sqlite3": "^4.2.0",
         "winston": "^3.3.3"
     },
     "engines": {
