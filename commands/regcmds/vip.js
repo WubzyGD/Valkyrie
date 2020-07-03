@@ -13,7 +13,7 @@ const userGameData = sequelize.import("../../models/usergamedata");
 module.exports = {
     name: "vip",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}\`vip <add|remove|is> <@mention>`);};
         if (message.author.id !== "330547934951112705") {return message.reply("Sorry, but only an owner can do that!");};
         var e = process.argv.includes('--force') || process.argv.includes('-f');
