@@ -30,7 +30,7 @@ module.exports = {
             await userGameData.update({is_vip: false}, {where: {user_id: message.author.id}});
             client.users.cache.get(mention.id).send("WubzyGD has removed you as a Valkyrie VIP! Uh lol? How'd you manage to get that to happen?");
             return message.channel.send(`${message.member.guild.members.cache.get(mention.id).displayName} is no longer a VIP!`);
-        } else if (args[0] == "remove") {
+        } else if (args[0] == "is") {
             if (mention) {var pstats = await userGameData.findOne({where: {user_id: mention.id}}); if (!pstats) {return message.reply("That user doesn't seem to have any stats!");};}
             else {return message.reply("You have to mention someone, idiot.");};
             if (pstats.is_vip) {return message.channel.send(`${message.member.guild.members.cache.get(mention.id).displayName} is a VIP`);} else {return message.channel.send(`${message.member.guild.members.cache.get(mention.id).displayName} is not a VIP`);};
