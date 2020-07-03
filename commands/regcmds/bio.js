@@ -10,7 +10,7 @@ module.exports = {
             if (args.length < 2) {return message.reply("You have to provide a bio, silly.");};
             if (args.join(" ").length > 100) {return message.channel.send("Your bio should be less than 100 characters, please. This is a bio, not a bio*graphy*.");};
             args.shift();
-            if (fs.existsSync(`./data/bios/${message.author.id}.json`), () => {}) {
+            if (fs.existsSync(`./data/bios/${message.author.id}.json`)) {
                 fs.readFile(`./data/bios/${message.author.id}.json`, 'utf8', function readFileCallback(err, data){
                     if (err) {
                         console.log(err);
