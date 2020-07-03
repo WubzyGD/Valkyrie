@@ -43,7 +43,7 @@ module.exports = {
 		ctx.strokeRect(0, 0, canvas.width, canvas.height);
 		ctx.font = '28px sans-serif';
 		ctx.fillStyle = '#ffffff';
-		ctx.fillText(`Level ${pstats.level} | [${pstats.xp}/${(pstats.level * 100) + ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))}]`, canvas.width / 2.5, canvas.height / 3.5);
+		ctx.fillText(`Level ${pstats.level} | [${pstats.xp}/${((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))}]`, canvas.width / 2.5, canvas.height / 3.5);
 		ctx.font = applyText(canvas, person.displayName);
 		ctx.fillStyle = '#ffffff';
 		ctx.fillText(person.displayName, canvas.width / 2.5, canvas.height / 1.8);
