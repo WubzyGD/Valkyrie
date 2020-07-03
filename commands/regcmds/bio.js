@@ -22,7 +22,6 @@ module.exports = {
                     return message.reply("Bio set!");
                 }});
             } else {
-                fs.mkdirSync(`./data/bios/${message.author.id}.json`);
                 var bio = {
                     bio: args.join(" ")
                 };
