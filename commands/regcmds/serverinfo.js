@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription("Server info card")
 		.setThumbnail(message.member.guild.iconURL())
 		.addField("Members", `**${message.guild.memberCount}**\n-${message.member.guild.members.cache.filter(member => !member.user.bot).size} Humans\n-${message.member.guild.members.cache.filter(member => member.user.bot).size} Bots`)
-		.addField("Members Online", `${message.member.guild.members.cache.filter(m => m.presence.status == "online" && !m.user.bot).size + message.member.guild.members.filter(m => m.presence.status == "dnd" && !m.user.bot).size} Members currently online.`)
+		.addField("Members Online", `${message.member.guild.members.cache.filter(m => m.presence.status == "online" && !m.user.bot).size + message.member.guild.members.cache.filter(m => m.presence.status == "dnd" && !m.user.bot).size} Members currently online.`)
 		.addField("Channels", `${message.member.guild.channels.cache.size}`)
 		.addField("Created", `Created: __${message.member.guild.createdAt}__`)
 		.addField("Region", message.member.guild.region)
