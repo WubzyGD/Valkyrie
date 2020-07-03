@@ -18,7 +18,7 @@ module.exports = {
                     bio = JSON.parse(data);
                     bio.bio = args.join(" ");
                     json = JSON.stringify(bio);
-                    fs.writeFile(`./data/bios/${message.author.id}.json`, json, 'utf8', callback);
+                    fs.writeFileSync(`./data/bios/${message.author.id}.json`, json, 'utf8');
                     return message.reply("Bio set!");
                 }});
             } else {
@@ -26,7 +26,7 @@ module.exports = {
                     bio: args.join(" ")
                 };
                 var json = JSON.stringify(bio);
-                fs.writeFile(`./data/bios/${message.author.id}.json`, json, 'utf8', callback);
+                fs.writeFileSync(`./data/bios/${message.author.id}.json`, json, 'utf8');
                 return message.reply("Bio set!");
             };
         } else if (args[0] == "clear") {
