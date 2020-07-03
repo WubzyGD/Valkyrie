@@ -13,7 +13,7 @@ const userGameData = sequelize.import("../../models/usergamedata");
 module.exports = {
     name: "bio",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
         var e = process.argv.includes('--force') || process.argv.includes('-f');
 		sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}bio <set|clear|view>\``);};
