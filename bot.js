@@ -247,7 +247,7 @@ client.on("message", async message => {
 		totalLevelXP = ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
-		//if (client.guilds.cache.get("679127746592636949").members.has(message.author.id)) {client.guilds.cache.get("679127746592636949").channels.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
+		if (client.guilds.cache.get("679127746592636949").members.cache.has(message.author.id)) {client.guilds.cache.get("679127746592636949").channels.cache.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
 	};
 
 	async function spawnTreasure() {
