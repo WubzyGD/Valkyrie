@@ -83,4 +83,8 @@ module.exports = (sequelize, DataTypes) => {
 		type: DataTypes.STRING,
 		defaultValue: "none"
 	},
+	user_bio: {
+		type: DataTypes.STRING,
+		defaultValue: "Not Set"
+	}
 })};
