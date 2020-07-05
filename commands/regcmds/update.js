@@ -18,8 +18,7 @@ module.exports = {
         var imgyn = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
         if (imgyn.first().content.toLowerCase() != "no") {upde.setImage(imgyn.first().content);};
         upde.setThumbnail(client.user.avatarURL());
-        return message.channel.send(upde);
-        //return client.guilds.cache.get("679127746592636949").channels.cache.get("689965400687247398").send(upde);
+        return client.guilds.cache.get("679127746592636949").channels.cache.get("689965400687247398").send(upde);
         /*client.guilds.cache.forEach(async g => {
 
         })*/
