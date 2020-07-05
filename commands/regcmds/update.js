@@ -9,11 +9,12 @@ module.exports = {
         var upde = new Discord.MessageEmbed();
         if (args[0] == "up") {upde.setTitle("New feature added!"); upde.setColor("00ff00");} else if (args[0] == "new" || args[0] == "p") {upde.setTitle("New planned feature/progress update!"); upde.setColor("6912a3");} else {return message.reply("Now listen here you little idiot. `up` or `new`. Not that hard.");};
         var filter = m => m.author.id == "330547934951112705";
-        message.channel.send("What would you like the update text to be?");
+        await message.channel.send("What would you like the update text to be?");
         var desc = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
         desc = desc.first().content;
         if (desc.includes("{{n}}")) {desc.replace(/{{n}}/g, "\n\n");};
         upde.setDescription(desc);
+        await message.channel.send("Would you like an image?");
         var imgyn = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
         if (imgyn.first().content.toLowerCase() != "no") {upde.setImage(imgyn.first().content);};
         upde.setThumbnail(client.user.avatarURL());
