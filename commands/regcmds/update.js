@@ -12,7 +12,7 @@ module.exports = {
         await message.channel.send("What would you like the update text to be?");
         var desc = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
         desc = desc.first().content;
-        if (desc.includes("{{n}}")) {desc.replace(/{{n}}/g, "\n\n");};
+        if (desc.includes("{{n}}")) {console.log("yos"); desc.replace(/{{n}}/g, "\n\n");};
         upde.setDescription(desc);
         await message.channel.send("Would you like an image?");
         var imgyn = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
