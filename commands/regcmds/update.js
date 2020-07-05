@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: "update",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}update <up|new>\``);};
         if (message.author.id != "330547934951112705") {return message.reply("Sorry, but only Wubzy can do that!");};
         var upde = new Discord.MessageEmbed();
