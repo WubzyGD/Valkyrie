@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const Canvas = require("canvas");
+const fs = require("fs");
 
 module.exports = {
     name: "meme",
@@ -9,10 +10,20 @@ module.exports = {
         message.delete();
         if (args[0] == "use") {
             var meme = args[1];
-            if (meme == "list") {return message.reply("Memes/Reaction image flags are: `shut`, `yikes`, `tompaper`, `excusewtf`" + 
+            var data = fs.readFileSync("./data/misc/meme.json", 'utf-8');
+            var memes = JSON.parse(data);
+            var memes = memes.memes;
+            if (meme == 'list') {
+                var memelist = "List of memes/reaction image flags: ";
+                for (i of Object.keys(memes)) {memelist += `\`${i}\``; if (Object.keys(memes).length - Object.keys(memes).indexOf(i) > 1) {memelist += ", ";} else {memelist += ".";};};
+                var rep = await message.reply(memelist);
+                return rep.delete(20000);
+            };
+            var link = memes[meme];
+            /*if (meme == "list") {return message.reply("Memes/Reaction image flags are: `shut`, `yikes`, `tompaper`, `excusewtf`" + 
             ", `thomasbs`, `bigno`, `doot`, `chacha`, `yessir`, `shockok`, `dogseize`, "
             + "`fukusay`, `noaccidents`, `bonehurtjuice`, `birb`, `f`.");};
-            if (meme == "shut") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674081841778524160/IMG_20200120_012215_921.jpg"};
+            /*if (meme == "shut") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674081841778524160/IMG_20200120_012215_921.jpg"};
             if (meme == "yikes") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674082003137724416/received_474102026641520.jpeg"};
             if (meme == "brain") {var link = "https://tenor.com/view/big-brain-markiplier-gif-14835823"};
             if (meme == "tompaper") {var link = "https://cdn.discordapp.com/attachments/472596691263029261/677720511777603614/300px-Tom_Cat_Reading_a_Newspaper.png"};
@@ -29,7 +40,7 @@ module.exports = {
             if (meme == "noaccidents") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472749045481533/received_894776877589314.jpeg"};
             if (meme == "bonehurtjuice") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472749242351616/55940bb.jpg"};
             if (meme == "birb") {var link = "https://cdn.discordapp.com/attachments/472603182824947732/731729073981620285/718572770232893470.gif"};
-            if (meme == "f") {var link = "https://cdn.discordapp.com/attachments/646137098335682579/683908052272939032/Press-F-to-Pay-Respects-meme-Call-of-Duty.jpg"};
+            if (meme == "f") {var link = "https://cdn.discordapp.com/attachments/646137098335682579/683908052272939032/Press-F-to-Pay-Respects-meme-Call-of-Duty.jpg"};*/
             if (!link) {return message.reply("I don't have the meme `" + meme + "`!");};
             return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.MessageAttachment(link));
         }
