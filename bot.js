@@ -261,7 +261,7 @@ client.on("message", async message => {
 		.setTimestamp();
 		client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").send(chestEmbed);
 		try {var filter = m => m.channel.id == "691149517021511722" && m.content.toLowerCase().includes("claim");
-		var claimed = await client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").awaitMessages(filter, {time: (60 * 10000), max: 1});
+		var claimed = await client.guilds.cache.get("679127746592636949").channels.cache.get("691149517021511722").awaitMessages(filter, {time: (600000), max: 1});
 		var tpstats = await userGameData.findOne({where: {user_id: claimed.first().author.id}}); if (!tpstats) {
 		await userGameData.create({
 			user_id: message.author.id, username: message.author.username,
