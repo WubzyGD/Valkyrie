@@ -44,6 +44,22 @@ module.exports = {
             if (!link) {return message.reply("I don't have the meme `" + meme + "`!");};
             return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.MessageAttachment(link));
         }
+        else if (args[0] == "r" || args[0] == "register") {
+            if (message.author.id != "330547934951112705") {return;};
+            var filter = m => m.author.id == "330547934951112705";
+            await message.channel.send("What would you like the meme name to be?");
+            var name = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
+            name = name.first().content;
+            await message.channel.send("Provide the link for the image");
+            var link = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
+            link = link.first().content;
+            var data = fs.readFileSync("./data/misc/meme.json", 'utf-8');
+            var memes = JSON.parse(data);
+            memes.memes[name] = link;
+            json = JSON.stringify(memes);
+            fs.writeFileSync(`./data/misc/meme.json`, json, 'utf8');
+            return message.reply("Meme added!");
+        }
         else if (args[0] == "avatar") {
             if (args.length < 2) {return message.reply(`Syntax: \`${prefix}meme avatar <memeName> [flip] [@mention] [@mention]\`. For templates with two avatars, if you mention nobody, it will use your avatar and Valkyrie's avatar, If you mention one person, it will use your avatar and their avatar, and if you mention two people, it will use both of their avatars and not yours. For two-avatar templates, you can use "flip" after the meme name to swap avatar positions. To see valid template names, use \`${prefix}meme avatar list\``)};
             var pfp1; var pfp2; var fmsg;
