@@ -32,7 +32,6 @@ module.exports = {
                 return message.reply(`Wubzy just purchased another **Golden Bullet** to kill me with! I love making him angery, just like the other ${counter.bullets} times :))))`);
             } else {return message.reply("Counters: `badbot`, `brokenbot`, `shitonwubzy`, `bullets`");};
         } else {
-            args.shift();
             if (args[0] == "badbot") {
                 return message.reply(`${person} thinks I've been a garbage bot ${counter.badbot} times :)`);
             } else if (args[0] == "brokenbot") {
