@@ -17,7 +17,7 @@ module.exports = {
                 var memelist = "List of memes/reaction image flags: ";
                 for (i of Object.keys(memes)) {memelist += `\`${i}\``; if (Object.keys(memes).length - Object.keys(memes).indexOf(i) > 1) {memelist += ", ";} else {memelist += ".";};};
                 var rep = await message.reply(memelist);
-                return rep.delete(20000);
+                return rep.delete({time: 20000});
             };
             var link = memes[meme];
             /*if (meme == "list") {return message.reply("Memes/Reaction image flags are: `shut`, `yikes`, `tompaper`, `excusewtf`" + 
