@@ -72,6 +72,8 @@ const applyText = (canvas, text) => {
 
 var last_treasureRoll = new Date().toString();
 
+console.log("made it here");
+
 client.login(config.id);
 
 fs.access("./database.sqlite", fs.F_OK, (err) => {
