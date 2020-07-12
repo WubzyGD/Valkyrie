@@ -17,20 +17,15 @@ module.exports = {
                 var memelist = "List of memes/reaction image flags: ";
                 for (i of Object.keys(memes)) {memelist += `\`${i}\``; if (Object.keys(memes).length - Object.keys(memes).indexOf(i) > 1) {memelist += ", ";} else {memelist += ".";};};
                 var rep = await message.reply(memelist);
-                return rep.delete({time: 20000});
+                return rep.delete({timeout: 200000});
             };
             var link = memes[meme];
-            /*if (meme == "list") {return message.reply("Memes/Reaction image flags are: `shut`, `yikes`, `tompaper`, `excusewtf`" + 
-            ", `thomasbs`, `bigno`, `doot`, `chacha`, `yessir`, `shockok`, `dogseize`, "
-            + "`fukusay`, `noaccidents`, `bonehurtjuice`, `birb`, `f`.");};
-            /*if (meme == "shut") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674081841778524160/IMG_20200120_012215_921.jpg"};
-            if (meme == "yikes") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/674082003137724416/received_474102026641520.jpeg"};
+            /*
             if (meme == "brain") {var link = "https://tenor.com/view/big-brain-markiplier-gif-14835823"};
             if (meme == "tompaper") {var link = "https://cdn.discordapp.com/attachments/472596691263029261/677720511777603614/300px-Tom_Cat_Reading_a_Newspaper.png"};
             if (meme == "excusewtf") {var link = "https://cdn.discordapp.com/attachments/472596691263029261/677722640940531732/excusemewhatthefuck.PNG"};
             if (meme == "considerthefollow") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472746918969366/received_715478235596053.jpeg"};
             if (meme == "thomasbs") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683471956271562752/SmartSelect_20200229-173317_Samsung_Internet.jpg"};
-            if (meme == "bigno") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472747174559769/received_487285101872462.jpeg"};
             if (meme == "doot") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472747422416950/received_785158701904335.jpeg"};
             if (meme == "chacha") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472747787059244/received_1141845076005698.jpeg"};
             if (meme == "yessir") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472748051169318/received_2693882840729239.jpeg"};
@@ -39,9 +34,7 @@ module.exports = {
             if (meme == "fukusay") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472748688834654/received_1354559018035549.jpeg"};
             if (meme == "noaccidents") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472749045481533/received_894776877589314.jpeg"};
             if (meme == "bonehurtjuice") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472749242351616/55940bb.jpg"};
-            if (meme == "birb") {var link = "https://cdn.discordapp.com/attachments/472603182824947732/731729073981620285/718572770232893470.gif"};
-            if (meme == "f") {var link = "https://cdn.discordapp.com/attachments/646137098335682579/683908052272939032/Press-F-to-Pay-Respects-meme-Call-of-Duty.jpg"};*/
-            if (!link) {return message.reply("I don't have the meme `" + meme + "`!");};
+*/            if (!link) {return message.reply("I don't have the meme `" + meme + "`!");};
             return message.channel.send(`Sender: ${message.member.displayName}`, new Discord.MessageAttachment(link));
         }
         else if (args[0] == "r" || args[0] == "register") {
