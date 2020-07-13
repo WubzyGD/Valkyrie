@@ -30,12 +30,12 @@ module.exports = {
         sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (args[0] == "create") {
             var bet = Number(args[1]);
-            if (!args[1] || isNaN(Number(args[1]))) {bet = 500};
+            if (!args[1] || isNaN(Number(args[1]))) {bet = 500;};
             var pLim = 20;
         } else if (args[0] == "limit") {
             if (args.length < 2) {return message.reply("Specify the `limit` then the `bet`.");};
             var bet = Number(args[2]);
-            if (!args[2] || isNaN(Number(args[2]))) {bet = 500};
+            if (!args[2] || isNaN(Number(args[2]))) {bet = 500;};
             var pLim = Number(args[1]);
             if (isNaN(Number(pLim)) || pLim > 20 || pLim < 2) {pLim = 20;};
         } else {return message.reply("You must use either `create` or `limit`.");};
@@ -51,7 +51,7 @@ module.exports = {
         var game = await message.channel.send(gameEmbed);
         var joined = [];
 
-        var filter = m => m.content.toLowerCase() == "spin match start" || (m.content.toLowerCase() == `spin accept <@${message.author.id}>` || m.content.toLowerCase() == `spin accept <@!${message.author.id}>`);
+        var filter = m => m.content.toLowerCase() == "spin match start" || (m.content.toLowerCase() == `spin join <@${message.author.id}>` || m.content.toLowerCase() == `spin join <@!${message.author.id}>`);
         var collector = message.channel.createMessageCollector(filter, {time: 60000});
         collector.on("collect", async m => {
             if (m.content.toLowerCase() == "spin match start" && m.author.id == message.author.id) {
