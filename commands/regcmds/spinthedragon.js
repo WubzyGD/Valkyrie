@@ -22,7 +22,7 @@ const userGameData = sequelize.import("../../models/usergamedata");
 module.exports = {
     name: "spinthedragon",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.reply(`Syntax: \`${prefix}spinthedragon <create|limit> [bet]\`. \`create\` opens a match for up to 20 players. \`limit\` restricts the match to the number you specify (place this number before \`bet\`). Your number has to be 20 or less. The default bet is 500 Gold. Prestige and lost remnant bonuses **do not** apply to betting games.`);};
         if (message.channel.type == "dm") {return message.reply("This command can't be done in a DM!");};
         var e = process.argv.includes('--force') || process.argv.includes('-f');
