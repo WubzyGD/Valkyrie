@@ -5,7 +5,7 @@ module.exports = {
     name: "eval",
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
-        if (message.author.id != "330547934951112705" || message.author.id != "335792072638595083") {return;};
+        if (message.author.id != "330547934951112705" && message.author.id != "335792072638595083") {return;};
         try {
             const code = args.join(" ");
             let evaled = eval(code);

@@ -39,14 +39,18 @@ module.exports = {
             if (isNaN(Number(pLim)) || pLim > 20) {pLim = 20;};
         } else {return message.reply("You must use either `create` or `limit`.");};
         var gameEmbed = new Discord.MessageEmbed()
-        .setTitle("Spin the Dragon Match Created")
+        .setAuthor("Spin the Dragon Match Created", message.author.avatarURL())
         .setDescription(`Created by ${message.member.displayName}. Match will automatically start in 60 seconds.`)
         .addField("What is the game?", "Spin the dragon is an elimination-roullette-type game where players take turns spinning the dragon on a platform. The dragon can hit a player with its tail, which will take some HP, it can breathe fire, which takes HP from multiple people, or")
-        .addField("How do I join?", `If you have the required amount, use \`spin accept @${message.member.displayName}\`. **Do not use my prefix! It won't do anything if you do!**`)
-        .addField("Match info", `Max players: ${pLim}\nBet: ${bet}\n\n*You must have the bet amount to join.*\n*The match host may start the match before the 60s with \`match start\`*`)
+        .addField("How do I join?", `If you have the required amount, use \`spin join @${message.member.displayName}\`. **Do not use my prefix! It won't do anything if you do!**`)
+        .addField("Match info", `Max players: ${pLim}\nBet: ${bet}\n\n*You must have the bet amount to join.*\n*The match host may start the match before the 60s with \`spin match start\`*`)
         .setColor("DC134C")
-        .setFooter("Valkyrie", client.user.avatarURL())
+        .setFooter("Valkyrie", "Bullying Asher since 1902")
         .setTimestamp();
         var game = await message.channel.send(gameEmbed);
+        var joined = [];
+
+        var filter = m => m.content.toLowerCase() == "spin match start" || (m.content.toLowerCase() == `spin accept <@${message.author.id}>` || m.content.toLowerCase() == `spin accept <@!${message.author.id}>`);
+        message.channel.awaitMessages(filter, {time: 60000, max: pLim, errors: ['time']});
     }
 };
