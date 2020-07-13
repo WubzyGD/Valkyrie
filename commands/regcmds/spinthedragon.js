@@ -9,6 +9,7 @@ function wait(time) {
 };
 
 const Sequelize = require('sequelize');
+const { startTimer } = require("winston");
 
 const sequelize = new Sequelize('database', 'username', 'password', {
 	host: 'localhost',
@@ -23,7 +24,7 @@ module.exports = {
     name: "spinthedragon",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.reply(`Syntax: \`${prefix}spinthedragon <create|limit> [bet]\`. \`create\` opens a match for up to 20 players. \`limit\` restricts the match to the number you specify (place this number before \`bet\`). Your number has to be 20 or less. The default bet is 500 Gold. Prestige and lost remnant bonuses **do not** apply to betting games.`);};
+        if (!args.length) {return message.reply(`Syntax: \`${prefix}spinthedragon <create|limit> [bet]\`. \`create\` opens a match for up to 20 players. \`limit\` restricts the match to the number of players you specify (place this number before \`bet\`). Your number has to be 20 or less. The player count includes you. The default bet is 500 Gold. Prestige and lost remnant bonuses **do not** apply to betting games.`);};
         if (message.channel.type == "dm") {return message.reply("This command can't be done in a DM!");};
         var e = process.argv.includes('--force') || process.argv.includes('-f');
         sequelize.sync({force: e}).then(async () => {}).catch(console.error);
@@ -36,7 +37,7 @@ module.exports = {
             var bet = Number(args[2]);
             if (!args[2] || isNaN(Number(args[2]))) {bet = 500};
             var pLim = Number(args[1]);
-            if (isNaN(Number(pLim)) || pLim > 20) {pLim = 20;};
+            if (isNaN(Number(pLim)) || pLim > 20 || pLim < 2) {pLim = 20;};
         } else {return message.reply("You must use either `create` or `limit`.");};
         var gameEmbed = new Discord.MessageEmbed()
         .setAuthor("Spin the Dragon Match Created", message.author.avatarURL())
@@ -45,12 +46,28 @@ module.exports = {
         .addField("How do I join?", `If you have the required amount, use \`spin join @${message.member.displayName}\`. **Do not use my prefix! It won't do anything if you do!**`)
         .addField("Match info", `Max players: ${pLim}\nBet: ${bet}\n\n*You must have the bet amount to join.*\n*The match host may start the match before the 60s with \`spin match start\`*`)
         .setColor("DC134C")
-        .setFooter("Valkyrie", "Bullying Asher since 1902")
+        .setFooter("Valkyrie - Bullying Asher since 1902")
         .setTimestamp();
         var game = await message.channel.send(gameEmbed);
         var joined = [];
 
         var filter = m => m.content.toLowerCase() == "spin match start" || (m.content.toLowerCase() == `spin accept <@${message.author.id}>` || m.content.toLowerCase() == `spin accept <@!${message.author.id}>`);
-        message.channel.awaitMessages(filter, {time: 60000, max: pLim, errors: ['time']});
+        var collector = message.channel.createMessageCollector(filter, {time: 60000});
+        collector.on("collect", async m => {
+            if (m.content.toLowerCase() == "spin match start" && m.author.id == message.author.id) {
+                collector.stop();
+            } else if (!joined.includes(m.author.id)) {
+                var pstats = await userGameData.findOne({where: {user_id: m.author.id}});
+                if (!pstats || pstats.money < bet) {message.channel.send("You don't have enough money to play!");}
+                else {message.channel.send(`${message.guild.members.cache.get(m.author.id).displayName} has joined the game!`);};
+                if (joined.length >= pLim - 1) {collector.stop();};
+            };
+        });
+        collector.on("end", collected => {
+            start(joined.length);
+        });
+        function start (pc /*player count*/) {
+            message.channel.send(`Game starting with ${pc} people in it!`);
+        };
     }
 };
