@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize('database', 'user', 'password', {
 	host: 'localhost',
@@ -6,69 +7,8 @@ const sequelize = new Sequelize('database', 'user', 'password', {
 	logging: false,
 	storage: 'database.sqlite',
 });
-const CharIndex = sequelize.define('charindex', {
-    user_id: {
-        type: Sequelize.STRING,
-        unique: true
-    },
-    char_count: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-    },
-    combo_key_int_index: {
-        type: Sequelize.STRING,
-        defaultValue: ""
-    },
-    char_names: {
-        type: Sequelize.STRING,
-        defaultValue: ""
-    }
-});
-const RpChars = sequelize.define('rpchars', {
-    user_id: Sequelize.STRING,
-    owner_name: Sequelize.STRING,
-    char_num: Sequelize.INTEGER,
-    combo_key: {
-        type: Sequelize.STRING,
-        unique: true
-    },
-    combo_key_int: {
-        type: Sequelize.STRING,
-        unique: true
-    },
 
-    name: Sequelize.STRING,
-    species: Sequelize.STRING,
-    height: Sequelize.STRING,
-    weight: Sequelize.STRING,
-    description: Sequelize.STRING,
-    gender: Sequelize.STRING,
-    personality: Sequelize.STRING,
-    skills: Sequelize.STRING,
-    apparel: Sequelize.STRING,
-    age: Sequelize.STRING,
-    oc_query: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: true
-    },
-    image_link: {
-        type: Sequelize.STRING,
-        defaultValue: "Omitted"
-    },
-    reference_source: Sequelize.STRING,
-    powers: {
-        type: Sequelize.STRING,
-        defaultValue: "Omitted"
-    },
-    powers_class: {
-        type: Sequelize.STRING,
-        defaultValue: "Omitted"
-    },
-    birth_place: Sequelize.STRING,
-    extra_notes: Sequelize.STRING
-});
-CharIndex.sync();
-RpChars.sync();
+const userGameData = sequelize.import("../../models/usergamedata");
 
 module.exports = {
     name: "char",
@@ -80,11 +20,9 @@ module.exports = {
             try {
                 if (message.channel.type !== "dm") {return message.reply("You must create a character in a DM with me first, and then you can use your character anywhere!");};
                 
-                var userindex = await CharIndex.findOne({where: {user_id: message.author.id}});
-                if (userindex && (userindex.char_count >= 5)) {return message.reply("It looks like you have reached your limit of 5 characters. You can remove old ones to make room for this one! In the future, the 5 character limit may be increased.");};
-
                 await message.channel.send("You will be asked a series of questions about your character. At any time, you can type \"skip\" to omit an option. You can always come back to it later.");
-                
+                //await message.channel.send("And, please keep in mind that inappropriate/sexual characters aren't allowed. Let's just try and keep things civil and SFW, as I am an SFW bot :) A Valkyrie admin can remove your character at any time if they feel that it is offensive or overly lewd.")
+
                 var filter = m => m.author.id === message.author.id;
                 await message.channel.send("What format would you like to use? this can be \"rp\" (roleplay) for characters with more detailed descriptions, but less DnD-esque stuff, or \"DnD\" for a standard basic 5e sheet. ~~Wubzy is hella lazy and isn't gonna put it on a real digital sheet *yet*~~");
                 var format = await message.channel.awaitMessages(filter, {time: 2000000, max: 1, errors: ["time"]});
@@ -94,83 +32,85 @@ module.exports = {
                     await message.channel.send(`${prompt} Lim: ${charLim}`);
                     var temp = await message.channel.awaitMessages(filter, {time: 100000, max: 1, errors: ["time"]});
                     temp = temp.first().content;
-                    if (temp.length > charLim) {temp = temp.slice(0, charLim);};
+                    if (typeof(charLim) == "number") {if (temp.length > charLim) {temp = temp.slice(0, charLim);};};
                     if (temp.toLowerCase().trim() == "skip") {temp = "Omitted";};
                     return temp;
                 };
 
                 if (format.toLowerCase().trim().includes("rp")) {
-                    await message.channel.send("What is your __rp__ character's name? Chars limit: 30. Any characters over 30 will be sliced off, and this will be the case for all questions.");
+                    await message.channel.send("What is your __rp__ character's name? Chars limit: 40. Any characters over 40 will be sliced off, and this will be the case for all questions.");
                     var cname = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
-                    cname = cname.first().content; if (cname.length > 30) {cname = cname.slice(0, 30);};
+                    cname = cname.first().content; if (cname.length > 40) {cname = cname.slice(0, 40);};
                     if (cname.toLowerCase() == "skip") {return message.reply("Remember what I said about being able to skip anything? That was kinda a lie, you have to name your character, silly. ~~I may be a dumb bot but~~ I'm not that stupid.");};
-
-                    var cspecies = await query(`What is ${cname}'s species?`, 30);
-                    var cheight = await query("What is their height?", 7);
-                    var cweight = await query("What is their weight?", 7);
-                    var cdesc = await query(`Give a very brief description of ${cname}.`, 200);
-                    var cgender = await query(`What is their gender?`, 10);
+                    var cid = await query("And one more thing: Give them an ID. This should have no spaces, and must be alphanumeric, with only underscores. This ID is not editable. If you make a character with an already-existing ID, the old one will be overwritten.", 50);
+                    cid = cid.replace(/\s/g, '').trim().toLowerCase();
+                    if (!/^[a-z0-9_]+$/.test(cid.trim().toLowerCase())) {return message.reply("You must use alphanumeric characters and underscores only!");};
+                    var cspecies = await query(`What is ${cname}'s species?`, 50);
+                    var cheight = await query("What is their height?", 10);
+                    var cweight = await query("What is their weight?", 10);
+                    var cdesc = await query(`Give a very brief appearance description of ${cname}. E.g. body type, facials, etc.`, "None");
+                    var cgender = await query(`What is their gender?`, 30);
+                    var cage = await query("How old are they?", 75);
+                    var cnicks = await query("What are their nicknames?", 200);
                     var cpersonality = await query("Describe your character's personality. Consider their strengths and weaknesses, too.", 1000);
-                    var cskills = await query("What are some things you character is skilled at?", 250);
-                    var capparel = await query("Describe you character's apparel and appearance.", 1000);
-                    var cage = await query("How old are they?", 15);
-                    var cocquery = await query("Is your character an OC (Original Character?) Respond with `yes` or `no`.");
+                    var cskills = await query("What are some things you character is skilled at?", 500);
+                    var chobbies = await query("What are their hobbies?", "None");
+                    var cflaws = await query("Describe some of your character's personality flaws.", "None");
+                    var cvirtues = await query("Describe some of their virtues - the things that make them great.", "None");
+                    var capparel = await query("Describe you character's apparel and appearance.", 1500);
+                    var cocquery = await query("Is your character an OC (Original Character?) If it was not created by you, or it is very closely based on someone else's character, then it is not an OC. Respond with `yes` or `no`.", 3);
                     if (cocquery.toLowerCase().includes("y")) {cocquery = true;} else if (cocquery.toLowerCase().includes("n")) {cocquery = false;} else {return message.reply("You must use yes or no.");};
-                    var cimage = await query("If you have an image to use for your character, send it.", 150);
-                    var creference = await query("If you have a blog or post or other link that contains more information on your character, send the link to it here.", 150);
-                    var cpowers = await query("Do they have any powers or magical abilities?", 500);
-                    if (cpowers !== "Omitted") {var cpowersclass = await query("What elemental or class of powers/magic does your character have?", 150);} else {cpowersclass = "Omitted";};
-                    var cbirth = await query("Where and when was your character born?", 50);
-                    var cnotes = await query(`Any extra notes about ${cname}?`, 1000);
+                    var cimage = await query("If you have an image to use for your character, send **a link to it. Sending it here will not work. Send it elsewhere and copy the link**.", 350);
+                    var creference = await query("If you have a blog or post or other link that contains more information on your character, send the link to it here. **Post an NSFW link and you will suffer my wrath!**", 350);
+                    var cpowers = await query("Do they have any powers or magical abilities?", "None");
+                    if (cpowers !== "Omitted") {var cpowersclass = await query("What elemental or class of powers/magic does your character have?", 300);} else {cpowersclass = "N/A";};
+                    var cbirth = await query("Where and when was your character born?", 250);
+                    var cnotes = await query(`Any extra notes about ${cname}?`, "None");
 
-                    if (!userindex) {await CharIndex.create({user_id: message.author.id});};
-                    
-                    if (!userindex) {var ccharnum = 1;} else {
-                        var combo_key_ints = [`${message.author.id}.1`, `${message.author.id}.2`, `${message.author.id}.3`, `${message.author.id}.4`, `${message.author.id}.5`];
-                        for (i of combo_key_ints) {
-                            var t = await RpChars.findOne({where: {combo_key_int: i}});
-                            if (!t) {
-                                var ckeyint = `${message.author.id}.${combo_key_ints.indexOf(t) + 1};`;
-                                ccharnum = combo_key_ints.indexOf(t) + 1;
-                                break;
-                            } else {};
-                        };
-                    };
-
-                    await RpChars.create({
-                        user_id: message.author.id,
-                        owner_name: message.author.name,
-                        char_num: ccharnum,
-                        combo_key: `${message.author.id}.${cname}`,
-                        combo_key_int: `${message.author.id}.${ccharnum}`,
+                    const thisChar = {
                         name: cname,
+                        id: cid,
                         species: cspecies,
                         height: cheight,
                         weight: cweight,
                         description: cdesc,
                         gender: cgender,
+                        age: cage,
+                        nicknames: cnicks,
                         personality: cpersonality,
                         skills: cskills,
+                        hobbies: chobbies,
+                        flaws: cflaws,
+                        virtues: cvirtues,
                         apparel: capparel,
-                        age: cage,
-                        oc_query: cocquery,
-                        image_link: cimage,
-                        reference_source: creference,
+                        is_oc: cocquery,
+                        ref_image: cimage,
+                        ref_link: creference,
                         powers: cpowers,
-                        powers_class: cpowersclass,
-                        birth_place: cbirth,
-                        extra_notes: cnotes
-                    });
-                    var userindex = await CharIndex.findOne({where: {user_id: message.author.id}});
-                    var ccharnames = "";
-                    for (i of userindex.char_names.split(";")) {
-                        if (i == "empty" && userindex.char_names.split(";").indexOf(i) == ccharnum - 1) {ccharnames += cname;}
-                        else {ccharnames += i;};
-                    };
-                    await CharIndex.update({combo_key_int_index: combo_key_ints, char_names: ccharnames});
-                    await userindex.increment
+                        elemental: cpowersclass,
+                        birth_info: cbirth,
+                        other_notes: cnotes
+                    }
 
-                    return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${ccharnum}\`. To see a list of your characters and which number they are, use \`${prefix}char view list}\`**. Your character can now be accessed in any server that I am in and updated anywhere. Using \`${prefix}char view text ${ccharnum}\` will have me give you a text file of your character's info.`);
+                    if (fs.existsSync(`./data/chars/${message.author.id}.json`)) {
+                        fs.readFile(`./data/chars/${message.author.id}.json`, 'utf8', function readFileCallback(err, data){
+                            if (err) {
+                                console.log(err);
+                            } else {
+                            chars = JSON.parse(data);
+                            chars.chars[cid] = thisChar;
+                            json = JSON.stringify(chars);
+                            fs.writeFileSync(`./data/chars/${message.author.id}.json`, json, 'utf8');
+                        }});
+                    } else {
+                        var chars = {
+                            chars: {}
+                        };
+                        chars.chars[cid] = thisChar;
+                        var json = JSON.stringify(chars);
+                        fs.writeFileSync(`./data/chars/${message.author.id}.json`, json, 'utf8');
+                    };
+                    return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${cid}\`. To see a list of your characters and which number they are, use \`${prefix}char view list}\`**. Your character can now be accessed in any server that I am in and updated anywhere. Using \`${prefix}char view text ${cid}\` will have me give you a text file of your character's info.`);
                 } else if (format.toLowerase().trim().includes("dnd")) {
                     await message.channel.send("What is your __DnD__ character's name? Chars limit: 30. Any characters over 30 will be sliced off, and this will be the case for all questions.");
                     var name = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
@@ -182,26 +122,7 @@ module.exports = {
         } else if (td == "edit") {
 
         } else if (td == "view") {
-            args.shift();
-            if (!args.length) {return message.reply(`Syntax: \`${prefix}char view <key|mention|text|list>\``);};
-            var userindex = await CharIndex.findOne({where: {user_id: message.author.id}});
-            if (!userindex || userindex.char_count < 1) {return message.reply("You do not have any characters made!");};
-            if (!isNaN(args[0]) && Number(args[0]) <= 5 && Number(args[0]) >= 1) {
-                if (userindex.char_names.split(";")[Number(args[0]) + 1] == "empty") {return message.reply("The character index you provided was an empty character. In other words, you haven't created the character with that numebr yet.");};
-                var charIntKey = userindex.char_names.split(";")[Number(args[0]) + 1];
-                if (charIntKey.includes(".")) {
-                    try {
-                        var dispChar = await RpChars.findOne({where: {combo_key_int: charIntKey}});
-                        var rpcharembed = new Discord.MessageEmbed()
-                        .setTitle(`Character Sheet for ${dispChar.name}`)
-                        .setDescription(`Created by `) 
-                    } catch (e) {
-                        return message.reply("Hey there! Wubzy speaking! So uh something happened there, and likely, it is completely my fault, unless you're trying to game the system. Direct message me at WubzyGD#8766 and tell me that you got this message.");
-                    };
-                } else if (charIntKey.includes("!")) {
-
-                } else {return message.reply("Hey there! Wubzy speaking! So uh something happened there, and likely, it is completely my fault, unless you're trying to game the system. Direct message me at WubzyGD#8766 and tell me that you got this message.");};
-            };
+        
         } else {return message.reply(`Invalid syntax. Syntax: \`${prefix}char <create|view|edit|delete>\``);};
     }
 };
