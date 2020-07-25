@@ -110,7 +110,29 @@ client.on("ready", async () => {
 });
 
 client.on('guildCreate', async (guild) => {
-    GBLValk.updateStats(client.guilds.cache.size);
+	GBLValk.updateStats(client.guilds.cache.size);
+	client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
+	.setAuthor("Valk Added to Server", guild.owner.user.avatarURL())
+	.setDescription(guild.name)
+	.addField("Members", guild.members.cache.size, true)
+	.addField("Guild #", client.guilds.cache.size, true)
+	.addField("Added", `${new Date().getDate()} of ${new Date().getMonth()}`, true)
+	.setColor("00ff00")
+	.setFooter("Valkyrie", client.user.avatarURL())
+	.setTimestamp());
+});
+
+client.on('guildDelete', async (guild) => {
+	GBLValk.updateStats(client.guilds.cache.size);
+	client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
+	.setAuthor("Valk Removed from Server", guild.owner.user.avatarURL())
+	.setDescription(guild.name)
+	.addField("Members", guild.members.cache.size, true)
+	.addField("Guild #", client.guilds.cache.size + 1, true)
+	.addField("Removed", `${new Date().getDate()} of ${new Date().getMonth()}`, true)
+	.setColor("ff0000")
+	.setFooter("Valkyrie", client.user.avatarURL())
+	.setTimestamp());
 });
 
 client.on('guildMemberAdd', async member => {
@@ -365,4 +387,4 @@ client.on("messageDelete", async message => {
 	if (message.channel.type != "text") {return;};
 	if (!Object.keys(snipe.delete).includes(message.guild.id)) {snipe.delete[message.guild.id] = {};};
 	snipe.delete[message.guild.id][message.channel.id] = message;
-})
+});
