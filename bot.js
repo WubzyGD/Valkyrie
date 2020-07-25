@@ -305,8 +305,8 @@ client.on("message", async message => {
 			.setColor("DC134C"));
 		} else if (args[0].startsWith("d")) {
 			message.delete();
-			if (!Object.keys(snipe.edit).includes(message.guild.id)) {return message.reply("Looks like nobody has deleted a message in this guild recently.");};
-			if (!Object.keys(snipe.edit[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has deleted a message in this channel recently.");};
+			if (!Object.keys(snipe.delete).includes(message.guild.id)) {return message.reply("Looks like nobody has deleted a message in this guild recently.");};
+			if (!Object.keys(snipe.delete[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has deleted a message in this channel recently.");};
 			var m = snipe.delete[message.guild.id][message.channel.id];
 			return message.channel.send(new Discord.MessageEmbed()
 			.setAuthor("Last Edited Message", m.author.avatarURL())
