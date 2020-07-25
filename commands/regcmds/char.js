@@ -106,7 +106,7 @@ module.exports = {
                         fs.writeFileSync(`./data/chars/${message.author.id}.json`, json, 'utf8');
                     };
                     return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${cid}\` To see a list of your characters and which number they are, use \`${prefix}char view list\`**. Your character can now be accessed in any server that I am in and updated anywhere. Using \`${prefix}char view text ${cid}\` will have me give you a text file of your character's info.`);
-                } else if (format.toLowerase().trim().includes("dnd")) {
+                } else if (format.toLowerCase().trim().includes("dnd")) {
                     await message.channel.send("What is your __DnD__ character's name? Chars limit: 30. Any characters over 30 will be sliced off, and this will be the case for all questions.");
                     var name = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
                     name = name.first.content().slice(0, 30);
