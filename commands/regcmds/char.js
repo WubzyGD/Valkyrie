@@ -1,15 +1,5 @@
 const Discord = require("discord.js");
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize('database', 'user', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	storage: 'database.sqlite',
-});
-
-const userGameData = sequelize.import("../../models/usergamedata");
-
 module.exports = {
     name: "char",
     description: "",
@@ -30,7 +20,7 @@ module.exports = {
 
                 async function query(prompt, charLim) {
                     await message.channel.send(`${prompt} Lim: ${charLim}`);
-                    var temp = await message.channel.awaitMessages(filter, {time: 100000, max: 1, errors: ["time"]});
+                    var temp = await message.channel.awaitMessages(filter, {time: 2000000, max: 1, errors: ["time"]});
                     temp = temp.first().content;
                     if (typeof(charLim) == "number") {if (temp.length > charLim) {temp = temp.slice(0, charLim);};};
                     if (temp.toLowerCase().trim() == "skip") {temp = "Omitted";};
@@ -45,6 +35,7 @@ module.exports = {
                     var cid = await query("And one more thing: Give them an ID. This should have no spaces, and must be alphanumeric, with only underscores. This ID is not editable. If you make a character with an already-existing ID, the old one will be overwritten.", 50);
                     cid = cid.replace(/\s/g, '').trim().toLowerCase();
                     if (!/^[a-z0-9_]+$/.test(cid.trim().toLowerCase())) {return message.reply("You must use alphanumeric characters and underscores only!");};
+                    if (cid.toLowerCase() == "skip") {return message.reply("Oh yeah, and you have to have an ID, too.");};
                     var cspecies = await query(`What is ${cname}'s species?`, 50);
                     var cheight = await query("What is their height?", 10);
                     var cweight = await query("What is their weight?", 10);
@@ -90,7 +81,7 @@ module.exports = {
                         elemental: cpowersclass,
                         birth_info: cbirth,
                         other_notes: cnotes
-                    }
+                    };
 
                     if (fs.existsSync(`./data/chars/${message.author.id}.json`)) {
                         fs.readFile(`./data/chars/${message.author.id}.json`, 'utf8', function readFileCallback(err, data){
@@ -117,6 +108,7 @@ module.exports = {
                     name = name.first.content().slice(0, 30);
                 } else {return message.reply("You didn't specify a valid format. Try again!");};
             } catch (e) {
+                console.log(e);
                 message.reply("Looks like you ran out of time. --If you're certain that you didn't take more than about 100 seconds, contact my creator.");
             };
         } else if (td == "edit") {
