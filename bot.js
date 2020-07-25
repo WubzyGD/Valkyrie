@@ -116,7 +116,7 @@ client.on('guildCreate', async (guild) => {
 	.setDescription(guild.name)
 	.addField("Members", guild.members.cache.size, true)
 	.addField("Guild #", client.guilds.cache.size, true)
-	.addField("Added", `${new Date().getDate()} of ${new Date().getMonth()}`, true)
+	.addField("Added", `${new Date().getDate()} of ${new Date().toLocaleString('default', { month: 'long' })}`, true)
 	.setColor("00ff00")
 	.setFooter("Valkyrie", client.user.avatarURL())
 	.setTimestamp());
@@ -129,7 +129,7 @@ client.on('guildDelete', async (guild) => {
 	.setDescription(guild.name)
 	.addField("Members", guild.members.cache.size, true)
 	.addField("Guild #", client.guilds.cache.size + 1, true)
-	.addField("Removed", `${new Date().getDate()} of ${new Date().getMonth()}`, true)
+	.addField("Removed", `${new Date().getDate()} of ${new Date().toLocaleString('default', { month: 'long' })}`, true)
 	.setColor("ff0000")
 	.setFooter("Valkyrie", client.user.avatarURL())
 	.setTimestamp());
