@@ -293,17 +293,28 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && cmd == "snipe") {
 		if (args[0].startsWith("e")) {
 			message.delete();
-			if (!Object.keys(snipe.edit).includes(message.guild.id)) {return message.reply("Looks like nobody has edited a message in this guild... ever. ~~Or at least not that I've seen.~~");};
+			if (!Object.keys(snipe.edit).includes(message.guild.id)) {return message.reply("Looks like nobody has edited a message in this guild recently.");};
 			if (!Object.keys(snipe.edit[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has edited a message in this channel recently.");};
 			var m = snipe.edit[message.guild.id][message.channel.id];
 			return message.channel.send(new Discord.MessageEmbed()
-			.setAuthor("Edited Message", m.old.author.avatarURL())
+			.setAuthor("Last Edited Message", m.old.author.avatarURL())
 			.setDescription(`In \`${m.old.channel.name}\`\nSent by ${m.old.member.displayName}`)
 			.addField("Old Message", m.old.content)
 			.addField("New Message", m.cur.content)
 			.setThumbnail(m.old.guild.iconURL({size: 2048}))
 			.setColor("DC134C"));
-		} else if (args[0].startsWith("d")) {} else {return message.reply("I can snipe an `edit` or a `delete`!");};
+		} else if (args[0].startsWith("d")) {
+			message.delete();
+			if (!Object.keys(snipe.edit).includes(message.guild.id)) {return message.reply("Looks like nobody has deleted a message in this guild recently.");};
+			if (!Object.keys(snipe.edit[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has deleted a message in this channel recently.");};
+			var m = snipe.delete[message.guild.id][message.channel.id];
+			return message.channel.send(new Discord.MessageEmbed()
+			.setAuthor("Last Edited Message", m.author.avatarURL())
+			.setDescription(`In \`${m.channel.name}\`\nSent by ${m.member.displayName}`)
+			.addField("Message", m.content)
+			.setThumbnail(m.guild.iconURL({size: 2048}))
+			.setColor("DC134C"));
+		} else {return message.reply("I can snipe an `edit` or a `delete`!");};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
@@ -348,4 +359,10 @@ client.on("messageUpdate", async (oldM, newM) => {
 	if (oldM.channel.type != "text") {return;};
 	if (!Object.keys(snipe.edit).includes(oldM.guild.id)) {snipe.edit[oldM.guild.id] = {};};
 	snipe.edit[oldM.guild.id][oldM.channel.id] = {old: oldM, cur: newM};
+});
+
+client.on("messageDelete", async message => {
+	if (message.channel.type != "text") {return;};
+	if (!Object.keys(snipe.delete).includes(message.guild.id)) {snipe.delete[message.guild.id] = {};};
+	snipe.delete[message.guild.id][message.channel.id] = message;
 })
