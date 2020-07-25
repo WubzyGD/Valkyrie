@@ -309,7 +309,7 @@ client.on("message", async message => {
 			if (!Object.keys(snipe.delete[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has deleted a message in this channel recently.");};
 			var m = snipe.delete[message.guild.id][message.channel.id];
 			return message.channel.send(new Discord.MessageEmbed()
-			.setAuthor("Last Edited Message", m.author.avatarURL())
+			.setAuthor("Last Deleted Message", m.author.avatarURL())
 			.setDescription(`In \`${m.channel.name}\`\nSent by ${m.member.displayName}`)
 			.addField("Message", m.content)
 			.setThumbnail(m.guild.iconURL({size: 2048}))
