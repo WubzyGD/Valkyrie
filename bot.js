@@ -300,7 +300,7 @@ client.on("message", async message => {
 			.setAuthor("Edited Message", m.old.author.avatarURL())
 			.setDescription(`In \`${m.old.channel.name}\`\nSent by ${m.old.member.displayName}`)
 			.addField("Old Message", m.old.content)
-			.addField("New Message", m.new.content)
+			.addField("New Message", m.cur.content)
 			.setThumbnail(m.old.guild.iconURL({size: 2048}))
 			.setColor("DC134C"));
 		} else if (args[0].startsWith("d")) {} else {return message.reply("I can snipe an `edit` or a `delete`!");};
