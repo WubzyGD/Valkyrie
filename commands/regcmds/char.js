@@ -105,24 +105,20 @@ module.exports = {
                         var json = JSON.stringify(chars);
                         fs.writeFileSync(`./data/chars/${message.author.id}.json`, json, 'utf8');
                     };
-<<<<<<< HEAD
                     return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${cid}\`. To see a list of your characters' IDs, use \`${prefix}char view list}\`**. Your character can now be accessed in any server that I am in, and updated anywhere. Using \`${prefix}char view text ${cid}\` will have me give you a text file of your character's info.`);
                 } else if (format.toLowerase().trim().includes("dnd")) {
-=======
-                    return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${cid}\` To see a list of your characters and which number they are, use \`${prefix}char view list\`**. Your character can now be accessed in any server that I am in and updated anywhere. Using \`${prefix}char view text ${cid}\` will have me give you a text file of your character's info.`);
-                } else if (format.toLowerCase().trim().includes("dnd")) {
->>>>>>> aaa7694b8fa3d5767f32efe34c389a3eea784c4c
                     await message.channel.send("What is your __DnD__ character's name? Chars limit: 30. Any characters over 30 will be sliced off, and this will be the case for all questions.");
                     var name = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
                     name = name.first.content().slice(0, 30);
                 } else {return message.reply("You didn't specify a valid format. Try again!");};
             } catch (e) {
-                console.log(e);
                 message.reply("Looks like you ran out of time. --If you're certain that you didn't take more than about 100 seconds, contact my creator.");
             };
         } else if (td == "edit") {
 
         } else if (td == "view") {
+            args.shift();
+            if (!args.length) {return message.channel.send(`You must provide an ID of the character you wish to view. If you do not know the character's ID, use \`list\` as the ID to see all of you characters' IDs.`);};
             
         } else {return message.reply(`Invalid syntax. Syntax: \`${prefix}char <create|view|edit|delete>\``);};
     }

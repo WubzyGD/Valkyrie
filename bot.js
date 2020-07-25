@@ -80,6 +80,11 @@ fs.access("./database.sqlite", fs.F_OK, (err) => {
 	  	return;};
 	});
 
+var snipe = {
+	"edit": {},
+	"delete": {}
+};
+
 client.on("ready", async () => {
 	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
@@ -285,6 +290,20 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && (cmd == "spawntreasure") && message.author.id === Wubzy) {
 		message.delete();
 		return spawnTreasure();
+	} else if (msg.startsWith(prefix) && cmd == "snipe") {
+		if (args[0].startsWith("e")) {
+			message.delete();
+			if (!Object.keys(snipe.edit).includes(message.guild.id)) {return message.reply("Looks like nobody has edited a message in this guild... ever. ~~Or at least not that I've seen.~~");};
+			if (!Object.keys(snipe.edit[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has edited a message in this channel recently.");};
+			var m = snipe.edit[message.guild.id][message.channel.id];
+			return message.channel.send(new Discord.MessageEmbed()
+			.setAuthor("Edited Message", m.old.author.avatarURL())
+			.setDescription(`In \`${m.old.channel.name}\`\nSent by ${m.old.member.displayName}`)
+			.addField("Old Message", m.old.content)
+			.addField("New Message", m.new.content)
+			.setThumbnail(m.old.guild.iconURL({size: 2048}))
+			.setColor("DC134C"));
+		} else if (args[0].startsWith("d")) {} else {return message.reply("I can snipe an `edit` or a `delete`!");};
 	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
 	try {
 		if (msg.startsWith(prefix)) {
@@ -324,3 +343,9 @@ client.on("message", async message => {
 	//card games
 	//raids
 });
+
+client.on("messageUpdate", async (oldM, newM) => {
+	if (oldM.channel.type != "text") {return;};
+	if (!Object.keys(snipe.edit).includes(oldM.guild.id)) {snipe.edit[oldM.guild.id] = {};};
+	snipe.edit[oldM.guild.id][oldM.channel.id] = {old: oldM, cur: newM};
+})
