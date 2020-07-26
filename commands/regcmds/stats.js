@@ -82,9 +82,9 @@ module.exports = {
 			var users = {};
 			message.guild.members.cache.forEach(m => {
 				var ps = await userGameData.findOne({where: {user_id: m.id}});
-				users[m.id] = ps;
+				if (ps) {users[m.id] = ps;};
 			});
-			message.channel.send(Object.keys(users).length);
+			return message.channel.send(Object.keys(users).length);
 		};
         return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
     }
