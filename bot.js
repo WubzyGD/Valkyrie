@@ -85,30 +85,6 @@ var snipe = {
 	"delete": {}
 };
 
-GBLValk.webhook.on("vote", async vote => {
-	var u = client.users.cache.get(vote.id);
-	var stats = GBLValk.getBot(client.user.id);
-	client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
-	.setAuthor("New GBL Vote!", u.avatarURL())
-	.setThumbnail("https://cdn.discordapp.com/icons/623600255987875870/a_fdb1896f4a9e2b1d1ab74b6e1eadad7b.webp?size=2048")
-	.setDescription(`From ${u.username}`)
-	.addField("Votes/Monthly", stats.monthly_upvotes, true)
-	.addField("Votes/Total", stats.total_upvotes, true)
-	.addField("In Server?", client.guilds.cache.get("679127746592636949").members.cache.has(u.id), true)
-	.setColor("ff33ff"));
-
-	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
-	var pstats = await userGameData.findOne({where: {user_id: u.id}});
-	if (pstats) {await userGameData.update({xp: pstats.xp + 1500}, {where: {user_id: u.id}})};
-
-	if (client.guilds.cache.get("679127746592636949").members.cache.has(u.id)) {
-		client.guilds.cache.get("679127746592636949").channels.cache.get("679127747469115405").send(new Discord.MessageEmbed()
-		.setAuthor("New Vote")
-		.setDescription(`Thanks <@${u.id}> for the vote! Enjoy 1,500XP on the house`)
-		.setColor("33ff33"));
-	};
-})
-
 client.on("ready", async () => {
 	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
@@ -130,7 +106,30 @@ client.on("ready", async () => {
 	"in purgatory...", "..."
 	,`in ${client.guilds.cache.size} servers...`, );
 	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
-	} catch (e) {};
+	GBLValk.webhook.on("vote", async vote => {
+		var u = client.users.cache.get(vote.id);
+		var stats = GBLValk.getBot(client.user.id);
+		client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
+		.setAuthor("New GBL Vote!", u.avatarURL())
+		.setThumbnail("https://cdn.discordapp.com/icons/623600255987875870/a_fdb1896f4a9e2b1d1ab74b6e1eadad7b.webp?size=2048")
+		.setDescription(`From ${u.username}`)
+		.addField("Votes/Monthly", stats.monthly_upvotes, true)
+		.addField("Votes/Total", stats.total_upvotes, true)
+		.addField("In Server?", client.guilds.cache.get("679127746592636949").members.cache.has(u.id), true)
+		.setColor("ff33ff"));
+	
+		await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
+		var pstats = await userGameData.findOne({where: {user_id: u.id}});
+		if (pstats) {await userGameData.update({xp: pstats.xp + 1500}, {where: {user_id: u.id}})};
+	
+		if (client.guilds.cache.get("679127746592636949").members.cache.has(u.id)) {
+			client.guilds.cache.get("679127746592636949").channels.cache.get("679127747469115405").send(new Discord.MessageEmbed()
+			.setAuthor("New Vote")
+			.setDescription(`Thanks <@${u.id}> for the vote! Enjoy 1,500XP on the house`)
+			.setColor("33ff33"));
+		};
+	})
+} catch (e) {console.log(e)};
 });
 
 client.on('guildCreate', async (guild) => {
