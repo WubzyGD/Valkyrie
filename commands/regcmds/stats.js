@@ -81,13 +81,24 @@ module.exports = {
 			if (message.channel.type != "text") {return;};
 			var userss = Array.from(message.guild.members.cache.values());
 			var users = [];
-			for (var u in userss) {
-				console.log(u);
+			for (var u of userss) {
 				var ps = await userGameData.findOne({where: {user_id: u.id}});
 				if (ps != undefined && ps != null) {users.push(ps);};
 			};
-			console.log(users);
-			return message.channel.send(users.length);
+			var ls = "";
+			users.sort(function(a, b){return b.level-a.level});
+			for (var i = 0; i < 10; i++) {
+				if (users[i] == undefined) {delete users[i];}
+				else {ls += `**${i + 1}**. __${message.guild.members.cache.get(users[i].user_id).displayName}__ - ${users[i].level}\n-> ${users[i].money}GP // Prestige ${users[i].prestige}\n`;};
+			};
+			return message.channel.send(new Discord.MessageEmbed()
+			.setTitle("Level Leaderboard")
+			.setDescription(`For ${message.guild.name}`)
+			.setThumbnail(message.guild.iconURL({size: 2048}))
+			.addField("Scores", ls)
+			.setColor("DC134C")
+			.setFooter("Valkyrie", client.user.avatarURL()
+			.setTimestamp()));
 		};
         return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
     }
