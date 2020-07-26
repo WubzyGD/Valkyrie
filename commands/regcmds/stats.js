@@ -97,8 +97,8 @@ module.exports = {
 			.setThumbnail(message.guild.iconURL({size: 2048}))
 			.addField("Scores", ls)
 			.setColor("DC134C")
-			.setFooter("Valkyrie", client.user.avatarURL()
-			.setTimestamp()));
+			.setFooter("Valkyrie", client.user.avatarURL())
+			.setTimestamp());
 		};
         return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
     }
