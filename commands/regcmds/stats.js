@@ -79,13 +79,13 @@ module.exports = {
 		if (args[0] == "image") {return message.channel.send(attachment);};
 		if (args[0] == "leaderboard" || args[0] == "l") {
 			if (message.channel.type != "text") {return;};
-			var users = {};
+			var users = [];
 			await message.guild.members.cache.forEach(async m => {
 				var ps = await userGameData.findOne({where: {user_id: m.id}});
-				if (ps != undefined && ps != null) {console.log("am here"); users[m.id] = ps;};
+				if (ps != undefined && ps != null) {users += ps;};
 			});
 			console.log(users);
-			return message.channel.send(Object.keys(users).length);
+			return message.channel.send(users.length);
 		};
         return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
     }
