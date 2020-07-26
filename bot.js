@@ -108,7 +108,7 @@ client.on("ready", async () => {
 	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
 	GBLValk.webhook.on("vote", async vote => {
 		var u = client.users.cache.get(vote.id);
-		var stats = GBLValk.getBot(client.user.id);
+		var stats = await GBLValk.getBot(client.user.id);
 		client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
 		.setAuthor("New GBL Vote!", u.avatarURL())
 		.setThumbnail("https://cdn.discordapp.com/icons/623600255987875870/a_fdb1896f4a9e2b1d1ab74b6e1eadad7b.webp?size=2048")
