@@ -18,7 +18,7 @@ module.exports = {
     name: "vote",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.channel.send(new Discord.MessageEmbed().setTitle("Vote for me!").setDescription("You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)! In the future, this will give you a giant amount of XP and possibly exclusive commands.").setColor("DC134C"));};
+        if (!args.length) {return message.channel.send(new Discord.MessageEmbed().setTitle("Vote for me!").setDescription("You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)! This will give you a giant amount of XP (1,500) and in the future, possibly exclusive commands.").setColor("DC134C"));};
         var e = process.argv.includes('--force') || process.argv.includes('-f');
         sequelize.sync({force: e}).then(async () => {}).catch(console.error);
         if (args[0] == "server") {
