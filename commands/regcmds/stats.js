@@ -80,7 +80,7 @@ module.exports = {
 		if (args[0] == "leaderboard" || args[0] == "l") {
 			if (message.channel.type != "text") {return;};
 			var users = {};
-			message.guild.members.cache.forEach(m => {
+			message.guild.members.cache.forEach(async m => {
 				var ps = await userGameData.findOne({where: {user_id: m.id}});
 				if (ps) {users[m.id] = ps;};
 			});
