@@ -82,6 +82,7 @@ module.exports = {
 			var userss = Array.from(message.guild.members.cache.values());
 			var users = [];
 			for (var u in userss) {
+				console.log(u);
 				var ps = await userGameData.findOne({where: {user_id: u.id}});
 				if (ps != undefined && ps != null) {users.push(ps);};
 			};
