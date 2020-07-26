@@ -89,7 +89,7 @@ module.exports = {
 			users.sort(function(a, b){return b.level-a.level});
 			for (var i = 0; i < 10; i++) {
 				if (users[i] == undefined) {delete users[i];}
-				else {ls += `**${i + 1}**. __${message.guild.members.cache.get(users[i].user_id).displayName}__ - ${users[i].level}\n-> ${users[i].money}GP // Prestige ${users[i].prestige}\n`;};
+				else {ls += `**${i + 1}**. __${message.guild.members.cache.get(users[i].user_id).displayName}__ - **Level ${users[i].level}**\n->  ${users[i].money}GP // Prestige ${users[i].prestige}\n\n`;};
 			};
 			return message.channel.send(new Discord.MessageEmbed()
 			.setTitle("Level Leaderboard")
