@@ -81,13 +81,17 @@ module.exports = {
 			if (message.channel.type != "text") {return;};
 			var userss = Array.from(message.guild.members.cache.values());
 			var users = [];
-			for (var u in userss) {
-				console.log(u);
+			for (var u of userss) {
 				var ps = await userGameData.findOne({where: {user_id: u.id}});
 				if (ps != undefined && ps != null) {users.push(ps);};
 			};
-			console.log(users);
-			return message.channel.send(users.length);
+			var ls = "Leaderboard by Level:\n";
+			users.sort(function(a, b){return b.level-a.level});
+			for (var i = 0; i < 10; i++) {
+				if (users[i] == undefined) {delete users[i];}
+				else {ls += `${i + 1}. ${message.guild.members.cache.get(users[i].user_id).displayName} - ${users[i].level}\n`;};
+			};
+			return message.channel.send(ls);
 		};
         return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
     }
