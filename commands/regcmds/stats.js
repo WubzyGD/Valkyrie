@@ -82,6 +82,7 @@ module.exports = {
 			var users = {};
 			message.guild.members.cache.forEach(async m => {
 				var ps = await userGameData.findOne({where: {user_id: m.id}});
+				console.log(ps);
 				if (ps) {users[m.id] = ps;};
 			});
 			return message.channel.send(Object.keys(users).length);
