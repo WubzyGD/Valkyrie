@@ -312,12 +312,6 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && (cmd == "spawntreasure") && message.author.id === Wubzy) {
 		message.delete();
 		return spawnTreasure();
-<<<<<<< HEAD
-=======
-	} else if (msg.startsWith(prefix) && cmd == "emoji") {
-		if (client.emojis.cache.filter(e => e.identifier == args[2]).first()) {message.channel.send(client.emojis.cache.filter(e => e.identifier == args[2]).first().name);}
-		else {return message.reply("Couldn't finf that emoji.");};
->>>>>>> 5bb5779645d1f1dff85ddbb99d6526e0e2653fab
 	} else if (msg.startsWith(prefix) && cmd == "snipe") {
 		if (args[0].startsWith("e")) {
 			message.delete();
