@@ -82,7 +82,8 @@ module.exports = {
 			var users = [];
 			await message.guild.members.cache.forEach(async m => {
 				var ps = await userGameData.findOne({where: {user_id: m.id}});
-				if (ps != undefined && ps != null) {users += ps;};
+				if (ps != undefined && ps != null) {users.push(ps);};
+				//users = "sdfsf";
 			});
 			console.log(users);
 			return message.channel.send(users.length);
