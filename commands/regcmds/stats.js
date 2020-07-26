@@ -77,6 +77,15 @@ module.exports = {
 		var tempDieCount = await diceRolled.findOne({where: {user_id: String(person.id)}});
 		if (tempDieCount) {pstatsembed.addField("Dice Rolled", `You have rolled dice ${tempDieCount.dice_rolled} times.`);};
 		if (args[0] == "image") {return message.channel.send(attachment);};
+		if (args[0] == "leaderboard" || args[0] == "l") {
+			if (message.channel.type != "text") {return;};
+			var users = {};
+			message.guild.members.cache.forEach(m => {
+				var ps = await userGameData.findOne({where: {user_id: m.id}});
+				users[m.id] = ps;
+			});
+			message.channel.send(Object.keys(users).length);
+		};
         return message.channel.send(pstatsembed);} catch (e) {console.log(e);};
     }
 };

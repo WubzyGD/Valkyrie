@@ -312,10 +312,6 @@ client.on("message", async message => {
 	} else if (msg.startsWith(prefix) && (cmd == "spawntreasure") && message.author.id === Wubzy) {
 		message.delete();
 		return spawnTreasure();
-	} else if (msg.startsWith(prefix) && cmd == "emoji") {
-		var em;
-		client.guilds.cache.forEach(g => {em = g.emojis.cache.filter(e => e.identifier == args[2]).first().name; break;});
-		message.channel.send(em);
 	} else if (msg.startsWith(prefix) && cmd == "snipe") {
 		if (args[0].startsWith("e")) {
 			message.delete();
