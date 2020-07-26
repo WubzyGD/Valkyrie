@@ -314,8 +314,8 @@ client.on("message", async message => {
 		return spawnTreasure();
 	} else if (msg.startsWith(prefix) && cmd == "emoji") {
 		var em;
-		client.guilds.cache.forEach(g => {em = g.emojis.cache.filter(e => e.identifier == args[2]).first().name; if (em) {return;};});
-		message.channel.send(em);
+		client.guilds.cache.forEach(g => {em = g.emojis.cache.filter(e => e.identifier == args[2]).first(); if (em) {return;};});
+		message.channel.send(em.name);
 	} else if (msg.startsWith(prefix) && cmd == "snipe") {
 		if (args[0].startsWith("e")) {
 			message.delete();
