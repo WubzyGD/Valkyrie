@@ -85,7 +85,7 @@ var snipe = {
 	"delete": {}
 };
 
-GBLValk.webhook.on("vote", vote => {
+GBLValk.webhook.on("vote", async vote => {
 	var u = client.users.cache.get(vote.id);
 	var stats = GBLValk.getBot(client.user.id);
 	client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
