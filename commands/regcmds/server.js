@@ -45,34 +45,34 @@ module.exports = {
                 } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
             } else if (args[0] == "updatechannel") {
                 args.shift();
-                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit updatechannel <#channel|none>\` This will enable update logs in a channel for when Valkyrie is updated - if you mention a channel, or disable them if you type "none".`);};
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit updatechannel <#channel|channelID|none>\` This will enable update logs in a channel for when Valkyrie is updated - if you mention a channel, or disable them if you type "none".`);};
                 if (args[0] == "none") {
                     currentServer.valk_update_channel = null; save();
                     return message.reply("This server will no longer receive update messages. This can be re-enabled at any time.");
-                } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
+                } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
                     currentServer.valk_update_channel = args[0]; getChannel(); bc(getChannel()); save();
                     return message.reply(`This server will now receive updates in the ${args[0]} channel.`);
-                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit updatechannel <#channel|none>\``);};
+                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit updatechannel <#channel|channelID|none>\``);};
             } else if (args[0] == "welcomechannel") {
                 args.shift();
-                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit updatechannel <#channel|none>\` This will enable welcome messages in a channel for when a user joins - if you mention a channel, or disable them if you type "none".`)};
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit updatechannel <#channel|channelID|none>\` This will enable welcome messages in a channel for when a user joins - if you mention a channel, or disable them if you type "none".`)};
                 if (args[0] == "none") {
                     currentServer.welcome_message_channel = null; save();
                     return message.reply("This server will no longer receive welcome messages. This can be re-enabled at any time.");
-                } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
+                } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
                     currentServer.welcome_message_channel = args[0]; getChannel(); bc(getChannel()); save();
                     return message.reply(`This server will now receive welcome messages in the ${args[0]} channel.`);
-                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomechannel <#channel|none>\``);};
+                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomechannel <#channel|channelID|none>\``);};
             } else if (args[0] == "leavechannel") {
                 args.shift();
-                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit leavechannel <#channel|none>\` This will enable leave messages in a channel for when a user leaves - if you mention a channel, or disable them if you type "none".`)};
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit leavechannel <#channel|channelID|none>\` This will enable leave messages in a channel for when a user leaves - if you mention a channel, or disable them if you type "none".`)};
                 if (args[0] == "none") {
                     currentServer.leave_message_channel = null; save();
                     return message.reply("This server will no longer receive leaving messages. This can be re-enabled at any time.");
-                } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
+                } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
                     currentServer.leave_message_channel = args[0]; getChannel(); bc(getChannel()); save();
                     return message.reply(`This server will now receive leaving messages in the ${args[0]} channel.`);
-                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit leavechannel <#channel|none>\``);};
+                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit leavechannel <#channel|channelID|none>\``);};
             } else if (args[0] == "defaultrole") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit defaultrole <@role|none>\` This will add the role to users who join - if you mention a role, or disable it if you type "none".`)};
