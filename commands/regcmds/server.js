@@ -5,12 +5,12 @@ module.exports = {
     name: "server",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (message.channel.type != "text") {return;};
+        if (message.channel.type != "text") {return;}; currentServer = {};
         if (fs.existsSync(`./data/guildconfig/${message.guild.id}.json`)) {
             var currentServer = fs.readFileSync(`./data/guildconfig/${message.guild.id}.json`);
             currentServer = JSON.parse(currentServer);
         } else {
-            var currentServer = {
+            currentServer = {
                 server_edit_admin_requirement: true,
                 valk_update_channel: null,
                 welcome_message_channel: null,
@@ -105,7 +105,7 @@ module.exports = {
                 } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
             } else {return message.reply(`Invalid syntax/option provided. Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole|welcomerole|levelmessage>\``);};
         } else if (args[0] == "view") {
-            for (i of Object.keys(currentServer)) {if (currentServer[i] == null) {currentServer[i] = "None"};};
+            for (var i of Object.keys(currentServer)) {if (currentServer[i] == null) {currentServer[i] = "None";} else if (i.includes("channel")) {currentServer[i] = `<#${currentServer[i]}>`;};};
             var serverSettingsEmbed = new Discord.MessageEmbed()
             .setAuthor("Server Settings", message.member.guild.iconURL())
             .setDescription(`Server: ${message.member.guild.name}`)
