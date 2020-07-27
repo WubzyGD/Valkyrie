@@ -21,7 +21,7 @@ module.exports = {
                 welcome_ping_role: null,
             };
         };
-        function save() {var data = JSON.stringify(ars); fs.writeFileSync(`./data/guildconfig/${message.guild.id}.json`, data, 'utf8');};
+        function save() {var data = JSON.stringify(currentServer); fs.writeFileSync(`./data/guildconfig/${message.guild.id}.json`, data, 'utf8');};
         if (currentServer.server_edit_admin_requirement == true || currentServer.server_edit_admin_requirement == undefined) {if (!message.member.permissions.has("ADMINISTRATOR") && message.member.id !== "330547934951112705") {return message.reply("This server is set to only allow admins to edit my settings.")};};
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server <edit|view>\``)};
         if (args[0] == "edit") {
