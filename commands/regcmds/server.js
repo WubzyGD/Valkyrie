@@ -5,7 +5,7 @@ module.exports = {
     name: "server",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (fs.existsSync(`./data/ar/${message.guild.id}.json`)) {
+        if (fs.existsSync(`./data/guildconfig/${message.guild.id}.json`)) {
             var currentServer = fs.readFileSync(`./data/guildconfig/${message.guild.id}.json`);
             currentServer = JSON.parse(currentServer);
         } else {
