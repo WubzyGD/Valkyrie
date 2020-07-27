@@ -5,6 +5,7 @@ module.exports = {
     name: "server",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
+        if (message.channel.type != "text") {return;};
         if (fs.existsSync(`./data/guildconfig/${message.guild.id}.json`)) {
             var currentServer = fs.readFileSync(`./data/guildconfig/${message.guild.id}.json`);
             currentServer = JSON.parse(currentServer);
@@ -21,6 +22,11 @@ module.exports = {
                 welcome_ping_role: null,
             };
         };
+        function getChannel() {
+            if (message.mentions.channels.size < 1 || message.guild.channels.cache.has(args[0].trim())) {return 0;};
+            if (message.mentions.channels.size) {return message.mentions.channels.first().id;}
+            else {return args[0].trim();};
+        }; function bc(e) {if (e == 0) {return message.reply("You must tag a channel or provide an ID!");};};
         function save() {var data = JSON.stringify(currentServer); fs.writeFileSync(`./data/guildconfig/${message.guild.id}.json`, data, 'utf8');};
         if (currentServer.server_edit_admin_requirement == true || currentServer.server_edit_admin_requirement == undefined) {if (!message.member.permissions.has("ADMINISTRATOR") && message.member.id !== "330547934951112705") {return message.reply("This server is set to only allow admins to edit my settings.")};};
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server <edit|view>\``)};
@@ -44,7 +50,7 @@ module.exports = {
                     currentServer.valk_update_channel = null; save();
                     return message.reply("This server will no longer receive update messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
-                    currentServer.valk_update_channel = args[0]; save();
+                    currentServer.valk_update_channel = args[0]; getChannel(); bc(getChannel()); save();
                     return message.reply(`This server will now receive updates in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit updatechannel <#channel|none>\``);};
             } else if (args[0] == "welcomechannel") {
@@ -54,7 +60,7 @@ module.exports = {
                     currentServer.welcome_message_channel = null; save();
                     return message.reply("This server will no longer receive welcome messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
-                    currentServer.welcome_message_channel = args[0]; save();
+                    currentServer.welcome_message_channel = args[0]; getChannel(); bc(getChannel()); save();
                     return message.reply(`This server will now receive welcome messages in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomechannel <#channel|none>\``);};
             } else if (args[0] == "leavechannel") {
@@ -64,7 +70,7 @@ module.exports = {
                     currentServer.leave_message_channel = null; save();
                     return message.reply("This server will no longer receive leaving messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
-                    currentServer.leave_message_channel = args[0]; save();
+                    currentServer.leave_message_channel = args[0]; getChannel(); bc(getChannel()); save();
                     return message.reply(`This server will now receive leaving messages in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit leavechannel <#channel|none>\``);};
             } else if (args[0] == "defaultrole") {
