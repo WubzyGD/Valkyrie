@@ -85,6 +85,17 @@ var snipe = {
 	"delete": {}
 };
 
+var ars = {};
+
+setInterval(async () => {
+	for (var guild of Array.from(client.guilds.cache.values())) {
+		if (fs.existsSync(`./data/ar/${guild.id}.json`)) {
+			var t = fs.readFileSync(`./data/ar/${guild.id}.json`);
+			ars[guild.id] = JSON.parse(t);
+		} else {ars[guild.id] = null;};
+	};
+}, 120000);
+
 client.on("ready", async () => {
 	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
@@ -360,7 +371,7 @@ client.on("message", async message => {
 			.setThumbnail(m.guild.iconURL({size: 2048}))
 			.setColor("DC134C"));
 		} else {return message.reply("I can snipe an `edit` or a `delete`!");};
-	} else if (!client.commands.has(cmd)) {client.commands.get("ar").execute(message, msg, args, cmd, prefix, mention, client);};
+	} else if (!client.commands.has(cmd)) {client.commands.get("arcustom").execute(message, msg, args, cmd, prefix, mention, client, ars[message.guild.id]);};
 	try {
 		if (msg.startsWith(prefix)) {
 			if (client.commands.has(cmd)) {
