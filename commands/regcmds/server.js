@@ -23,7 +23,7 @@ module.exports = {
             };
         };
         function getChannel() {
-            if (message.mentions.channels.size < 1 || message.guild.channels.cache.has(args[0].trim())) {return 0;};
+            if (message.mentions.channels.size < 1 && message.guild.channels.cache.has(args[0].trim())) {return 0;};
             if (message.mentions.channels.size) {return message.mentions.channels.first().id;}
             else {return args[0].trim();};
         }; function bc(e) {if (e == 0) {return message.reply("You must tag a channel or provide an ID!");};};
