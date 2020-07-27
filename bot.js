@@ -112,7 +112,8 @@ setInterval(async () => {
 		if (users[i] == undefined) {delete users[i];}
 		else {ls += `**${i + 1}**. __${client.guilds.cache.get("679127746592636949").members.cache.get(users[i].user_id).displayName}__ - **Level ${users[i].level}**\n->  ${users[i].money}GP // Prestige ${users[i].prestige}\n\n`;};
 	};
-	client.guilds.cache.get("679127746592636949").channels.cache.get("737087839413469185").messages.fetch("737130334474207332").edit(new Discord.MessageEmbed()
+	var lbm = await client.guilds.cache.get("679127746592636949").channels.cache.get("737087839413469185").messages.fetch("737135205382357003");
+	await lbm.edit(new Discord.MessageEmbed()
 	.setTitle("Level Leaderboard")
 	.setDescription(`For ${client.guilds.cache.get("679127746592636949").name}`)
 	.setThumbnail(client.guilds.cache.get("679127746592636949").iconURL({size: 2048}))
