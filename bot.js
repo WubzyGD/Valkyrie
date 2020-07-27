@@ -87,6 +87,12 @@ var snipe = {
 
 var ars = {};
 
+for (var guild of Array.from(client.guilds.cache.values())) {
+	if (fs.existsSync(`./data/ar/${guild.id}.json`)) {
+		var t = fs.readFileSync(`./data/ar/${guild.id}.json`);
+		ars[guild.id] = JSON.parse(t);
+	} else {ars[guild.id] = null;};
+};
 setInterval(async () => {
 	for (var guild of Array.from(client.guilds.cache.values())) {
 		if (fs.existsSync(`./data/ar/${guild.id}.json`)) {

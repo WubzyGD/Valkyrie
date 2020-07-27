@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const ar = require("./ar");
 
 module.exports = {
     name: "arcustom",
@@ -41,7 +40,7 @@ module.exports = {
         };
         if (message.channel.type == "text") {
             if (ars == null) {return;};
-            for (ar of Object.keys(ars)) {if (msg == ar) {return message.channel.send(ars[ar]);};};
+            for (var arr of Object.keys(ars)) {if (msg == arr) {return message.channel.send(ars[arr]);};};
         };
     }
 };
