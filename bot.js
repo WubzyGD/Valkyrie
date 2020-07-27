@@ -212,25 +212,17 @@ client.on('guildDelete', async (guild) => {
 
 client.on('guildMemberAdd', async member => {
 	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
-	var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
-	if (!thisServerSettings) {
-		await serverSettings.create({
-			guild_name: member.guild.name,
-			guild_id: String(member.guild.id),
-		});
-		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
-	};
+    if (fs.existsSync(`./data/guildconfig/${member.guild.id}.json`)) {
+        var thisServerSettings = fs.readFileSync(`./data/guildconfig/${member.guild.id}.json`);
+		thisServerSettings = JSON.parse(thisServerSettings);
+		if (thisServerSettings.welcome_message_channel != null) {var channel = await member.guild.channels.cache.get(thisServerSettings);};
+    };
 	try {
-	if (thisServerSettings.join_role != "none") {
+	/*if (thisServerSettings.join_role != "none") {
 		var role = member.guild.roles.cache.get(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim());
 		if (!role) {serverSettings.update({join_role: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
-	};
-	if (thisServerSettings.welcome_message_channel != "none") {
-		var channel = member.guild.channels.cache.get(thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
-		if (!channel) {serverSettings.update({welcome_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
-	};
+	};*/
 	console.log(thisServerSettings.join_role.slice(3, thisServerSettings.join_role.length - 1).trim(), thisServerSettings.welcome_message_channel.slice(2, thisServerSettings.welcome_message_channel.length - 1).trim());
-	if (role != "none") {console.log(role); member.roles.add(role.id).catch(console.error);};
 	var join_extraOptions = new Array("Careful, the tiefling riled up the skeletons.", 
 	"Be warned, the wizard is a little irritable, he just rolled pretty low.", "Careful, dice rolls are a little low today.", 
 	"Look on the bright side, finally someone other than the dragonborn can help take care of the goblins.", 
@@ -270,7 +262,7 @@ client.on('guildMemberAdd', async member => {
 
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
-		if (channel !== "none") {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
+		if (channel != null) {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
 	} catch (error) {console.log(error);};} catch (e) {console.log(e);};
 });
 
