@@ -6,7 +6,7 @@ module.exports = {
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}ar <add|edit|delete|list>\``);};
-        function getName() {
+        async function getName() {
             try {
                 var filter = m => m.author.id == message.author.id;
                 await message.channel.send("What text would you like to trigger the AR? This is case-sensitive (except for capitals) and will trigger in any channel in this server only!");
@@ -15,7 +15,7 @@ module.exports = {
                 return trigger;
             } catch (e) {message.reply("Looks like you took too long. Try again?"); return null;};
         };
-        function getResp() {
+        async function getResp() {
             try {
                 var filter = m => m.author.id == message.author.id;
                 await message.channel.send("And how should I reply? Let's keep things relatively nice, please!");
