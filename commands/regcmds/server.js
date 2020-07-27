@@ -1,34 +1,28 @@
 const Discord = require("discord.js");
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize('database', 'user', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	storage: 'database.sqlite',
-});
-
-const serverConfig = sequelize.import("../../models/serversettings");
-
-var e = process.argv.includes('--force') || process.argv.includes('-f');
-
-sequelize.sync({force: e}).then(async () => {}).catch(console.error);
+const fs = require("fs");
 
 module.exports = {
     name: "server",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
-        var currentServer = await serverConfig.findOne({where: {guild_id: message.member.guild.id}});
-		if (!currentServer) {
-			try {
-				await serverConfig.create({
-                    guild_name: message.member.guild.name,
-                    guild_id: String(message.member.guild.id),
-                });
-				return message.reply(`This appears to be the first time a member has tried to access this server's server config, so I've registered your server, and you can now edit and access its settings! --Granted that you have the right permissions, of course. **If you just ran an edit command, you may need to do it again.**`);
-			} catch (e) {};
+        if (fs.existsSync(`./data/ar/${message.guild.id}.json`)) {
+            var currentServer = fs.readFileSync(`./data/guildconfig/${message.guild.id}.json`);
+            currentServer = JSON.parse(currentServer);
+        } else {
+            var currentServer = {
+                server_edit_admin_requirement: true,
+                valk_update_channel: null,
+                welcome_message_channel: null,
+                leave_message_channel: null,
+                join_role: null,
+                prefix: "v.",
+                level_update: false,
+                log_channel: null,
+                welcome_ping_role: null,
+            };
         };
-        if (currentServer.server_edit_admin_requirement == true) {if (!message.member.permissions.has("ADMINISTRATOR") && message.member.id !== "330547934951112705") {return message.reply("This server is set to only allow admins to edit my settings.")};};
+        function save() {var data = JSON.stringify(ars); fs.writeFileSync(`./data/guildconfig/${message.guild.id}.json`, data, 'utf8');};
+        if (currentServer.server_edit_admin_requirement == true || currentServer.server_edit_admin_requirement == undefined) {if (!message.member.permissions.has("ADMINISTRATOR") && message.member.id !== "330547934951112705") {return message.reply("This server is set to only allow admins to edit my settings.")};};
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server <edit|view>\``)};
         if (args[0] == "edit") {
             args.shift();
@@ -37,74 +31,75 @@ module.exports = {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit adminedit <true|false>\` Setting this to \`true\` means that any member can update my settings in this server. Otherwise, members must have administrator permissions to edit my settings.`);};
                 if (args[0] == "true" || args[0] == "yes") {
-                    await serverConfig.update({server_edit_admin_requirement: true}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.server_edit_admin_requirement = true; save();
                     return message.reply("This server is now set to only allow admins to update my settings.");
                 } else if (args[0] == "false" || args[0] == "no") {
-                    await serverConfig.update({server_edit_admin_requirement: false}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.server_edit_admin_requirement = false; save();
                     return message.reply("This server is now set only anyone to update my settings.");
                 } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
             } else if (args[0] == "updatechannel") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit updatechannel <#channel|none>\` This will enable update logs in a channel for when Valkyrie is updated - if you mention a channel, or disable them if you type "none".`);};
                 if (args[0] == "none") {
-                    await serverConfig.update({valk_update_channel: "none"}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.valk_update_channel = null; save();
                     return message.reply("This server will no longer receive update messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
-                    await serverConfig.update({valk_update_channel: args[0]}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.valk_update_channel = args[0]; save();
                     return message.reply(`This server will now receive updates in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit updatechannel <#channel|none>\``);};
             } else if (args[0] == "welcomechannel") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit updatechannel <#channel|none>\` This will enable welcome messages in a channel for when a user joins - if you mention a channel, or disable them if you type "none".`)};
                 if (args[0] == "none") {
-                    await serverConfig.update({welcome_message_channel: "none"}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.welcome_message_channel = null; save();
                     return message.reply("This server will no longer receive welcome messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
-                    await serverConfig.update({welcome_message_channel: args[0]}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.welcome_message_channel = args[0]; save();
                     return message.reply(`This server will now receive welcome messages in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomechannel <#channel|none>\``);};
             } else if (args[0] == "leavechannel") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit leavechannel <#channel|none>\` This will enable leave messages in a channel for when a user leaves - if you mention a channel, or disable them if you type "none".`)};
                 if (args[0] == "none") {
-                    await serverConfig.update({leave_message_channel: "none"}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.leave_message_channel = null; save();
                     return message.reply("This server will no longer receive leaving messages. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<#") && args[0].endsWith(">")) {
-                    await serverConfig.update({leave_message_channel: args[0]}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.leave_message_channel = args[0]; save();
                     return message.reply(`This server will now receive leaving messages in the ${args[0]} channel.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit leavechannel <#channel|none>\``);};
             } else if (args[0] == "defaultrole") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit defaultrole <@role|none>\` This will add the role to users who join - if you mention a role, or disable it if you type "none".`)};
                 if (args[0] == "none") {
-                    await serverConfig.update({join_role: "none"}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.join_role = null; save();
                     return message.reply("This server now has no default role - I won't add a role to users when they join. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<@&") && args[0].endsWith(">")) {
-                    await serverConfig.update({join_role: args[0]}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.join_role = args[0]; save();
                     return message.reply(`I'll add that role to new members.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit defaultrole <@role|none>\``);};
             } else if (args[0] == "welcomerole") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit welcomerole <@role|none>\` This will add ping a role when new users join - if you mention a role, or disable it if you type "none".`)};
                 if (args[0] == "none") {
-                    await serverConfig.update({welcome_ping_role: "none"}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.welcome_ping_role = null; save();
                     return message.reply("This server now has no welcome role ping - I won't add ping a role when users join. This can be re-enabled at any time.");
                 } else if (args[0].startsWith("<@&") && args[0].endsWith(">")) {
-                    await serverConfig.update({welcome_ping_role: args[0]}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.welcome_ping_role = args[0]; save();
                     return message.reply(`I'll ping that role when new members join.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomerole <@role|none>\``);};
             } else if (args[0] == "levelmessage") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit levelmessage <true|false>\` Setting this to \`true\` means that when a user levels up, a message will be sent. Otherwise, they'll just level up... er... *incognito*.`);};
                 if (args[0] == "true" || args[0] == "yes") {
-                    await serverConfig.update({level_update: true}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.level_update = true; save();
                     return message.reply("This server is now set to send level up messages.");
                 } else if (args[0] == "false" || args[0] == "no") {
-                    await serverConfig.update({level_update: false}, {where: {guild_id: message.member.guild.id}});
+                    currentServer.level_update = false; save();
                     return message.reply("Level up messages have been disabled.");
                 } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
             } else {return message.reply(`Invalid syntax/option provided. Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole|welcomerole|levelmessage>\``);};
         } else if (args[0] == "view") {
+            for (i of Object.keys(currentServer)) {if (currentServer[i] == null) {currentServer[i] = "None"};};
             var serverSettingsEmbed = new Discord.MessageEmbed()
             .setAuthor("Server Settings", message.member.guild.iconURL())
             .setDescription(`Server: ${message.member.guild.name}`)
