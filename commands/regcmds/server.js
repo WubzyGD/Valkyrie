@@ -50,7 +50,7 @@ module.exports = {
                     currentServer.valk_update_channel = null; save();
                     return message.reply("This server will no longer receive update messages. This can be re-enabled at any time.");
                 } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
-                    currentServer.valk_update_channel = args[0]; getChannel(); if (currentServer.valk_update_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
+                    currentServer.valk_update_channel = getChannel(); if (currentServer.valk_update_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
                     return message.reply(`This server will now receive updates in <#${currentServer.valk_update_channel}>.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit updatechannel <#channel|channelID|none>\``);};
             } else if (args[0] == "welcomechannel") {
@@ -60,7 +60,7 @@ module.exports = {
                     currentServer.welcome_message_channel = null; save();
                     return message.reply("This server will no longer receive welcome messages. This can be re-enabled at any time.");
                 } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
-                    currentServer.welcome_message_channel = args[0]; getChannel(); if (currentServer.welcome_message_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
+                    currentServer.welcome_message_channel = getChannel(); if (currentServer.welcome_message_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
                     return message.reply(`This server will now receive welcome messages in <#${currentServer.welcome_message_channel}>.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit welcomechannel <#channel|channelID|none>\``);};
             } else if (args[0] == "leavechannel") {
@@ -70,7 +70,7 @@ module.exports = {
                     currentServer.leave_message_channel = null; save();
                     return message.reply("This server will no longer receive leaving messages. This can be re-enabled at any time.");
                 } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
-                    currentServer.leave_message_channel = args[0]; getChannel(); if (currentServer.leave_message_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
+                    currentServer.leave_message_channel = getChannel(); if (currentServer.leave_message_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
                     return message.reply(`This server will now receive leaving messages in <#${currentServer.leave_message_channel}>.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit leavechannel <#channel|channelID|none>\``);};
             } else if (args[0] == "defaultrole") {
