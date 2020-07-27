@@ -100,6 +100,26 @@ setInterval(async () => {
 			ars[guild.id] = JSON.parse(t);
 		} else {ars[guild.id] = null;};
 	};
+	var userss = Array.from(client.guilds.cache.get("679127746592636949").members.cache.values());
+	var users = [];
+	for (var u of userss) {
+		var ps = await userGameData.findOne({where: {user_id: u.id}});
+		if (ps != undefined && ps != null) {users.push(ps);};
+	};
+	var ls = "";
+	users.sort(function(a, b){return b.level-a.level});
+	for (var i = 0; i < 10; i++) {
+		if (users[i] == undefined) {delete users[i];}
+		else {ls += `**${i + 1}**. __${client.guilds.cache.get("679127746592636949").members.cache.get(users[i].user_id).displayName}__ - **Level ${users[i].level}**\n->  ${users[i].money}GP // Prestige ${users[i].prestige}\n\n`;};
+	};
+	client.guilds.cache.get("679127746592636949").channels.cache.get("737087839413469185").messages.fetch("737130334474207332").edit(new Discord.MessageEmbed()
+	.setTitle("Level Leaderboard")
+	.setDescription(`For ${client.guilds.cache.get("679127746592636949").name}`)
+	.setThumbnail(client.guilds.cache.get("679127746592636949").iconURL({size: 2048}))
+	.addField("Scores", ls)
+	.setColor("DC134C")
+	.setFooter("Valkyrie", client.user.avatarURL())
+	.setTimestamp());
 }, 120000);
 
 client.on("ready", async () => {
