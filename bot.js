@@ -107,16 +107,31 @@ setInterval(async () => {
 		if (ps != undefined && ps != null) {users.push(ps);};
 	};
 	var ls = "";
+	var ls_money = "";
+	var users_money = users;
 	users.sort(function(a, b){return b.level-a.level});
+	users_money.sort(function(a, b){return b.money-a.money});
 	for (var i = 0; i < 10; i++) {
 		if (users[i] == undefined) {delete users[i];}
 		else {ls += `**${i + 1}**. __${client.guilds.cache.get("679127746592636949").members.cache.get(users[i].user_id).displayName}__ - **Level ${users[i].level}**\n->  ${users[i].money}GP // Prestige ${users[i].prestige}\n\n`;};
+		if (users_money[i] == undefined) {delete users_money[i];}
+		else {ls_money += `**${i + 1}**. __${client.guilds.cache.get("679127746592636949").members.cache.get(users_money[i].user_id).displayName}__ - **${users_money[i].money} GP**\n->  Level ${users_money[i].level} // Prestige ${users[i].prestige}\n\n`;};
 	};
-	client.guilds.cache.get("679127746592636949").channels.cache.get("737087839413469185").messages.fetch("737130334474207332").edit(new Discord.MessageEmbed()
+	var lbm = await client.guilds.cache.get("679127746592636949").channels.cache.get("737087839413469185").messages.fetch("737135205382357003");
+	await lbm.edit(new Discord.MessageEmbed()
 	.setTitle("Level Leaderboard")
 	.setDescription(`For ${client.guilds.cache.get("679127746592636949").name}`)
 	.setThumbnail(client.guilds.cache.get("679127746592636949").iconURL({size: 2048}))
 	.addField("Scores", ls)
+	.setColor("DC134C")
+	.setFooter("Valkyrie", client.user.avatarURL())
+	.setTimestamp());
+	var lbmm = await client.guilds.cache.get("679127746592636949").channels.cache.get("737087839413469185").messages.fetch("737140287704531034");
+	await lbmm.edit(new Discord.MessageEmbed()
+	.setTitle("GP Leaderboard")
+	.setDescription(`For ${client.guilds.cache.get("679127746592636949").name}`)
+	.setThumbnail(client.guilds.cache.get("679127746592636949").iconURL({size: 2048}))
+	.addField("Scores", ls_money)
 	.setColor("DC134C")
 	.setFooter("Valkyrie", client.user.avatarURL())
 	.setTimestamp());
