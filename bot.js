@@ -215,7 +215,7 @@ client.on('guildMemberAdd', async member => {
     if (fs.existsSync(`./data/guildconfig/${member.guild.id}.json`)) {
         var thisServerSettings = fs.readFileSync(`./data/guildconfig/${member.guild.id}.json`);
 		thisServerSettings = JSON.parse(thisServerSettings);
-		if (thisServerSettings.welcome_message_channel != null) {var channel = await member.guild.channels.cache.get(thisServerSettings);};
+		if (thisServerSettings.welcome_message_channel != null) {var channel = member.guild.channels.cache.get(thisServerSettings.welcome_message_channel);};
     };
 	try {
 	/*if (thisServerSettings.join_role != "none") {
@@ -260,7 +260,7 @@ client.on('guildMemberAdd', async member => {
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
-		console.log(thisServerSettings);
+
 		if (channel != null && channel != undefined) {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
 	} catch (error) {console.log(error);};} catch (e) {console.log(e);};
 });
