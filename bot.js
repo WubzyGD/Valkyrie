@@ -260,7 +260,7 @@ client.on('guildMemberAdd', async member => {
 		ctx.drawImage(avatar, 25, 25, 200, 200);
 
 		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
-		console.log(channel);
+		console.log(thisServerSettings);
 		if (channel != null && channel != undefined) {channel.send(`**${member.displayName}** just joined the fight. ${join_extraOptions[chosen_join_extraOptions]}`, attachment);};
 	} catch (error) {console.log(error);};} catch (e) {console.log(e);};
 });
