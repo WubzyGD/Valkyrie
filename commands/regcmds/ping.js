@@ -7,7 +7,7 @@ module.exports = {
         return message.channel.send(new Discord.MessageEmbed()
         .setTitle("Pong!")
         .setDescription("Here you go, nerd ;)")
-        .addField("Bot Ping", `${Date.now() - message.createdTimestamp}ms`, true)
+        .addField("Bot Ping", `${Date.now() - message.createdTimestamp - 500}ms`, true)
         .addField("API Ping", `${client.ws.ping}ms`, true)
         .setColor("DC134C")
         .setFooter("Valkyrie", client.user.avatarURL())
