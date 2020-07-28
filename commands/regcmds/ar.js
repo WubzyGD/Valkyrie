@@ -42,7 +42,7 @@ module.exports = {
         } else if (args[0] == "list") {
             if (Object.keys(ars).length == 0) {return message.reply("This server has no auto-responses!");};
             arls = "";
-            for (ar of Object.keys(ars)) {arls += `${Object.keys(ars).indexOf(ar) + 1}. Trigger: ${ar}\nResponse: ${ars[ar]}\n\n`;};
+            for (ar of Object.keys(ars)) {arls += `${Object.keys(ars).indexOf(ar) + 1}. Trigger: \`${ar}\`\nResponse: \`${ars[ar]}\`\n\n`;};
             return message.channel.send(new Discord.MessageEmbed()
             .setTitle("Server ARs")
             .setThumbnail(message.guild.iconURL({size: 2048}))
