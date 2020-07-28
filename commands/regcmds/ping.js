@@ -8,9 +8,9 @@ module.exports = {
         .setTitle("Pong!")
         .setDescription("Here you go, nerd ;)")
         .addField("Bot Ping", `${Date.now() - message.createdTimestamp}ms`, true)
-        .addField("API Ping", `${client.ws.ping}ms`, true))
+        .addField("API Ping", `${client.ws.ping}ms`, true)
         .setColor("DC134C")
-        .setFooter("Valkyrie", client.user.avatarURL()
-        .setTimestamp())
+        .setFooter("Valkyrie", client.user.avatarURL())
+        .setTimestamp());
     }
 };
