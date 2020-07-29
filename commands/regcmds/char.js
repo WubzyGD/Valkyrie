@@ -47,8 +47,8 @@ module.exports = {
                     var cpersonality = await query("Describe your character's personality. Consider their strengths and weaknesses, too.", 1000);
                     var cskills = await query("What are some things you character is skilled at?", 500);
                     var chobbies = await query("What are their hobbies?", "None");
-                    var cflaws = await query("Describe some of your character's personality flaws.", "None");
-                    var cvirtues = await query("Describe some of their virtues - the things that make them great.", "None");
+                    var cflaws = await query("Describe some of your character's personality flaws.", 500);
+                    var cvirtues = await query("Describe some of their virtues - the things that make them great.", 500);
                     var capparel = await query("Describe you character's apparel and appearance.", 1500);
                     var cocquery = await query("Is your character an OC (Original Character?) If it was not created by you, or it is very closely based on someone else's character, then it is not an OC. Respond with `yes` or `no`.", 3);
                     if (cocquery.toLowerCase().includes("y")) {cocquery = true;} else if (cocquery.toLowerCase().includes("n")) {cocquery = false;} else {return message.reply("You must use yes or no.");};
@@ -118,8 +118,72 @@ module.exports = {
 
         } else if (td == "view") {
             args.shift();
-            if (!args.length) {return message.channel.send(`You must provide an ID of the character you wish to view. If you do not know the character's ID, use \`list\` as the ID to see all of you characters' IDs.`);};
-            
+            if (!args.length) {return message.channel.send(`You must provide first the character's type (\`rp\` or \`DnD\`) an ID of the character you wish to view. If you do not know the character's ID, use \`list\` as the ID to see all of you characters' IDs.`);};
+            if (fs.existsSync(`./data/chars/${message.author.id}.json`)) {
+                var chars = JSON.parse(fs.readFileSync(`./data/chars/${message.author.id}.json`));
+            } else {return message.reply("You don't have any characters made!");};
+            function viewChar(type, char) {
+                try {
+                    var charEmbed = new Discord.MessageEmbed().setAuthor(char.name, message.author.avatarURL())
+                    .setDescription(`${type} Character made by ${message.author.username}`)
+                    .addField("Base Info", `**Name**: ${char.name}\n\n**Age**: ${char.age}\n**Gender**: ${char.gender}\n**Species**: ${char.species}\A**liases/Nicknames**: ${char.nicknames}`)
+                    .addField("Physical", `**Height**: ${char.height}\n**Weight**: ${char.weight}`)
+                    .addField("Physical Description", char.description)
+                    .addField("Personality", `**Personality**: ${char.personality}\n\n**Virtues**: ${char.virtues}\n\n**Flaws**: ${char.flaws}`)
+                    .addField("Apparel", char.apparel)
+                    .addField("Attributes", `**Skills**: ${char.skills}\n**Hobbies**: ${char.hobbies}\n**Powers**: ${char.powers}\n**Class/Elemental**: ${char.elemental}`)
+                    .addField("Other Info", `**Birth Info**: ${char.birth_info}\n**Other Notes**: ${char.other_notes}`)
+                    .setColor("DC134C").setFooter("Valkyrie", client.user.avatarURL()).setTimestamp();
+                    if (char.ref_image != "Omitted") {try {
+                        charEmbed.addField("Image Source", `[${char.name} Ref Img](${char.ref_image})`, true);
+                        charEmbed.setImage(char.ref_image); } catch {message.author.send("It seems like the link you provided for the image for your character is invalid. Please edit your character and fix this!");};
+                    };
+                    if (char.ref_link != "Omitted") {charEmbed.addField("Reference Link", `Go [here](${char.link}) to learn more.`, true);};
+                    return message.channel.send(charEmbed);
+                } catch (e) {console.log(`Error while displaying character: ${e}`); return message.reply("There was an error in displaying your character. Most likely, if you had an image for your character, you gave a bad link. It's possible that you had too many letters in your character's bio fields, in which case, yell at Wubzy for me and he'll make a fix.");};
+            };
+            if (args[0] == "list") {
+                var lsr = "";
+                var lsd = "";
+                if (Object.keys(chars.rp).length > 0) {for (var charid of Object.keys(chars.rp)) {lsr += `**${Object.keys(chars.rp).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.rp[charid].namme}\n\n`;};}
+                else {lsr = "No RP Characters made yet!";};
+                if (Object.keys(chars.dnd).length > 0) {for (var charid of Object.keys(chars.dnd)) {lsd += `**${Object.keys(chars.dnd).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.dnd[charid].namme}\n\n`;};}
+                else {lsd = "No DnD Characters made yet!";};
+                return message.channel.send(new Discord.MessageEmbed()
+                .setAuthor("Character List", message.author.avatarURL())
+                .setDescription(`For ${message.author.username}`)
+                .addField("RP Characters", lsr)
+                .addField("DnD Characters", lsd)
+                .setColor("DC134C")
+                .setFooter("Valkyrie")
+                .setTimestamp());
+            } else if (args[0] == "rp") {
+                if (args[1] == "list") {
+                    var lsr = "";
+                    if (Object.keys(chars.rp).length > 0) {for (var charid of Object.keys(chars.rp)) {lsr += `**${Object.keys(chars.rp).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.rp[charid].namme}\n\n`;};}
+                    else {lsr = "No RP Characters made yet!";};
+                    return message.channel.send(new Discord.MessageEmbed()
+                    .setAuthor("Character List", message.author.avatarURL())
+                    .setDescription(`For ${message.author.username}`)
+                    .addField("RP Characters", lsr)
+                    .setColor("DC134C")
+                    .setFooter("Valkyrie")
+                    .setTimestamp());
+                } else {if (Object.keys(chars.rp).includes(args[1])) {viewChar("RP", chars.rp[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");};};
+            } else if (args[0] == "dnd") {
+                if (args[1] == "list") {
+                    var lsd = "";
+                    if (Object.keys(chars.dnd).length > 0) {for (var charid of Object.keys(chars.dnd)) {lsd += `**${Object.keys(chars.dnd).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.dnd[charid].namme}\n\n`;};}
+                    else {lsd = "No DnD Characters made yet!";};
+                    return message.channel.send(new Discord.MessageEmbed()
+                    .setAuthor("Character List", message.author.avatarURL())
+                    .setDescription(`For ${message.author.username}`)
+                    .addField("DnD Characters", lsd)
+                    .setColor("DC134C")
+                    .setFooter("Valkyrie")
+                    .setTimestamp());
+                } else {if (Object.keys(chars.dnd).includes(args[1])) {viewChar("DnD", chars.rp[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");};};
+            } else {return message.reply("Please specify either `list`, or the character's type, `rp` or `dnd`");};
         } else {return message.reply(`Invalid syntax. Syntax: \`${prefix}char <create|view|edit|delete>\``);};
     }
 };
