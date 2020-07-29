@@ -266,23 +266,15 @@ client.on('guildMemberAdd', async member => {
 });
 
 client.on('guildMemberRemove', async member => {
-	await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
 	try {
-		var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
-		if (!thisServerSettings) {
-			await serverSettings.create({
-				guild_name: member.guild.name,
-				guild_id: String(member.guild.id),
-			});
-			var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});
+		if (fs.existsSync(`./data/guildconfig/${member.guild.id}.json`)) {
+			var thisServerSettings = fs.readFileSync(`./data/guildconfig/${member.guild.id}.json`);
+			thisServerSettings = JSON.parse(thisServerSettings);
+			if (thisServerSettings.leave_message_channel != null) {var channel = member.guild.channels.cache.get(thisServerSettings.leave_message_channel);};
+			if (channel != null && channel != undefined) {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.')};
 		};
-		if (thisServerSettings.leave_message_channel !== "none") {
-			var channel = member.guild.channels.cache.get(thisServerSettings.leave_message_channel.slice(2, thisServerSettings.leave_message_channel.length - 1).trim());
-			if (!channel) {serverSettings.update({leave_message_channel: "none"}, {where: {guild_id: member.guild.id}}); var thisServerSettings = await serverSettings.findOne({where: {guild_id: member.guild.id}});};
-		};
-		if (channel !== "none") {channel.send(member.displayName + ' left the server. They probably got eaten by goblins.').catch(console.error);};
 	} catch (e) {
-		console.log(e, channel, thisServerSettings.channel);
+		console.log(e);
 	};
 });
 
