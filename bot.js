@@ -395,7 +395,8 @@ client.on("message", async message => {
 			.setThumbnail(m.guild.iconURL({size: 2048}))
 			.setColor("DC134C"));
 		} else {return message.reply("I can snipe an `edit` or a `delete`!");};
-	} else if (!client.commands.has(cmd)) {client.commands.get("arcustom").execute(message, msg, args, cmd, prefix, mention, client, ars[message.guild.id]);};
+	} else if (!client.commands.has(cmd)) {
+	if (message.channel.type == "text") {client.commands.get("arcustom").execute(message, msg, args, cmd, prefix, mention, client, ars[message.guild.id]);};};
 	try {
 		if (msg.startsWith(prefix)) {
 			if (client.commands.has(cmd)) {
