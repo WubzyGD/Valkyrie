@@ -139,7 +139,7 @@ module.exports = {
                         charEmbed.addField("Image Source", `[${char.name} Ref Img](${char.ref_image})`, true);
                         charEmbed.setImage(char.ref_image); } catch {message.author.send("It seems like the link you provided for the image for your character is invalid. Please edit your character and fix this!");};
                     };
-                    if (char.ref_link != "Omitted") {charEmbed.addField("Reference Link", `Go [here](${char.link}) to learn more.`, true);};
+                    if (char.ref_link != "Omitted") {charEmbed.addField("Reference Link", `Go [here](${char.ref_link}) to learn more.`, true);};
                     return message.channel.send(charEmbed);
                 } catch (e) {console.log(`Error while displaying character: ${e}`); return message.reply("There was an error in displaying your character. Most likely, if you had an image for your character, you gave a bad link. It's possible that you had too many letters in your character's bio fields, in which case, yell at Wubzy for me and he'll make a fix.");};
             };
