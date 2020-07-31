@@ -371,11 +371,15 @@ client.on("message", async message => {
 		message.delete();
 		return spawnTreasure();
 	} else if (msg.startsWith(prefix) && cmd == "snipe") {
+		if (message.mentions.channels.size > 0) {var channel = message.mentions.channels.first()} else if (args.length > 1 && args[1].length == 18) {
+			var channel = message.guild.channels.cache.get(args[1]);
+			if (channel == undefined) {return message.reply("You provided an invalid channel ID!");};
+		} else {var channel = message.channel;};
 		if (args[0].startsWith("e")) {
 			message.delete();
 			if (!Object.keys(snipe.edit).includes(message.guild.id)) {return message.reply("Looks like nobody has edited a message in this guild recently.");};
-			if (!Object.keys(snipe.edit[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has edited a message in this channel recently.");};
-			var m = snipe.edit[message.guild.id][message.channel.id];
+			if (!Object.keys(snipe.edit[message.guild.id]).includes(channel.id)) {return message.reply("Looks like nobody has edited a message in this channel recently.");};
+			var m = snipe.edit[message.guild.id][channel.id];
 			return message.channel.send(new Discord.MessageEmbed()
 			.setAuthor("Last Edited Message", m.old.author.avatarURL())
 			.setDescription(`In \`${m.old.channel.name}\`\nSent by ${m.old.member.displayName}`)
@@ -386,8 +390,8 @@ client.on("message", async message => {
 		} else if (args[0].startsWith("d")) {
 			message.delete();
 			if (!Object.keys(snipe.delete).includes(message.guild.id)) {return message.reply("Looks like nobody has deleted a message in this guild recently.");};
-			if (!Object.keys(snipe.delete[message.guild.id]).includes(message.channel.id)) {return message.reply("Looks like nobody has deleted a message in this channel recently.");};
-			var m = snipe.delete[message.guild.id][message.channel.id];
+			if (!Object.keys(snipe.delete[message.guild.id]).includes(channel.id)) {return message.reply("Looks like nobody has deleted a message in this channel recently.");};
+			var m = snipe.delete[message.guild.id][channel.id];
 			return message.channel.send(new Discord.MessageEmbed()
 			.setAuthor("Last Deleted Message", m.author.avatarURL())
 			.setDescription(`In \`${m.channel.name}\`\nSent by ${m.member.displayName}`)
