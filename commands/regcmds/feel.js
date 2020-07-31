@@ -21,7 +21,7 @@ module.exports = {
                     fs.writeFileSync(`./data/emotions/${args[1]}.json`, JSON.stringify(emotion), "utf8");
                     return message.reply(new Discord.MessageEmbed()
                     .setAuthor("New Emotion Image Added", message.author.avatarURL())
-                    .setDescription(`For \`${args[1]} emotion`)
+                    .setDescription(`For \`${args[1]}\` emotion`)
                     .setImage(args[3])
                     .setColor(emotion.color));
                 } else {return message.reply("I don't have that emotion!");};
@@ -36,9 +36,8 @@ module.exports = {
             .setColor("DC134C"));
         } else {
             if (message.channel.type != "text") {return;};
-            var emotionsl = fs.readdirSync("./data/emotions").filter(file => file.endsWith(".json"));
-            if (emotionsl.includes(args[1])) {
-                var emotions = JSON.parse(fs.readFileSync(`./data/emotions/${args[1]}.json`));
+            if (fs.existsSync(`./data/emotions/${args[0]}.json`)) {
+                var emotions = JSON.parse(fs.readFileSync(`./data/emotions/${args[0]}.json`));
                 return message.reply(new Discord.MessageEmbed()
                 .setTitle(`${message.member.displayName} is feeling ${args[0]}`)
                 .setImage(emotions.feels[Object.keys(emotions.feels)[Math.floor(Math.random() * Object.keys(emotions.feels).length)]])
