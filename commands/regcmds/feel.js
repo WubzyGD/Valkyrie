@@ -17,7 +17,7 @@ module.exports = {
             } else {
                 if (fs.existsSync(`./data/emotions/${args[1]}.json`)) {
                     var emotion = JSON.parse(fs.readFileSync(`./data/emotions/${args[1]}.json`));
-                    emotion.feels[args[2]] = args[3];
+                    emotion.feels[Object.keys(emotion.feels).length.toString()] = args[2];
                     fs.writeFileSync(`./data/emotions/${args[1]}.json`, JSON.stringify(emotion), "utf8");
                     return message.reply(new Discord.MessageEmbed()
                     .setAuthor("New Emotion Image Added", message.author.avatarURL())
@@ -29,7 +29,7 @@ module.exports = {
         } else if (args[0] == "list") {
             var emotions = fs.readdirSync("./data/emotions").filter(file => file.endsWith(".json"));
             var es = "";
-            for (var emotion of emotions) {es += `- \`${emotion}\`\n`};
+            for (var emotion of emotions) {es += `- \`${emotion.slice(0, emotion.length - 5)}\`\n`};
             return message.reply(new Discord.MessageEmbed()
             .setTitle("Emotions list")
             .setDescription(es)
