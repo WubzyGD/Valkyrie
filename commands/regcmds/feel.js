@@ -41,7 +41,7 @@ module.exports = {
             if (mention.bot) {return message.reply("Bots don't have feelings, silly! Actually, that's a lie, but we're probably not gonna tell you what they are.");};
             return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Psst!", message.author.avatarURL({size: 2048}))
-            .setDescription(`${message.member.displayName} wants to know how ${message.guild.users.cache.get(mention.id).displayName} is feeling!\n\nLet them know by using \`${prefix}feel\``)
+            .setDescription(`${message.member.displayName} wants to know how ${message.guild.members.cache.get(mention.id).displayName} is feeling!\n\nLet them know by using \`${prefix}feel\``)
             .setThumbnail(mention.avatarURL({size: 2048}))
             .setColor("dc134c")
             .setFooter("Valkyrie", client.user.avatarURL())
