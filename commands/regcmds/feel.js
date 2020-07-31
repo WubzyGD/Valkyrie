@@ -10,17 +10,20 @@ module.exports = {
             if (args[1] == "t") {
                 if (fs.existsSync(`./data/emotions/${args[2]}.json`)) {message.reply("I already have that emotion!");}
                 else {
-                    var data = JSON.stringify({});
+                    var data = JSON.stringify({feels: {}, color: args[3], requires_mention: Boolean(args[4]), ask_for: Boolean(args[5]), messages: []});
                     fs.writeFileSync(`./data/emotions/${args[2]}.json`, data, "utf8");
                     return message.reply("Emotion added!");
                 };
             } else {
                 if (fs.existsSync(`./data/emotions/${args[1]}.json`)) {
                     var emotion = JSON.parse(fs.readFileSync(`./data/emotions/${args[1]}.json`));
-                    emotion[args[2]] = args[3];
+                    emotion.feels[args[2]] = args[3];
                     fs.writeFileSync(`./data/emotions/${args[1]}.json`, JSON.stringify(emotion), "utf8");
                     return message.reply(new Discord.MessageEmbed()
-                    .setAuthor("New Emotion Image Added", message.author.avatarURL()));
+                    .setAuthor("New Emotion Image Added", message.author.avatarURL())
+                    .setDescription(`For \`${args[1]} emotion`)
+                    .setImage(args[3])
+                    .setColor(emotion.color));
                 } else {return message.reply("I don't have that emotion!");};
             };
         } else if (args[0] == "list") {
@@ -31,6 +34,16 @@ module.exports = {
             .setTitle("Emotions list")
             .setDescription(es)
             .setColor("DC134C"));
+        } else {
+            if (message.channel.type != "text") {return;};
+            var emotionsl = fs.readdirSync("./data/emotions").filter(file => file.endsWith(".json"));
+            if (emotionsl.includes(args[1])) {
+                var emotions = JSON.parse(fs.readFileSync(`./data/emotions/${args[1]}.json`));
+                return message.reply(new Discord.MessageEmbed()
+                .setTitle(`${message.member.displayName} is feeling ${args[0]}`)
+                .setImage(emotions.feels[Object.keys(emotions.feels)[Math.floor(Math.random() * Object.keys(emotions.feels).length)]])
+                .setColor(emotions.color));
+            } else {return message.reply("I can't help you show that feeling. Maybe try `list` to see if another one will work?")}
         };
     }
 };
