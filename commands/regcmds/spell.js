@@ -77,7 +77,7 @@ module.exports = {
 			if ((parsing_spellName.includes("fire") || parsing_spellName.includes("flame")) && parsing_spellName.includes("ball")) {
 				message.channel.send(spells.fireball.embed);
 			} else if ((parsing_spellName.includes("basic") || parsing_spellName.includes("simple") || parsing_spellName.includes("easy")) && (parsing_spellName.includes("heal") || parsing_spellName.includes("regen") || parsing_spellName.includes("recover")) || parsing_spellName.includes("repair")) {
-				message.channel.send(spells.spell_heal.embed);
+				message.channel.send(spells.basic_heal.embed);
 			} else if (parsing_spellName.includes("wind") && parsing_spellName.includes("gust")) {
 				message.channel.send(spells.wind_gust.embed);
 			} else if (parsing_spellName.includes("pizza") && parsing_spellName.includes("murphy")) {
