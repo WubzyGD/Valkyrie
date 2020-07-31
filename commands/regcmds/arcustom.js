@@ -28,14 +28,7 @@ module.exports = {
         if (msg.startsWith("whats up valk") || msg.startsWith("what's up valk") || msg.startsWith("what’s up valk")) {
             return message.channel.send("Not too much. But quit asking how I'm doing, ask it to the goblin behind you. Party member down...");
         };
-        if (msg.includes("confused stonks") && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705")) {
-            return message.channel.send({files: ["https://cdn.discordapp.com/attachments/563198656241598484/655553468865708062/5fm9ifqkgzr31.jpg"]});
-        } else if (msg.includes("stonks") && (msg.includes("isn") || msg.includes("not")) && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705")) {
-            return message.channel.send({files: ["https://cdn.discordapp.com/attachments/563198656241598484/655553468865708063/SmartSelect_20191214-163438_Samsung_Internet.jpg"]});
-        } else if (msg.includes("stonks") && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705")) {
-            return message.channel.send({files: ["https://cdn.discordapp.com/attachments/563198656241598484/655553468160933929/download.jpeg-2.jpg"]});
-        };
-        if ((msg.startsWith("i am ") || msg.startsWith("im ") || msg.startsWith("i'm ") || msg.startsWith("i’m ")) && message.content.length <= 30 && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705")) {
+        if ((msg.startsWith("i am ") || msg.startsWith("im ") || msg.startsWith("i'm ") || msg.startsWith("i’m ")) && message.content.length <= 30 && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")) {
             return message.channel.send(`Hi **${message.content.slice((message.content.search("m ") + 2))}**, I'm Mom!`);
         };
         if (message.channel.type == "text") {
