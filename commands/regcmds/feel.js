@@ -36,6 +36,7 @@ module.exports = {
             .setColor("DC134C"));
         } else {
             if (message.channel.type != "text") {return;};
+            message.delete();
             if (fs.existsSync(`./data/emotions/${args[0]}.json`)) {
                 var emotions = JSON.parse(fs.readFileSync(`./data/emotions/${args[0]}.json`));
                 return message.reply(new Discord.MessageEmbed()
