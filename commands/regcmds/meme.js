@@ -119,13 +119,6 @@ module.exports = {
             } else if (meme == "list") {
                 return message.reply("Two-Avatar flags: `roloshoot`, `mhabattle`")
             };
-
-            var myObject = {
-                "example": {"somestuff": "data", "otherstuff": "otherdata"},
-                "blahBlah": {"bonks": "data", "stonks": "otherdata"},
-                "e.exe": {"yoink": false, "not stonks": "otherdata"},
-                "meme.mp4": {"shit": 420, "lololol": "otherdata"}
-            };
         };
     }
 };
