@@ -22,7 +22,7 @@ module.exports = {
                     return message.reply(new Discord.MessageEmbed()
                     .setAuthor("New Emotion Image Added", message.author.avatarURL())
                     .setDescription(`For \`${args[1]}\` emotion`)
-                    .setImage(args[3])
+                    .setImage(args[2])
                     .setColor(emotion.color));
                 } else {return message.reply("I don't have that emotion!");};
             };
