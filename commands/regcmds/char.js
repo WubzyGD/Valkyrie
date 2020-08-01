@@ -107,9 +107,18 @@ module.exports = {
                     };
                     return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${cid}\`. To see a list of your characters' IDs, use \`${prefix}char view list}\`**. Your character can now be accessed in any server that I am in, and updated anywhere. Using \`${prefix}char view text ${cid}\` will have me give you a text file of your character's info.`);
                 } else if (format.toLowerase().trim().includes("dnd")) {
-                    await message.channel.send("What is your __DnD__ character's name? Chars limit: 30. Any characters over 30 will be sliced off, and this will be the case for all questions.");
+                    await message.channel.send("What is your __DnD__ character's name? Chars limit: 40. Any characters over 30 will be sliced off, and this will be the case for all questions.");
                     var name = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
-                    name = name.first.content().slice(0, 30);
+                    name = name.first.content().slice(0, 40);
+                    var cid = await query("And one more thing: Give them an ID. This should have no spaces, and must be alphanumeric, with only underscores. This ID is not editable. If you make a character with an already-existing ID, the old one will be overwritten.", 50);
+                    cid = cid.replace(/\s/g, '').trim().toLowerCase();
+                    if (!/^[a-z0-9_]+$/.test(cid.trim().toLowerCase())) {return message.reply("You must use alphanumeric characters and underscores only!");};
+                    if (cid.toLowerCase() == "skip") {return message.reply("Oh yeah, and you have to have an ID, too.");};
+                    var cspecies = await query(`What is ${cname}'s species?`, 50);
+                    var cheight = await query("What is their height?", 10);
+                    var cweight = await query("What is their weight?", 10);
+                    var cdesc = await query(`Give a very brief appearance description of ${cname}. E.g. body type, facials, etc.`, "None");
+                    var cgender = await query(`What is their gender?`, 30);
                 } else {return message.reply("You didn't specify a valid format. Try again!");};
             } catch (e) {
                 message.reply("Looks like you ran out of time. --If you're certain that you didn't take more than about 100 seconds, contact my creator.");

@@ -25,7 +25,8 @@ module.exports = {
 				};
 			} else if (i.startsWith("$")) {
 				i = i.toLowerCase().slice(1);
-				reading = i;
+                reading = i;
+                if (temptoption.length > 0) {options.push(tempoption); temptoption = "";};
 			};
         };
         return message.channel.send(new Discord.MessageEmbed().setAuthor("Random Item", message.author.avatarURL()).setDescription(options[Math.floor(Math.random() * options.length)]).setColor("DC134C"));
