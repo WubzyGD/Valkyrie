@@ -48,6 +48,7 @@ module.exports = {
             var factionToJoin = await message.channel.awaitMessages(filter, {time: 60000, max: 1});
             factionToJoin = factionToJoin.first().content.toLowerCase().trim();
             if (isNaN(Number(factionToJoin))) {return message.reply("You must provide a number! Please try again");}
+            else if (Number(factionToJoin) < 1 || Number(factionToJoin > 6)) {return message.reply("That's not a valid option.");}
             else {await joinFaction(factionToJoin);};
             namespace.account_usernames.push(name);
             fs.writeFileSync("./data/misc/namespace.json", JSON.stringify(namespace), 'utf8');
