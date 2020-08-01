@@ -75,7 +75,7 @@ module.exports = {
         } else if (args[0] == "audit" && message.author.id == "330547934951112705") {
             if (args[1] == "name") {
                 var acc = JSON.parse(fs.readFileSync(`./data/accounts/${mention.id}.json`)); 
-                args.shift(); args.shift();
+                args.shift(); args.shift(); args.shift();
                 var namespace = JSON.parse(fs.readFileSync("./data/misc/namespace.json"));
                 namespace.account_usernames[namespace.account_usernames.indexOf(acc.name)] = args.join(" ");
                 var oldName = acc.name;
