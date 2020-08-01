@@ -35,17 +35,17 @@ module.exports = {
             if (message.channel.type == "text") {return message.reply("Let's do that in a DM");};
             var filter = m => m.author.id == message.author.id;
             await message.channel.send("What would your account username to be?\n\nPlease be aware that this cannot be changed, and you can only have one account!");
-            var name = await message.channel.awaitMessages(filter, {time: 60000, max: 1});
+            var name = await message.channel.awaitMessages(filter, {time: 60000, max: 1, errors: ['time']});
             name = name.first().content;
             if (name.length > 30) {return message.reply("Please keep your name under 30 characters");};
             if (namespace.account_usernames.includes(name)) {return message.reply("That name has already been taken!");};
             await message.channel.send(`Are you positive you want your username to be \`${name}\`?`);
-            var conf = await message.channel.awaitMessages(filter, {time: 60000, max: 1});
+            var conf = await message.channel.awaitMessages(filter, {time: 60000, max: 1, errors: ['time']});
             conf = conf.first().content;
             if (conf.toLowerCase() != "yes") {return message.reply("Okay, I won't make that your username. Try the command again when you come up with a better one!");};
             account.name = name;
             await message.channel.send("There are 6 factions:\n1. The Holy Faction of the Sun - *Solakia*\n2. The Omniscient Faction of the Cosmos - *Lundasia*\n3. The Fiery Faction of the Crimson - *Crimsakia*\n4. The Wandering Faction of the Ruin - *Havashia*\n5. The Adventuring Faction of the Dragon - *Valkaria*\n6. The Graceful Faction of the Life - *Nataria*\n\nPlease select a Faction to join by providing a number.");
-            var factionToJoin = await message.channel.awaitMessages(filter, {time: 60000, max: 1});
+            var factionToJoin = await message.channel.awaitMessages(filter, {time: 60000, max: 1, errors: ['time']});
             factionToJoin = factionToJoin.first().content.toLowerCase().trim();
             if (isNaN(Number(factionToJoin))) {return message.reply("You must provide a number! Please try again");}
             else if (Number(factionToJoin) < 1 || Number(factionToJoin > 6)) {return message.reply("That's not a valid option.");}
@@ -57,7 +57,7 @@ module.exports = {
             faction.members.push(message.author.id);
             fs.writeFileSync(`./data/factions/${account.faction.toLowerCase()}.json`, JSON.stringify(faction), 'utf8');
             return message.reply("Your account has been created.");
-        } catch (e) {console.log(e); return message.reply("Hmm, it seems you took too long. Try again?");};} else if (args[0] == "view") {
+        } catch (e) {return message.reply("Hmm, it seems you took too long. Try again?");};} else if (args[0] == "view") {
             if (mention) {
                 if (!fs.existsSync(`./data/accounts/${mention.id}.json`)) {return message.reply("That user doesn't have an account yet!");};
                 var account = JSON.parse(fs.readFileSync(`./data/accounts/${mention.id}.json`));
@@ -72,6 +72,23 @@ module.exports = {
             .setTimestamp());
         } else if (args[0] == "info") {
             return message.author.send("Ah, I see you're curious about this whole thing. What could this possibly be? Well, not even *I* know that answer. Seriously, Wubzy just threw some crown on me and then skipped away before I could ask anything. You get used to it after a while. Bottom line: he'll reveal more as time goes.");
+        } else if (args[0] == "audit" && message.author.id == "330547934951112705") {
+            if (args[1] == "name") {
+                var acc = JSON.parse(fs.readFileSync(`./data/accounts/${message.id}.json`)); 
+                args.shift(); args.shift();
+                var namespace = JSON.parse(fs.readFileSync("./data/misc/namespace.json"));
+                namespace.account_usernames[namespace.account_usernames.indexOf(acc.name)] = args.join(" ");
+                var oldName = acc.name;
+                acc.name = args.join(" "); 
+                fs.writeFileSync(`./data/accounts/${message.id}.json`, JSON.stringify(acc), 'utf8');
+                fs.writeFileSync("./data/misc/namespace.json", JSON.stringify(namespace), 'utf8');
+                message.channel.send(new Discord.MessageEmbed()
+                .setAuthor("Username Change", mention.avatarURL())
+                .setDescription(`Audited by ${message.author.username}`)
+                .addField("Old Name", oldName, true)
+                .addField("New Name", acc.name, true)
+                .setColor("DC134C"));
+            };
         } else {return message.reply("Use `<register|view|info>`");};
     }
 };

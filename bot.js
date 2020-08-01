@@ -371,6 +371,7 @@ client.on("message", async message => {
 		message.delete();
 		return spawnTreasure();
 	} else if (msg.startsWith(prefix) && cmd == "snipe") {
+		if (!args.length) {return message.reply(`Syntax: \`${prefix}snipe <e|edit|d|delete> [#channel]\``);};
 		if (message.mentions.channels.size > 0) {var channel = message.mentions.channels.first()} else if (args.length > 1 && args[1].length == 18) {
 			var channel = message.guild.channels.cache.get(args[1]);
 			if (channel == undefined) {return message.reply("You provided an invalid channel ID!");};
