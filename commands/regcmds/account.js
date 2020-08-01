@@ -52,6 +52,9 @@ module.exports = {
             namespace.account_usernames.push(name);
             fs.writeFileSync("./data/misc/namespace.json", JSON.stringify(namespace), 'utf8');
             fs.writeFileSync(`./data/accounts/${message.author.id}.json`, JSON.stringify(account), 'utf8');
+            var faction = JSON.parse(fs.readFileSync(`./data/factions/${account.faction.toLowerCase()}.json`));
+            faction.members.push(message.author.id);
+            fs.writeFileSync(`./data/factions/${account.faction.toLowerCase()}.json`, JSON.stringify(faction), 'utf8');
             return message.reply("Your account has been created.");
         } catch (e) {console.log(e); return message.reply("Hmm, it seems you took too long. Try again?");};} else if (args[0] == "view") {
             if (mention) {
