@@ -82,12 +82,15 @@ module.exports = {
                 acc.name = args.join(" "); 
                 fs.writeFileSync(`./data/accounts/${mention.id}.json`, JSON.stringify(acc), 'utf8');
                 fs.writeFileSync("./data/misc/namespace.json", JSON.stringify(namespace), 'utf8');
-                message.channel.send(new Discord.MessageEmbed()
+                var nameEmbed = new Discord.MessageEmbed()
                 .setAuthor("Username Change", mention.avatarURL())
                 .setDescription(`Audited by ${message.author.username}`)
                 .addField("Old Name", oldName, true)
                 .addField("New Name", acc.name, true)
-                .setColor("DC134C"));
+                .setColor("DC134C")
+                mention.send(nameEmbed);
+                mention.send("This message is to inform you that your name has been changed. If you did not request this action, please contact Wubzy!");
+                return message.channel.send(nameEmbed);
             };
         } else {return message.reply("Use `<register|view|info>`");};
     }
