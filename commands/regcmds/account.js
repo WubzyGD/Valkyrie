@@ -6,8 +6,8 @@ module.exports = {
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}account <register|view|info>\``);};
-        if (fs.existsSync(`/data/accounts/${message.author.id}.json`)) {
-            var account = JSON.parse(fs.readFileSync(`/data/accounts/${message.author.id}.json`));
+        if (fs.existsSync(`./data/accounts/${message.author.id}.json`)) {
+            var account = JSON.parse(fs.readFileSync(`./data/accounts/${message.author.id}.json`));
             var hasAccount = true;
         } else {
             var account = {
@@ -17,7 +17,7 @@ module.exports = {
                 inventory: {}
             };
         };
-        var namespace = JSON.parse(fs.readFileSync(`/data/misc/namespace.json`));
+        var namespace = JSON.parse(fs.readFileSync(`./data/misc/namespace.json`));
         async function joinFaction(fn) {
             const factions = {
                 "1": {name: "Solakia", msg: "Welcome, young Master, to the Exalted Solakians. We accept you into our Order with honor and open arms. May your Light one day outshine the Sun."},
@@ -55,8 +55,8 @@ module.exports = {
             return message.reply("Your account has been created.");
         } catch {return message.reply("Hmm, it seems you took too long. Try again?");};} else if (args[0] == "view") {
             if (mention) {
-                if (!fs.existsSync(`/data/accounts/${mention.id}.json`)) {return message.reply("That user doesn't have an account yet!");};
-                var account = JSON.parse(fs.readFileSync(`/data/accounts/${mention.id}.json`));
+                if (!fs.existsSync(`./data/accounts/${mention.id}.json`)) {return message.reply("That user doesn't have an account yet!");};
+                var account = JSON.parse(fs.readFileSync(`./data/accounts/${mention.id}.json`));
                 var person = mention;
             } else {if (!hasAccount) {return message.reply("You don't seem to have an account.");}; var person = message.author;};
             return message.channel.send(new Discord.MessageEmbed()
