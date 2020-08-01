@@ -45,7 +45,7 @@ module.exports = {
             if (conf.toLowerCase() != "yes") {return message.reply("Okay, I won't make that your username. Try the command again when you come up with a better one!");};
             account.name = name;
             await message.channel.send("There are 6 factions:\n1. The Holy Faction of the Sun - *Solakia*\n2. The Omniscient Faction of the Cosmos - *Lundasia*\n3. The Fiery Faction of the Crimson - *Crimsakia*\n4. The Wandering Faction of the Ruin - *Havashia*\n5. The Adventuring Faction of the Dragon - *Valkaria*\n6. The Graceful Faction of the Life - *Nataria*\n\nPlease select a Faction to join by providing a number.");
-            var factionToJoin = await message.channel.awaitMessages(filter, {time: 60000});
+            var factionToJoin = await message.channel.awaitMessages(filter, {time: 60000, max: 1});
             factionToJoin = factionToJoin.first().content.toLowerCase().trim();
             if (isNaN(Number(factionToJoin))) {return message.reply("You must provide a number! Please try again");}
             else {await joinFaction(factionToJoin);};
