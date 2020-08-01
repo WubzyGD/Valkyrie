@@ -491,15 +491,10 @@ client.on("message", async message => {
 			return message.reply("Something happened while trying to create your announcement that didn't work. You may have input too many characters somewhere, or... I dunno?.");
         };
 
-        if (options.length >= 1) {await pollMessage.react("1️⃣");};
-        if (options.length >= 2) {await pollMessage.react("2️⃣");};
-        if (options.length >= 3) {await pollMessage.react("3️⃣");};
-        if (options.length >= 4) {await pollMessage.react("4️⃣");};
-        if (options.length >= 5) {await pollMessage.react("5️⃣");};
-        if (options.length >= 6) {await pollMessage.react("6️⃣");};
-        if (options.length >= 7) {await pollMessage.react("7️⃣");};
-        if (options.length >= 8) {await pollMessage.react("8️⃣");};
-        if (options.length >= 9) {await pollMessage.react("9️⃣");};
+		var emotes = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣"];
+		for (i = 0; i < options.length; i++) {await pollMessage.react(emotes[i]);};
+		var filter = true;
+		//message.awaitReactions(filter, {time: time, maxEmojis: options.length, errors: ['time']});
 	} else if (!client.commands.has(cmd)) {
 	if (message.channel.type == "text") {client.commands.get("arcustom").execute(message, msg, args, cmd, prefix, mention, client, ars[message.guild.id]);};};
 	try {
