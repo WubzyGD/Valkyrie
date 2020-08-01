@@ -74,13 +74,13 @@ module.exports = {
             return message.author.send("Ah, I see you're curious about this whole thing. What could this possibly be? Well, not even *I* know that answer. Seriously, Wubzy just threw some crown on me and then skipped away before I could ask anything. You get used to it after a while. Bottom line: he'll reveal more as time goes.");
         } else if (args[0] == "audit" && message.author.id == "330547934951112705") {
             if (args[1] == "name") {
-                var acc = JSON.parse(fs.readFileSync(`./data/accounts/${message.id}.json`)); 
+                var acc = JSON.parse(fs.readFileSync(`./data/accounts/${mention.id}.json`)); 
                 args.shift(); args.shift();
                 var namespace = JSON.parse(fs.readFileSync("./data/misc/namespace.json"));
                 namespace.account_usernames[namespace.account_usernames.indexOf(acc.name)] = args.join(" ");
                 var oldName = acc.name;
                 acc.name = args.join(" "); 
-                fs.writeFileSync(`./data/accounts/${message.id}.json`, JSON.stringify(acc), 'utf8');
+                fs.writeFileSync(`./data/accounts/${mention.id}.json`, JSON.stringify(acc), 'utf8');
                 fs.writeFileSync("./data/misc/namespace.json", JSON.stringify(namespace), 'utf8');
                 message.channel.send(new Discord.MessageEmbed()
                 .setAuthor("Username Change", mention.avatarURL())
