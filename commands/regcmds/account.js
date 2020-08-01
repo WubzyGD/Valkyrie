@@ -53,7 +53,7 @@ module.exports = {
             fs.writeFileSync("./data/misc/namespace.json", JSON.stringify(namespace), 'utf8');
             fs.writeFileSync(`./data/accounts/${message.author.id}.json`, JSON.stringify(account), 'utf8');
             return message.reply("Your account has been created.");
-        } catch {return message.reply("Hmm, it seems you took too long. Try again?");};} else if (args[0] == "view") {
+        } catch (e) {console.log(e); return message.reply("Hmm, it seems you took too long. Try again?");};} else if (args[0] == "view") {
             if (mention) {
                 if (!fs.existsSync(`./data/accounts/${mention.id}.json`)) {return message.reply("That user doesn't have an account yet!");};
                 var account = JSON.parse(fs.readFileSync(`./data/accounts/${mention.id}.json`));
