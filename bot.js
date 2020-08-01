@@ -402,7 +402,7 @@ client.on("message", async message => {
 		} else {return message.reply("I can snipe an `edit` or a `delete`!");};
 	} else if (msg.startsWith(prefix) && cmd == "poll") {
 		if (!args.length) {return message.channel.send(`Syntax: \`${prefix}poll <options>\`. Use \`${prefix}poll options\` to see a list of available options.`);};
-        if (args[0] == "options") {var opw = await message.reply("**Valid options are:**\n\n-Title - Required\n-Text - Displays below title\n-Color - must be hex; Embed color\n-Channel - Optional; must be tagged\n-Option - Required; no more than 9\n-Image - Pass a URL for an image to add\n-Thumbnail - Pass a URL for the embed thumbnail\n-Servericonimage/Servericonthumbnail - Uses the server's icon as the image/thumbnail\n-Time - Required; ms only\n-Secret - Only DMs results\n-DM - Send results by DM\n\nUsage: `$option data` Example: `poll $title Ex. $text Test Text $option Left $option Right $time 10000`"); {return opw.delete(60000);};};
+        if (args[0] == "options") {return message.reply("**Valid options are:**\n\n-Title - Required\n-Text - Displays below title\n-Color - must be hex; Embed color\n-Channel - Optional; must be tagged\n-Option - Required; no more than 9\n-Image - Pass a URL for an image to add\n-Thumbnail - Pass a URL for the embed thumbnail\n-Servericonimage/Servericonthumbnail - Uses the server's icon as the image/thumbnail\n-Time - Required; ms only\n-Secret - Only DMs results\n-DM - Send results by DM\n\nUsage: `$option data` Example: `poll $title Ex. $text Test Text $option Left $option Right $time 10000`");};
         var title = "";
 		var text = "";
 		var color = "";
