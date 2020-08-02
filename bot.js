@@ -3,8 +3,9 @@ const config = require("./config.json");
 const client = new Discord.Client();
 const Canvas = require("canvas");
 const gbl = require("gblapi.js");
-
+const fetch = require("node-fetch");
 const fs = require("fs");
+
 client.commands = new Discord.Collection();
 
 const Wubzy = "330547934951112705";
@@ -142,15 +143,6 @@ setInterval(async () => {
 	.setTimestamp());
 }, 120000);
 
-const fetch = require("node-fetch");
-fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
-        method: 'POST',
-        headers: {
-            'authorization': "no"
-        },
-        body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
-    }).then(res => res.json());
-
 client.on("ready", async () => {
 	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
@@ -194,7 +186,14 @@ client.on("ready", async () => {
 			.setDescription(`Thanks <@${u.id}> for the vote! Enjoy 1,500XP on the house`)
 			.setColor("33ff33"));
 		};
-	})
+	});
+	fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
+        method: 'POST',
+        headers: {
+            'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjYxOTMwNTA2MjkwMDAzOTcyNiIsImlhdCI6MTU5NjQwODU0M30.o7Tfuc_WnRfzjWLyFD2MdjlnbkQ0g77zdowAUb1eb-w"
+        },
+        body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
+    }).then(res => res.json());
 } catch (e) {console.log(e)};
 });
 
@@ -213,7 +212,7 @@ client.on('guildCreate', async (guild) => {
 	fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
         method: 'POST',
         headers: {
-            'authorization': "no"
+            'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjYxOTMwNTA2MjkwMDAzOTcyNiIsImlhdCI6MTU5NjQwODU0M30.o7Tfuc_WnRfzjWLyFD2MdjlnbkQ0g77zdowAUb1eb-w"
         },
         body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
     }).then(res => res.json());
@@ -234,7 +233,7 @@ client.on('guildDelete', async (guild) => {
 	fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
         method: 'POST',
         headers: {
-            'authorization': "no"
+            'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjYxOTMwNTA2MjkwMDAzOTcyNiIsImlhdCI6MTU5NjQwODU0M30.o7Tfuc_WnRfzjWLyFD2MdjlnbkQ0g77zdowAUb1eb-w"
         },
         body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
     }).then(res => res.json());
