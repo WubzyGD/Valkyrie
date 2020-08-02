@@ -192,7 +192,7 @@ client.on("ready", async () => {
         headers: {
             'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjYxOTMwNTA2MjkwMDAzOTcyNiIsImlhdCI6MTU5NjQwODU0M30.o7Tfuc_WnRfzjWLyFD2MdjlnbkQ0g77zdowAUb1eb-w"
         },
-        body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
+        body: {guilds: client.guilds.cache.size, users: client.users.cache.size}
     }).then(res => res.json()).then(json => console.log(json));
 } catch (e) {console.log(e)};
 });
