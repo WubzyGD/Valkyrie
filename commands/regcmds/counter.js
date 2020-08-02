@@ -45,7 +45,7 @@ module.exports = {
             } else if (args[0] == "bullets") {
                 return message.reply(`One of the best moments in life for an old dungeon dragon like me is when I make Wubzy so mad, that he purchases another **gold bullet** (which *supposedly* can kill me). I think he has ${counter.bullets} of them, actually. Yikes.`);
             } else if (args[0] == "simpforvalk") {
-                return message.reply(`Unfortunately, some of the people in this dungeon tend to get a little... horny. And then they choose *me*, a *dragon* to hit on. I think I've been hit on ${counter.shitonwubzy} times`);
+                return message.reply(`Unfortunately, some of the people in this dungeon tend to get a little... horny. And then they choose *me*, a *dragon* to hit on. I think I've been hit on ${counter.simpforvalk} times`);
             } else {return message.reply("Counters: `badbot`, `brokenbot`, `shitonwubzy`, `bullets`, `simpforvalk`");};
         }
     }
