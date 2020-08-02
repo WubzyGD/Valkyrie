@@ -58,7 +58,7 @@ console.log("All commands successfully loaded with no errors!\n");
 
 const info = require("./info.json");
 
-const prefix = "v.";
+var prefix = "v.";
 const adminPrefix = "adm.";
 
 const applyText = (canvas, text) => {
@@ -86,6 +86,7 @@ var snipe = {
 };
 
 var ars = {};
+var settings = {};
 
 for (var guild of Array.from(client.guilds.cache.values())) {
 	if (fs.existsSync(`./data/ar/${guild.id}.json`)) {
@@ -99,6 +100,10 @@ setInterval(async () => {
 			var t = fs.readFileSync(`./data/ar/${guild.id}.json`);
 			ars[guild.id] = JSON.parse(t);
 		} else {ars[guild.id] = null;};
+		if (fs.existsSync(`./data/guildconfig/${guild.id}.json`)) {
+			var t = fs.readFileSync(`./data/guildconfig/${guild.id}.json`);
+			settings[guild.id] = JSON.parse(t);
+		} else {settings[guild.id] = null;};
 	};
 	var userss = Array.from(client.guilds.cache.get("679127746592636949").members.cache.values());
 	var users = [];
@@ -295,6 +300,8 @@ client.on("message", async message => {
 		message.channel.send("Simulating member join...");
 		client.emit('guildMemberAdd', message.member || message.guild.members.cache.get(message.author));
 	};
+
+	if (settings[message.guild.id]) {prefix = settings[message.guild.id].prefix;};
 
 	if (msg.startsWith(prefix)) {cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.MessageEmbed().SetAuthor("Commands Executed since last restart", client.user.avatarURL()).setDescription(`${cmdcount} commands.`));};
 

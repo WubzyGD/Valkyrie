@@ -103,6 +103,18 @@ module.exports = {
                     currentServer.level_update = false; save();
                     return message.reply("Level up messages have been disabled.");
                 } else {return message.reply("You didn't provide a valid operator for this option. User either `true` or `false`.");};
+            } else if (args[0] == "prefix") {
+                args.shift();
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit prefix <prefix|clear>\`. Don't include spaces or non-ascii characters. Use "clear" to reset the prefix.`);};
+                if (args[0] == "clear") {
+                    currentServer.prefix = "v."; save();
+                    return message.reply("Prefix reset to the default: `v.` It may take up to two minutes for this new prefix to come into effect!");
+                } else {
+                    if (!/^[\x00-\x7F]*$/.test(args[0])) {return message.reply("You must only use ascii characters!");};
+                    if (args[0].length > 6) {return message.reply("I think that's probably too much for a prefix.");};
+                    currentServer.prefix = args[0]; save();
+                    return message.reply(`Server prefix set to \`${currentServer.prefix}\`. It can be cleared with \`${currentServer.prefix}server edit prefix clear\`. It may take up to two minutes for this new prefix to come into effect!`);
+                }
             } else {return message.reply(`Invalid syntax/option provided. Syntax: \`${prefix}server edit <adminedit|updatechannel|welcomechannel|leavechannel|defaultrole|welcomerole|levelmessage>\``);};
         } else if (args[0] == "view") {
             for (var i of Object.keys(currentServer)) {if (currentServer[i] == null) {currentServer[i] = "None";} else if (i.includes("channel")) {currentServer[i] = `<#${currentServer[i]}>`;};};
