@@ -92,7 +92,6 @@ module.exports = {
 			if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("SEND_MESSAGES")) {return message.channel.send("You don't have the right permissions for that.");};
 			return message.guild.channels.cache.get(channel).send(announceEmbedNorm);
 		} catch (e) {
-			console.log("Announce cmd error; Likely channel find.", e);
 			return message.reply("Something happened while trying to create your announcement that didn't work. You may have input too many characters somewhere.");
 		};
     }
