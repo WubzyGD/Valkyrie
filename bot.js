@@ -142,6 +142,15 @@ setInterval(async () => {
 	.setTimestamp());
 }, 120000);
 
+const fetch = require("node-fetch");
+fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
+        method: 'POST',
+        headers: {
+            'authorization': "no"
+        },
+        body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
+    }).then(res => res.json());
+
 client.on("ready", async () => {
 	try {
 	var date = new Date; date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
@@ -200,6 +209,14 @@ client.on('guildCreate', async (guild) => {
 	.setColor("00ff00")
 	.setFooter("Valkyrie", client.user.avatarURL())
 	.setTimestamp());
+
+	fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
+        method: 'POST',
+        headers: {
+            'authorization': "no"
+        },
+        body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
+    }).then(res => res.json());
 });
 
 client.on('guildDelete', async (guild) => {
@@ -213,6 +230,14 @@ client.on('guildDelete', async (guild) => {
 	.setColor("ff0000")
 	.setFooter("Valkyrie", client.user.avatarURL())
 	.setTimestamp());
+
+	fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
+        method: 'POST',
+        headers: {
+            'authorization': "no"
+        },
+        body: JSON.stringify({guilds: client.guilds.cache.size, users: client.users.cache.size})
+    }).then(res => res.json());
 });
 
 client.on('guildMemberAdd', async member => {
