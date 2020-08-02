@@ -128,6 +128,7 @@ module.exports = {
             .addField("Join Role", currentServer.join_role)
             .addField("Welcome Committee Role", currentServer.welcome_ping_role)
             .addField("Level Up Messages", currentServer.level_update)
+            .addField("Prefix", currentServer.prefix)
             .setColor("DC134C")
             .setFooter("Valkyrie")
             .setTimestamp();
