@@ -30,7 +30,11 @@ module.exports = {
                 counter.bullets += 1;
                 write();
                 return message.reply(`Wubzy just purchased another **Golden Bullet** to kill me with! I love making him angery, just like the other ${counter.bullets} times :))))`);
-            } else {return message.reply("Counters: `badbot`, `brokenbot`, `shitonwubzy`, `bullets`");};
+            } else if (args[0] == "simpforvalk") {
+                counter.simpforvalk += 1;
+                write();
+                return message.reply(`Sure thing, you horny fuck! So what's that, like, ${counter.simpforvalk} times you've tried to hit on me?`);
+            } else {return message.reply("Counters: `badbot`, `brokenbot`, `shitonwubzy`, `bullets`, `simpforvalk`");};
         } else {
             if (args[0] == "badbot") {
                 return message.reply(`${person} thinks I've been a garbage bot ${counter.badbot} times :)`);
@@ -40,7 +44,9 @@ module.exports = {
                 return message.reply(`Bullying my creator is my favorite hobby. I've done it ${counter.shitonwubzy} times, actually.`);
             } else if (args[0] == "bullets") {
                 return message.reply(`One of the best moments in life for an old dungeon dragon like me is when I make Wubzy so mad, that he purchases another **gold bullet** (which *supposedly* can kill me). I think he has ${counter.bullets} of them, actually. Yikes.`);
-            } else {return message.reply("Counters: `badbot`, `brokenbot`, `shitonwubzy`, `bullets`");};
+            } else if (args[0] == "simpforvalk") {
+                return message.reply(`Unfortunately, some of the people in this dungeon tend to get a little... horny. And then they choose *me*, a *dragon* to hit on. I think I've been hit on ${counter.shitonwubzy} times`);
+            } else {return message.reply("Counters: `badbot`, `brokenbot`, `shitonwubzy`, `bullets`, `simpforvalk`");};
         }
     }
 };
