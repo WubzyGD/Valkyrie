@@ -40,9 +40,9 @@ module.exports = {
 				} else if (reading == "image") {
 					image = i;
 				} else if (reading == "servericonimage") {
-					image = message.member.guild.iconURL();
+					image = message.member.guild.iconURL({size: 2048});
 				} else if (reading == "servericonthumbnail") {
-					thumbnail = message.member.guild.iconURL();
+					thumbnail = message.member.guild.iconURL({size: 512});
 				} else {
 					var warn = await message.reply(`\`${i}\` is not a valid option. Use \`${adminPrefix}announce options\` to see a list of valid options.`);
 					warn.delete({timeout: 10000});
@@ -52,8 +52,8 @@ module.exports = {
 				if (i == "newfield" && tempfn !== "") {fieldNames.push(tempfn); tempfn = "";};
 				if (i == "fieldtext" && tempft !== "") {fieldText.push(tempft); tempft = "";};
 				reading = i;
-				if (reading == "servericonimage") {thumbnail = i;};
-				if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL();};
+				if (reading == "servericonimage") {image = message.member.guild.iconURL({size: 2048});};
+				if (reading == "servericonthumbnail") {thumbnail = message.member.guild.iconURL({size: 512});};
 			};
 		};
 		if (fieldNames.length !== fieldText.length) {return message.reply("You must make your field titles and field content tags equal to each other, so that every field has a title and text")}
