@@ -6,7 +6,7 @@ module.exports = {
     async execute(message, msg, args, cmd, adminPrefix, mention, client) {
 		message.delete();
 		if (!args.length) { message.delete(); return message.channel.send(`One of those things was not like the other. \`Usage: ${adminPrefix}announce <options>\`. Use \`announce options\` to see a list of options.`)};
-		if (args[0] == "options") {var opw = await message.reply("**Valid options are:**\n\n-Title\n-Text - required\n-Color - must be hex\n-Channel - must be tagged\n-Newfield - Adds a new field\n-Fieldtext - Sets the text for the field. - Field and text tags mut be equal\n-Image - Pass a URL for an image to add\n-Thumbnail - Pass a URL for the embed thumbnail\n-Servericonimage/Servericonthumbnail - Uses the server's icon as the image/thumbnail\n\nUsage: `$option data` Example: `announce $title Ex. $text Test Text`"); {return opw.delete({timeout: 60000});};};
+		if (args[0] == "options") {return message.reply("**Valid options are:**\n\n-Title\n-Text - required\n-Color - must be hex\n-Channel - must be tagged\n-Newfield - Adds a new field\n-Fieldtext - Sets the text for the field. - Field and text tags mut be equal\n-Image - Pass a URL for an image to add\n-Thumbnail - Pass a URL for the embed thumbnail\n-Servericonimage/Servericonthumbnail - Uses the server's icon as the image/thumbnail\n\nUsage: `$option data` Example: `announce $title Ex. $text Test Text`");};
 		var title = "";
 		var text = "";
 		var color;
