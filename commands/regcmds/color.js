@@ -57,7 +57,7 @@ module.exports = {
         .addField("Green", gv, true)
         .addField("Blue", bv, true)
         .setColor(hex)
-        .attachFile(colorIm)
+        .attachFiles(colorIm)
         .setImage("attachment://color.png");
         if (hex.toLowerCase() == "dc134c") {colorEmbed.addField("Hey there!", "That's my normal embed color!");};
         return message.reply(colorEmbed);
