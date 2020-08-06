@@ -1,0 +1,33 @@
+{
+    "scrap": {
+        "chance": 0,
+        "chests": []
+    },
+    "common": {
+        "chance": 0,
+        "chests": []
+    },
+    "uncommon": {
+        "chance": 0,
+        "chests": []
+    },
+    "rare": {
+        "chance": 0,
+        "chests": []
+    },
+    "legendary": {
+        "chance": 0,
+        "chests": []
+    },
+    "exotic:": {
+        "chance": 0,
+        "chests": []
+    },
+    "exalted": {
+        "chance": 0,
+        "chests": []
+    },
+    "custom": {
+        "chests": {}
+    }
+}
