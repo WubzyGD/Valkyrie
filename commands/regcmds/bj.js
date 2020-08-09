@@ -12,7 +12,7 @@ module.exports = {
             var p1 = message.author; var p1n = p1.username;
             var p2 = client.user; var p2n = "Valkyrie";
 
-            var startEmbed = new Discord.RichEmbed()
+            var startEmbed = new Discord.MessageEmbed()
             .setTitle("Blackjack Started")
             .setDescription(`__${p1.username}__ vs __${p2.username}__`)
             .setColor("DC134C")
@@ -31,7 +31,7 @@ module.exports = {
                 while (tempHand.length < 3) {
                     while (true) {
                         var card = `${values[Math.floor(Math.random() * values.length)]} of ${suits[Math.floor(Math.random() * suits.length)]}`;
-                        if (!card in usedCards) {break};
+                        if (!card in usedCards) {break;};
                     };
                     tempHand.push(card);
                 };
@@ -40,7 +40,7 @@ module.exports = {
 
             function findHandValue(hand, currentHandValue) {
                 var handValue = 0;
-                for (card of hand) {
+                for (let card of hand) {
                     if (card == "A") {if (currentHandValue > 11) {handValue += 1;} else {handValue += 11;};}
                     else if (card == "Jack" || card == "Queen" || card == "King") {handValue += 10;}
                     else {handValue += Number(card);};
@@ -57,7 +57,7 @@ module.exports = {
 
             async function turn(p) {
                 if (p == p1) {
-                    var updateEmbed = new Discord.RichEmbed()
+                    var updateEmbed = new Discord.MessageEmbed()
                     .setTitle("Blackjack Game")
                     .setDescription(`__${p1.username}__ vs __${p2.username}__`)
                     .addField("Info", `It is currently ${p.displayName}'s turn. Your hand value is ${handsValue[p1n]} Would you like to hit or stand?\nLast turn: ${lastTurn}`)
