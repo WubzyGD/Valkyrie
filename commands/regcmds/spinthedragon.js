@@ -44,7 +44,7 @@ module.exports = {
         var gameEmbed = new Discord.MessageEmbed()
         .setAuthor("Spin the Dragon Match Created", message.author.avatarURL())
         .setDescription(`Created by ${message.member.displayName}. Match will automatically start in 60 seconds.`)
-        .addField("What is the game?", "Spin the dragon is an elimination-roullette-type game where players take turns spinning the dragon on a platform. The dragon can hit a player with its tail, which will take some HP, it can breathe fire, which takes HP from multiple people, or")
+        .addField("What is the game?", "Spin the dragon is an elimination-roullette-type game where players take turns spinning the dragon on a platform. The dragon can hit a player with its tail, which will take some HP, it can breathe fire, which takes HP from multiple people, or get too dizzy and get nauseous and throw up a toxic liquid that damages everyone!")
         .addField("How do I join?", `If you have the required amount, use \`spin join @${message.member.displayName}\`. **Do not use my prefix! It won't do anything if you do!**`)
         .addField("Match info", `Max players: ${pLim}\nBet: ${bet}\n\n*You must have the bet amount to join.*\n*The match host may start the match before the 60s with \`spin match start\`*`)
         .setColor("DC134C")
@@ -67,6 +67,7 @@ module.exports = {
             } else if (joined.includes(m.author.id)) {message.reply("You've already joined the game!");};
         });
         collector.on("end", collected => {
+            if (joined.length < 2) {return message.reply("You can't have just you in the game! Make sure you have your party rallied to play *before* you create the game so that everyone has time to join.");};
             start(joined.length);
         });
         function start (pc /*player count*/) {
