@@ -23,6 +23,17 @@ var words = ["rainbow", "goblin", "skeleton", "despair", "turtle", "chocolate", 
 "square one", "maple syrup", "sometimes", "blade dance", "sword flay", "extra moist",
 "easter egg", "the snack that smiles back", "eggcellent news", "pneumonoultramicroscopicsilicavolcanoconiosis"];
 
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	logging: false,
+	storage: 'database.sqlite',
+});
+
+const userGameData = sequelize.import("../../models/usergamedata");
+
 module.exports = {
     name: "hangman",
     description: "",
@@ -62,7 +73,12 @@ module.exports = {
         async function make_guess() {
             try {
                 if (disp == secret) {
-                    bottT = `You won! Yay! The word was ${secret}.`; 
+                    var xp = Math.ceil(Math.random() * 200) + 300;
+                    bottT = `You won! Yay! The word or phrase was **${secret}**.\n\Here's **${xp}XP** for winning!`;
+                    var e = process.argv.includes('--force') || process.argv.includes('-f');
+                    sequelize.sync({force: e}).then(async () => {}).catch(console.error);
+                    var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+                    if (pstats) {await userGameData.update({xp: pstats.xp + xp}, {where: {user_id: message.author.id}})};
                     done = true; 
                     var hangmanEmbed = new Discord.MessageEmbed()
                     .setAuthor("Hangman", message.author.avatarURL())
@@ -111,7 +127,7 @@ module.exports = {
                     .setTimestamp();
                     await he.edit(hangmanEmbed);
                 } else {
-                    bottT = "You ran out of gueses! Game over. The word was " + secret;
+                    bottT = `You ran out of gueses! Game over. The word or phrase was **${secret}**`;
                     done = true;
                     var hangmanEmbed = new Discord.MessageEmbed()
                     .setAuthor("Hangman", message.author.avatarURL())

@@ -9,7 +9,6 @@ function wait(time) {
 };
 
 const Sequelize = require('sequelize');
-const { startTimer } = require("winston");
 
 const sequelize = new Sequelize('database', 'username', 'password', {
 	host: 'localhost',
