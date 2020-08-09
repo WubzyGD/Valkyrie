@@ -31,7 +31,12 @@ function wait(time) {
 
 const GBLValk = new gbl("619305062900039726", 'XA-46200ce4794741d3bf7216dcb3f725b1', false, {webhookPort: 7429, webhookPath: "/GBLWebhook", webhookAuth: "pizzapineapplespeachesandpears"});
 
-var cmdcount = 0;
+var botstats = {
+	cmdcount: 0,
+	cmdcounts: {},
+	messages: 0,
+	dicerolls: 0
+};
 
 var dmcmds = ["theme", "bj"];
 var chcmds = ["slap", "battle", "serverinfo", "secretsanta", "vibecheck", "poll", ""];
@@ -327,7 +332,7 @@ client.on("message", async message => {
 
 	if (message.channel.type == "text") {if (settings[message.guild.id]) {prefix = settings[message.guild.id].prefix;};};
 
-	if (msg.startsWith(prefix)) {cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.MessageEmbed().SetAuthor("Commands Executed since last restart", client.user.avatarURL()).setDescription(`${cmdcount} commands.`));};
+	if (msg.startsWith(prefix)) {botstats.cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.MessageEmbed().setAuthor("Commands Executed since last restart", client.user.avatarURL()).setDescription(`${botstats.cmdcount} commands.`));};
 
 	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (cmd !== "shop") && (message.author.id !== Wubzy)) {return message.delete();};
 
