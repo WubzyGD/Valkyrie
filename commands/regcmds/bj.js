@@ -4,6 +4,7 @@ module.exports = {
     name: "bj",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
+        message.reply("e");
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}bj <quick|create>\``);};
         if (args[0] == "quick") {
             if (message.channel.type != "dm") {return message.reply("You have to do that in a DM so you don't spam everyone :)");};
