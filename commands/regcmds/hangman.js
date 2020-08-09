@@ -92,12 +92,13 @@ module.exports = {
                 if (att > 0) {
                     var guessCollected = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
                     var guess = guessCollected.first().content.toLowerCase();
-                    message.channel.messages.fetch({limit: 10}).then((messages) => {
+                    /*message.channel.messages.fetch({limit: 10}).then((messages) => {
 				        var filterBy = message.author ? message.author.id : Client.message.author.id;
-				        messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 1);
+				        messages = messages.filter(m => m.author.id === filterBy && m.content.length == 1).array().slice(0, 1);
 				        message.channel.bulkDelete(messages).catch(console.error);
-			        });
-                    if (guess.length == 1) {if (guess in letters) {
+                    });*/
+                    
+                    if (guess.length == 1) {guessCollected.first().delete(); if (guess in letters) {
                         message.reply("You have already guessed that letter!");
                     } else {
                         var temps = "";
