@@ -39,6 +39,8 @@ module.exports = {
             var pLim = Number(args[1]);
             if (isNaN(Number(pLim)) || pLim > 20 || pLim < 2) {pLim = 20;};
         } else {return message.reply("You must use either `create` or `limit`.");};
+        var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
+        if (!pstats || pstats.money < bet) {return message.channel.send("You've set the bet amount to more money than you have! Make a new match with a lower bet amount.");};
         var gameEmbed = new Discord.MessageEmbed()
         .setAuthor("Spin the Dragon Match Created", message.author.avatarURL())
         .setDescription(`Created by ${message.member.displayName}. Match will automatically start in 60 seconds.`)
@@ -57,7 +59,7 @@ module.exports = {
             if (m.content.toLowerCase() == "spin match start" && m.author.id == message.author.id) {
                 collector.stop();
             } else if (!joined.includes(m.author.id)) {
-                var pstats = await userGameData.findOne({where: {user_id: m.author.id}});
+                pstats = await userGameData.findOne({where: {user_id: m.author.id}});
                 if (!pstats || pstats.money < bet) {message.channel.send("You don't have enough money to play!");}
                 else {message.channel.send(`${message.guild.members.cache.get(m.author.id).displayName} has joined the game!`);};
                 joined.push(m.author.id);
