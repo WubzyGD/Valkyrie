@@ -49,7 +49,7 @@ module.exports = {
         .setFooter("Valkyrie - Bullying Asher since 1902")
         .setTimestamp();
         var game = await message.channel.send(gameEmbed);
-        var joined = [];
+        var joined = [message.author.id];
 
         var filter = m => m.content.toLowerCase() == "spin match start" || (m.content.toLowerCase() == `spin join <@${message.author.id}>` || m.content.toLowerCase() == `spin join <@!${message.author.id}>`);
         var collector = message.channel.createMessageCollector(filter, {time: 60000});
@@ -60,14 +60,16 @@ module.exports = {
                 var pstats = await userGameData.findOne({where: {user_id: m.author.id}});
                 if (!pstats || pstats.money < bet) {message.channel.send("You don't have enough money to play!");}
                 else {message.channel.send(`${message.guild.members.cache.get(m.author.id).displayName} has joined the game!`);};
+                joined.push(m.author.id);
                 if (joined.length >= pLim - 1) {collector.stop();};
-            };
+            } else if (joined.includes(m.author.id)) {message.reply("You've already joined the game!");};
         });
         collector.on("end", collected => {
             start(joined.length);
         });
         function start (pc /*player count*/) {
             message.channel.send(`Game starting with ${pc} people in it!`);
+
         };
     }
 };
