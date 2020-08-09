@@ -318,10 +318,12 @@ client.on("message", async message => {
 	if (message.author.bot) { return undefined; }
 	if (message.channel.type == 'dm') {var dmch = true;} else {var dmch = false};
 	if (message.channel.type !== 'text' && message.channel.type !== 'dm') { return undefined; }
+
+	if (message.channel.type == "text") {if (settings[message.guild.id]) {prefix = settings[message.guild.id].prefix;};};
 	
 	var msg = message.content.toLowerCase();
 	var mention = message.mentions.users.first();
-	var args = message.content.slice(prefix.length).trim().split(/ +/g);
+	var args = message.content.slice(prefix.length).trim().split(/\s+/g);
 	var cmd = args.shift().toLowerCase();
 
 	if (message.content === '!join') {
@@ -329,9 +331,6 @@ client.on("message", async message => {
 		message.channel.send("Simulating member join...");
 		client.emit('guildMemberAdd', message.member || message.guild.members.cache.get(message.author));
 	};
-
-	if (message.channel.type == "text") {if (settings[message.guild.id]) {prefix = settings[message.guild.id].prefix;};};
-
 	if (msg.startsWith(prefix)) {botstats.cmdcount += 1;}; if (msg.startsWith(prefix) && cmd == "cmdcount") {return message.channel.send(new Discord.MessageEmbed().setAuthor("Commands Executed since last restart", client.user.avatarURL()).setDescription(`${botstats.cmdcount} commands.`));};
 
 	if (message.channel.id == "691149309755916370" && (msg.startsWith(prefix)) && (cmd !== "shop") && (message.author.id !== Wubzy)) {return message.delete();};
@@ -444,7 +443,6 @@ client.on("message", async message => {
 					await wait(800);
 					message.channel.stopTyping();
 				};
-				if ((!dmch && cmd == "theme") || (!dmch && cmd == "bj")) {return;};
 				client.commands.get(cmd).execute(message, msg, args, cmd, prefix, mention, client);
 			};
 		} else if (msg.startsWith(adminPrefix)) {

@@ -4,7 +4,6 @@ module.exports = {
     name: "bj",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        message.reply("e");
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}bj <quick|create>\``);};
         if (args[0] == "quick") {
             if (message.channel.type != "dm") {return message.reply("You have to do that in a DM so you don't spam everyone :)");};
@@ -29,10 +28,10 @@ module.exports = {
                 var values = ["Ace", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"];
                 var suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
                 var card;
-                while (tempHand.length < 3) {
+                while (tempHand.length < 2) {
                     while (true) {
                         var card = `${values[Math.floor(Math.random() * values.length)]} of ${suits[Math.floor(Math.random() * suits.length)]}`;
-                        if (!card in usedCards) {break;};
+                        if (card in usedCards) {continue;} else {break;};
                     };
                     tempHand.push(card);
                 };
@@ -42,6 +41,7 @@ module.exports = {
             function findHandValue(hand, currentHandValue) {
                 var handValue = 0;
                 for (let card of hand) {
+                    card = card.split(" ")[0];
                     if (card == "A") {if (currentHandValue > 11) {handValue += 1;} else {handValue += 11;};}
                     else if (card == "Jack" || card == "Queen" || card == "King") {handValue += 10;}
                     else {handValue += Number(card);};
@@ -58,15 +58,18 @@ module.exports = {
 
             async function turn(p) {
                 if (p == p1) {
+                    let mhs = pp => {let ls = `Value - \`${handsValue[pp]}\`\n\n`; for (let card of hands[pp]) {ls += `${hands[pp].indexOf(card) + 1}. **${card.split(" ")[0]}** of **${card.split(" ")[2]}**\n`;}; return ls;};
                     var updateEmbed = new Discord.MessageEmbed()
                     .setTitle("Blackjack Game")
                     .setDescription(`__${p1.username}__ vs __${p2.username}__`)
-                    .addField("Info", `It is currently ${p.displayName}'s turn. Your hand value is ${handsValue[p1n]} Would you like to hit or stand?\nLast turn: ${lastTurn}`)
-                    .addField(p1.displayName, `Hand: ${hands[p1n]}`)
-                    .addField(p2.displayName, `Hand: ${hands[p2n]}`)
+                    .addField("Info", `- It is currently ${p.username}'s turn.\n- Your hand value is ${handsValue[p1n]}.\n\nWould you like to "hit" or "stand"?\n\nLast turn: ${lastTurn}`)
+                    .addField(`__${p1.username}__`, `Hand: ${mhs(p1n)}`)
+                    .addField(`__${p2.username}__`, `Hand: ${mhs(p2n)}`)
                     .setColor("DC134C")
                     .setFooter("Valkyrie", client.user.avatarURL())
                     .setTimestamp();
+
+                    game.edit(updateEmbed);
 
                     try {
                         var filter = m => m.content.includes("hit") || m.content.includes("stand");
@@ -74,12 +77,13 @@ module.exports = {
                     } catch (e) {console.log(e); return "timeout"};
                 };
 
-                if (findHandValue(hands[p.displayName], handsValue[p.displayName]) > 21) {if (p == p1) {return p2;} else {return p1n;};};
-                if (findHandValue(hands[p.displayName], handsValue[p.displayName]) == 21) {return p;};
+                if (findHandValue(hands[p.username], handsValue[p.username]) > 21) {if (p == p1) {return p2;} else {return p1;};};
+                if (findHandValue(hands[p.username], handsValue[p.username]) == 21) {return p;};
 
                 game.edit(updateEmbed);
             };
             if (turn(p1) == "timeout") {return message.channel.send("The game ended because you took too long on your turn... try again?");};
+
         };
     }
 };

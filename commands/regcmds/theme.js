@@ -25,6 +25,7 @@ module.exports = {
     name: "theme",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
+        if (message.channel.type != "dm") {return;};
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}theme <create|help|get>\``);};
         if (args[0] == "help") {
             var helpEmbed = new Discord.MessageEmbed()
