@@ -97,9 +97,7 @@ module.exports = {
 				        messages = messages.filter(m => m.author.id === filterBy).array().slice(0, 1);
 				        message.channel.bulkDelete(messages).catch(console.error);
 			        });
-                    if (guess.length !== 1) {
-                        message.reply("You must make a guess of just one letter!");
-                    } else if (guess in letters) {
+                    if (guess.length == 1) {if (guess in letters) {
                         message.reply("You have already guessed that letter!");
                     } else {
                         var temps = "";
@@ -117,7 +115,7 @@ module.exports = {
                             att -= 1;
                         };
                         letters.push(guess);
-                    };
+                    };};
                     var hangmanEmbed = new Discord.MessageEmbed()
                     .setAuthor("Hangman", message.author.avatarURL())
                     .addField(`${corrG} correct of ${wlen}`, `\`${disp}\``)
