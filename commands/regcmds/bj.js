@@ -6,7 +6,7 @@ module.exports = {
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}bj <quick|create>\``);};
         if (args[0] == "quick") {
-            if (!message.channel.type == "dm") {return message.reply("You have to do that in a DM so you don't spam everyone :)");};
+            if (message.channel.type != "dm") {return message.reply("You have to do that in a DM so you don't spam everyone :)");};
             message.reply("Starting a match of blackjack against me...");
 
             var p1 = message.author; var p1n = p1.username;
