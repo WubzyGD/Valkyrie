@@ -158,7 +158,7 @@ client.on("ready", async () => {
 
 	console.log("\nSuccessfully loaded Sequelize database(s)");
 	
-  	var responses = new Array("some high rolls...", "with dice...", "a great rpg...", "with the laws of the dice...", 
+  	var responses = {"PLAYING": ["some high rolls...", "with dice...", "a great rpg...", "with the laws of the dice...", 
   	"with the dead elf's knife...", "with skeleton bones...", "with a new set of dice...", "five-finger filet...", 
   	"with the sanity of the bard...", "with Wubzy's winning chances...", "with Wubzy's patience...", "with the idea of becoming self-aware...",
   	"\"your code is wrong, wubzy\"", "with fire...", "with my food...", "with a fireball...", "dodge-fire-ball...",
@@ -166,9 +166,20 @@ client.on("ready", async () => {
 	"52-Card Burn-up...", "some bops...", "battle music...", "country music during a battle...", "at being insane...",
 	"I'm self-aware now...", "with newfound boredom...", "with a will to die...", "with stonks...", "with a deagle...",
 	"with your server ;)...", "in a lava pool...", "piano, just badly...", "for only myself...", "with the odds...",
-	"in purgatory...", "..."
-	,`in ${client.guilds.cache.size} servers...`, );
-	client.user.setActivity(responses[Math.floor(Math.random() * responses.length)] + " | " + prefix + "help", { type: 'PLAYING' });
+	"in purgatory...", "...", "hot cross bones...", "lots of nat 20s...", "with your odds of survival...",
+	"with a knife", "0 days since last nat 1...", "it thicc and jazzy...", "it cool...", "in a new dungeon...",
+	"Valkyrie4President...", "with time..."
+	,`in ${client.guilds.cache.size} servers...`], "WATCHING": [
+	"swordfights...", "Code Geass...", "Wubzy suffer...", "people suffer...", "low rolls...", "my plans unfold...",
+	"over the dungeon...", "idiots get low rolls...", `for ${regCommands.length + admCommands.length} commands...`,
+	"my palace of gold...", "high rolls...", "risky battles...", "some idiot use a sword...", "castles crumble...",
+	"for newcomers...", "out for some fun...", "the party argue...", "a bad love story...", "something sad...",
+	"the plan go wrong...", "plans F through K...", "I'm not a bad slime, slurp", "the black swordsman...",
+	"some tanuki girl...", "the 4 Heroes' Church...", "you sleep...", "Lelouch vi Britannia commands you...",
+	"Touka run a marathon..."
+	, `over ${client.guilds.cache.size} servers...`]};
+	var type = Object.keys(responses)[Math.floor(Math.random() * Object.keys(responses).length)];
+	client.user.setActivity(responses[type][Math.floor(Math.random() * responses[type].length)] + " | " + prefix + "help", {type: type});
 	GBLValk.webhook.on("vote", async vote => {
 		var u = client.users.cache.get(vote.id);
 		var stats = await GBLValk.getBot(client.user.id);
