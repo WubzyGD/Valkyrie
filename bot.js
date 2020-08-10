@@ -93,6 +93,13 @@ var snipe = {
 
 var ars = {};
 var settings = {};
+var scores = {};
+
+var factions = fs.readdirSync('./data/factions');
+for (let faction of factions) {scores[faction.slice(0, faction.length - 5)] = {total: 0, members: {}};};
+
+var accountsd = fs.readdirSync('./data/accounts');
+var accounts = {};
 
 for (var guild of Array.from(client.guilds.cache.values())) {
 	if (fs.existsSync(`./data/ar/${guild.id}.json`)) {
@@ -146,6 +153,19 @@ setInterval(async () => {
 	.setColor("DC134C")
 	.setFooter("Valkyrie", client.user.avatarURL())
 	.setTimestamp());
+	for (let factionf of factions) {
+		let faction = JSON.parse(fs.readFileSync(`./data/factions/${factionf}`));
+		faction.score.total += scores[faction.name].total;
+		for (let member of scores[faction.name].members) {
+			if (Object.keys(scores[faction.name].members).includes(member)) {faction.score.members[member] += scores[faction.name].members[member]}
+			else {faction.score.members[member] = scores[faction.name].members[member]};
+		};
+		fs.writeFileSync(`./data/factions/${factionf}`, JSON.stringify(faction), 'utf8');
+	};
+	for (let accountf of accountsd) {
+		let account = JSON.parse(fs.readFileSync(`./data/accounts/${accountf}`));
+		accounts[accountf.slice(0, accountf.length - 5)] = account;
+	};
 }, 120000);
 
 client.on("ready", async () => {
@@ -364,11 +384,15 @@ client.on("message", async message => {
 		});
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
 	};
+
+	if (Object.keys(accounts).includes(message.author.id)) {var account = accounts[message.author.id]} else {var account = null;};
+
 	if ((new Date().getTime() - new Date(pstats.last_xpGain).getTime()) / 1000 >= 60) {
 		if (message.channel.type == "text" && message.channel.guild.id == "679127746592636949") {var guildBoost = 1.5;} else {var guildBoost = 1;};
 		await userGameData.update({money: Math.floor(15 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.money}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: Math.floor(10 * (pstats.lost_remnants + 1) * ((pstats.prestige + 2) * .5) * guildBoost) + pstats.xp}, {where: {user_id: message.author.id}});
 		await userGameData.update({last_xpGain: new Date().toString()}, {where: {user_id: message.author.id}});
+		if (account) {scores[account.faction].total += Math.floor(5 * guildBoost); scores[account.faction].members[message.author.id] += Math.floor(5 * guildBoost);};
 	};
 	if (pstats.xp > ((pstats.level * 100) + ((pstats.level * 6) + (0.3 * (100 * pstats.level))))) {try{if (message.channel.type == "text") {
 		var thisServerSettings = settings[message.guild.id];
@@ -377,6 +401,7 @@ client.on("message", async message => {
 		await userGameData.update({level: pstats.level + 1}, {where: {user_id: message.author.id}});
 		await userGameData.update({xp: (pstats.xp - totalLevelXP)}, {where: {user_id: message.author.id}});
 		if (client.guilds.cache.get("679127746592636949").members.cache.has(message.author.id)) {client.guilds.cache.get("679127746592636949").channels.cache.get("691149365372256326").send(`<@${message.author.id}> has leveled up to Level ${pstats.level + 1}!`);};
+		if (account) {scores[account.faction].total += (pstats.level + 1) * 25; scores[account.faction].members[message.author.id] += (pstats.level + 1) * 25;};
 	};}catch{};};
 
 	async function spawnTreasure() {
@@ -449,6 +474,7 @@ client.on("message", async message => {
 	try {
 		if (msg.startsWith(prefix)) {
 			if (client.commands.has(cmd)) {
+				if (account) {scores[account.faction].total += 15; scores[account.faction].members[message.author.id] += 15;};
 				if (!(cmd == "say" || cmd == "slap" || cmd == "send")) {
 					message.channel.startTyping();
 					await wait(800);
