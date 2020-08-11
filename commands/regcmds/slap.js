@@ -18,7 +18,6 @@ module.exports = {
 		"https://cdn.discordapp.com/attachments/563578266984775681/655517431766319124/tenor.gif",
 		"https://cdn.discordapp.com/attachments/563578266984775681/655517430847635456/source.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668625715318751253/source_2.gif",
-		"https://cdn.discordapp.com/attachments/609888728155947021/668625886626447363/source_3.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668626056261009408/Agwwaj6.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668626330325221416/ABE1arT.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668626329113198602/source_4.gif",
