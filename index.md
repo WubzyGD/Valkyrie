@@ -1,3 +1,5 @@
+![Valkyrie](https://cdn.discordapp.com/avatars/619305062900039726/11f87bc65ad38fbcee6f95202f835360.webp?size=512)
+
 # Welcome to Valkyrie!
 
 You've reached the page for Valkyrie, a Discord bot designed to be feature-rich and simple, along with having a fun and unique personality!
