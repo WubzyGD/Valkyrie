@@ -18,19 +18,19 @@ module.exports = {
 		"https://cdn.discordapp.com/attachments/563578266984775681/655517431766319124/tenor.gif",
 		"https://cdn.discordapp.com/attachments/563578266984775681/655517430847635456/source.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668625715318751253/source_2.gif",
-		"https://cdn.discordapp.com/attachments/609888728155947021/668625886626447363/source_3.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668626056261009408/Agwwaj6.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668626330325221416/ABE1arT.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668626329113198602/source_4.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668627166983880726/giphy_2.gif",
 		"https://cdn.discordapp.com/attachments/609888728155947021/668627176790294535/iFwdi4l06yUfakZDVoMBb8vtT-nSCBnddM-yee959XqOFiyXomKydVwy7vVhNX20xMF9nW-maaq_ZIVri75aZft3i5W47v9qEzqL.gif"];
 		var slap = slaps[Math.floor(Math.random() * slaps.length)];
-		if (mention == null) {
+		if (!mention) {
 			var person = message.content.slice(prefix.length + cmd.length + 1);
 		} else {
 			var person = message.guild.members.cache.get(mention.id);
 			var person = person.displayName;
 		};
+		if (person == message.member.displayName) {var m = await message.channel.send("I mean, if you wanna slap yourself then I guess I won't stop you..."); await m.delete({timeout: 5000, reason: 'for the memes lol'}); person = "themself"};
 		var slapSend = new Discord.MessageEmbed()
 		.setTitle(`${message.member.displayName} slaps ${person}`)
 		.setImage(slap)
