@@ -1,37 +1,45 @@
-## Welcome to GitHub Pages
+# Welcome to Valkyrie!
 
-You can use the [editor on GitHub](https://github.com/WubzyGD/Valkyrie/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+You've reached the page for Valkyrie, a Discord bot designed to be feature-rich and simple, along with having a fun and unique personality!
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Contact me, WubzyGD#8766 through [Discord](https://discord.com) if you have any issues, requests, or feedback.
 
-### Markdown
+> ![WubzyGD](https://cdn.discordapp.com/avatars/330547934951112705/a_a6ecc58ac7857063425a0f2e614a3cc3.webp?size=64)
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Set-up and FAQs
 
-```markdown
-Syntax highlighted code block
+Before I get to the detailed stuff, here's some easy info on how to use the bot and get it working. 
 
-# Header 1
-## Header 2
-### Header 3
+### Adding
 
-- Bulleted
-- List
+To add Valkyrie, make sure you have a Discord server set up, and you have Administrator priviledges for that server.
 
-1. Numbered
-2. List
+Then, simply follow [this handy link]() and select your server, and she's there - easy as that!
 
-**Bold** and _Italic_ and `Code` text
+> As long as you don't uncheck any boxes and you have the right permissions in your server, Valkyrie should have all the permissions she needs to function. If you're experiencing issues or twitchy commands that you don't in other servers, this is likely the culprit.
 
-[Link](url) and ![Image](src)
-```
+### Getting Help
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### FAQ
 
-### Jekyll Themes
+## Bot Info
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/WubzyGD/Valkyrie/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Purpose
 
-### Support or Contact
+### Development
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Features
+
+### General
+
+### RPG
+
+### Fun
+
+### Social
+
+### Economy
+
+## Commands Help
+
+## Planned Features
