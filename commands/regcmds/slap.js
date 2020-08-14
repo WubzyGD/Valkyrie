@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 module.exports = {
     name: "slap",
     description: "",
-    execute(message, msg, args, cmd, prefix, mention, client) {
+    async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return(message.channel.send(`You've gotta slap someone, dingus! Syntax: \`${prefix}slap <person>\``))}
 		var slaps = ["https://cdn.discordapp.com/attachments/563578266984775681/655517570924806154/giphy-2.gif",
 		"https://cdn.discordapp.com/attachments/563578266984775681/655517570421751821/source-3.gif",
