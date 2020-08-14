@@ -1,4 +1,4 @@
-![Valkyrie](https://cdn.discordapp.com/avatars/619305062900039726/11f87bc65ad38fbcee6f95202f835360.webp?size=512)
+![Valkyrie](https://cdn.discordapp.com/avatars/619305062900039726/11f87bc65ad38fbcee6f95202f835360.webp?size=256)
 
 # Welcome to Valkyrie!
 
