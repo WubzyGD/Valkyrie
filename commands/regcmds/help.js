@@ -30,7 +30,7 @@ module.exports = {
 		.addField("__Stats__", "Syntax: `stats [image|l] [@mention]`\n\nDisplays your __global__ stats containing your level and XP through me, which is gained by being active in servers!\n\nTips:\n-You can get an image displaying your level stats by adding `image` to the command\n-You can get another user's stats by appending their mention to the __end of your message__.\n-By joining the support server, you gain access to more featuers of this system and faster ways to earn XP and GP!\n-You can view a server leaderboard with `stats l`.")
 		.addField("__Char__", "Syntax: `char <add|view|edit|list|delete>`\n\nUse this awesome feature to create detailed character \"sheets\" that you can then globally view and edit, allowing you to quickly join RPs and DnD sessions without the hassle of explaining your characters.\n\nCurrently, only the addition of RP characters is functional. The rest is very soon to come!")
 		.setColor("DC134C")
-		.setFooter("Valkyrie | Page 1 of 3", client.user.avatarURL())
+		.setFooter("Valkyrie | Page 1 of 4", client.user.avatarURL())
 		.setTimestamp();
 
 		var help2 = new Discord.MessageEmbed()
@@ -45,7 +45,7 @@ module.exports = {
 		.addField("__Slap__", "Syntax: `slap <@member>`\n\nGives the mentioned member a nice firm *whack* to the face")
 		.addField("__AR__", "Syntax: `ar <add|list|edit|delete>`\n\nCreates, edits, deletes, or lists auto-responses, which are ways to get me to say stuff when someone else says something specific in your server. Only an admin may edit responses in your server!")
 		.setColor("DC134C")
-		.setFooter("Valkyrie | Page 2 of 3", client.user.avatarURL())
+		.setFooter("Valkyrie | Page 2 of 4", client.user.avatarURL())
 		.setTimestamp();
 
 		var help3 = new Discord.MessageEmbed()
@@ -62,14 +62,14 @@ module.exports = {
 		.addField("__Vote__", "Syntax: `vote [has @member|monthly|total|stats]`\n\nShows info about me on Glenn Bot List. Using `has` can check to see if you've voted in the last 12 hours, or you can mention another member to check!")
 		//.addField("__Send__", "Syntax: `send <@username> <message>`\n\nSends that user a message and deletes the execution message. Glorified DMs")
 		.addField("__Delete__", "Syntax: `delete <count> [@member]`\n\nPurges a given number of messages from the channel, and optionally from only a specific member.")
-		.addField("__Announce__", "Syntax: `announce <options>`\n\nThis command is really just a glorified embed generator, and while it uses the admin prefix, as long as you have permissions to send a message to that channel, the command will work!\n\nTips:\n-Use `announce options` to see a list of customizability options")
+		.addField("__Announce__", "Syntax: `announce <options>`\n\nThis command is really just a glorified embed generator, and as long as you have permissions to send a message to that channel, the command will work!\n\nTips:\n-Use `announce options` to see a list of customizability options")
 		//.addField("__Kick__", ".")
 		//.addField("__Ban__", ".")
-		//.addField("__Poll", ".")
+		.addField("__Poll", "Syntax: `poll <options>\n\nCreate a poll with the specified options and duration. See `announce` for help; the two commands operate similarly.")
 		.addField("__Server__", "Syntax: `server <edit|view>`\n\nEdits your server settings for Valkyrie. For more help, send the command without any options to see more about it.\n\n**Please note that the functionality of these features is still in development!**")
 		.addField("__Color__", "Syntax: `color <rgb|hex> <color>`\n\nSends the color you specified.\n\nTips:\n-For rgb colors, use this syntax: `color rgb 0 0 0`\n-For hex colors, use this syntax: `color hex dc134c`")
 		.setColor("DC134C")
-		.setFooter("Valkyrie | Page 3 of 3", client.user.avatarURL())
+		.setFooter("Valkyrie | Page 3 of 4", client.user.avatarURL())
 		.setTimestamp();
 		
 		message.reply("Calling in the reinforcements! Help is in your DM's.");
