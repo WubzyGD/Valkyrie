@@ -36,8 +36,13 @@ module.exports = {
             if (meme == "bonehurtjuice") {var link = "https://cdn.discordapp.com/attachments/563198656241598484/683472749242351616/55940bb.jpg"};
 */          if (!link) {if (meme == "lost") {return message.reply(":thinking: Did you, perhaps, mis-spell \"list\"?");} else {return message.reply("I don't have the meme `" + meme + "`!");};};
             var ext;
-            if (link.endsWith(".mp4")) {ext = `\n${link}`;} else {ext = new Discord.MessageAttachment(link);}
-            return message.channel.send(`Sender: ${message.member.displayName}`, ext);
+            if (link.endsWith(".mp4")) {
+                ext = `\n${link}`;
+                return message.channel.send(`Sender: ${message.member.displayName}${ext}`);
+            } else {
+                ext = new Discord.MessageAttachment(link);
+                return message.channel.send(`Sender: ${message.member.displayName}`, ext);
+            }
         }
         else if (args[0] == "r" || args[0] == "register") {
             if (message.author.id != "330547934951112705") {return;};
