@@ -413,6 +413,10 @@ client.on("message", async message => {
 		if (account) {scores[account.faction.toLowerCase()].total += (pstats.level + 1) * 25; scores[account.faction.toLowerCase()].members[message.author.id] += (pstats.level + 1) * 25;};
 	};}catch{};};
 
+	if (pstats.commands_executed == 10) {
+		message.author.send(new Discord.MessageEmbed().setTitle("Enjoying Valkyrie?").setDescription("I hope I'm living up to your expectations!").addField("Get Support", "Join the [official Valkyrie Server](https://discord.gg/hg4VTwc)").addField("Vote for me", "Drop me a vote [here](https://glennbotlist.xyz/bot/619305062900039726/vote) on Glenn Bot List :) You'll get an XP boost!").setColor("DC134C").setFooter("Valkyrie | This message was automatically sent because you executed 10 commands", client.user.avatarURL()).setTimestamp());
+	}
+
 	async function spawnTreasure() {
 		var xpintreasure = (Math.ceil(Math.random() * 1300)) + 200;
 		var moneyintreasure = (Math.ceil(Math.random() * 1300)) + 200;
@@ -490,6 +494,7 @@ client.on("message", async message => {
 					message.channel.stopTyping();
 				};
 				client.commands.get(cmd).execute(message, msg, args, cmd, prefix, mention, client);
+				await userGameData.update({commands_executed: pstats.commands_executed + 1});
 			};
 		} else if (msg.startsWith(adminPrefix)) {
 			var args = message.content.slice(adminPrefix.length).trim().split(/ +/g);
@@ -498,6 +503,7 @@ client.on("message", async message => {
 			await wait(500);
 			message.channel.stopTyping();
 			if (client.commands.has(cmd)) {client.commands.get(cmd).execute(message, msg, args, cmd, adminPrefix, mention, client);};
+			await userGameData.update({commands_executed: pstats.commands_executed + 1});
 		}; 
 	} catch (err) {
 		console.error(err);

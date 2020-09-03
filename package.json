@@ -10,6 +10,7 @@
         "discord.js": "^12.2.0",
         "gblapi.js": "^2.0.5",
         "heroku": "^7.42.1",
+        "manyitems": "^1.0.2",
         "node-fetch": "^2.6.0",
         "sequelize": "^5.22.3",
         "sqlite3": "^4.2.0",
