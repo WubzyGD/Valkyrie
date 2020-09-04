@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "announce",
+	name: "announce",
+	aliases: ["ann", "embed", "createembed", "ce"],
     description: "",
     async execute(message, msg, args, cmd, adminPrefix, mention, client) {
 		message.delete();

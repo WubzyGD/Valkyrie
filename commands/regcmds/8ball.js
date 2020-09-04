@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "8ball",
+	name: "8ball",
+	aliases: ["eb", "8b"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention) {
         if (!args.length) { return message.channel.send(`You didn't do something right there. \`Usage: ${prefix}8ball <question>\``)};

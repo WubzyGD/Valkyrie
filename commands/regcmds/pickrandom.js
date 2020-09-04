@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: "pickrandom",
+    aliases: ["pr", "pickrand"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}pickrandom $option <stuff> $option <otherStuff> $option <moreStuff> <etc...>\``);};

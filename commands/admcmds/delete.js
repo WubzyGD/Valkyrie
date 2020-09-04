@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "delete",
+	name: "delete",
+	aliases: ["purge", "clean"],
     description: "",
     execute(message, msg, args, cmd, adminPrefix, mention, client) {
 		if (!message.member.hasPermission("MANAGE_MESSAGES")) {return message.channel.send("You must be able to manage messages to do that.");};

@@ -12,7 +12,8 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 const diceRolled = sequelize.import("../../models/dicerolled");
 
 module.exports = {
-    name: "rolldice",
+	name: "rolldice",
+	aliases: ["rd", "dr", "diceroll", "rolldie"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
 		if (message.channel.type == "dm") {return message.reply("I can only do that in a server!");};

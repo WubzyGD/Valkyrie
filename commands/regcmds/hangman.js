@@ -36,6 +36,7 @@ const userGameData = sequelize.import("../../models/usergamedata");
 
 module.exports = {
     name: "hangman",
+    aliases: ["hm"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         var up1 = await message.reply("You've initiated Hangman!");

@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "coinflip",
+	name: "coinflip",
+	aliases: ["cf"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         var coin = Math.ceil(Math.random() * 2);

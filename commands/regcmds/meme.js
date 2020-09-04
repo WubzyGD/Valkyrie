@@ -4,6 +4,7 @@ const fs = require("fs");
 
 module.exports = {
     name: "meme",
+    aliases: ["m"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}meme <use|avatar> <memeName>\` to have Valk send a meme/reaction image, or make one using your avatar and someone else's. Use \`list\` as the meme name to show available options.`);};

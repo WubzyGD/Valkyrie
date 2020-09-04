@@ -3,6 +3,7 @@ const Util = require("util");
 
 module.exports = {
     name: "eval",
+    aliases: ["e"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         if (message.author.id != "330547934951112705" && message.author.id != "335792072638595083") {return;};

@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "help",
+	name: "help",
+	aliases: ["h"],
     description: "Valk's command-listing",
     async execute(message, msg, args, cmd, prefix, mention, client) {
 		var infoEmbed = new Discord.MessageEmbed()

@@ -21,6 +21,7 @@ const userGameData = sequelize.import("../../models/usergamedata");
 
 module.exports = {
     name: "spinthedragon",
+    aliases: ["spindragon", "sd"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.reply(`Syntax: \`${prefix}spinthedragon <create|limit> [bet]\`. \`create\` opens a match for up to 20 players. \`limit\` restricts the match to the number of players you specify (place this number before \`bet\`). Your number has to be 20 or less. The player count includes you. The default bet is 500 Gold. Prestige and lost remnant bonuses **do not** apply to betting games.`);};
