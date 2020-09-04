@@ -13,13 +13,11 @@ const Wubzy = "330547934951112705";
 const regCommands = fs.readdirSync("./commands/regcmds").filter(file => file.endsWith(".js"));
 for (var file of regCommands) {
 	const command = require(`./commands/regcmds/${file}`);
-	if (command.aliases) {forEach(x => client.aliases.set(x, cmd.name));}
 	client.commands.set(command.name, command);
 };
 const admCommands = fs.readdirSync("./commands/admcmds").filter(file => file.endsWith(".js"));
 for (var file of admCommands) {
 	const command = require(`./commands/admcmds/${file}`);
-	if (command.aliases) {forEach(x => client.aliases.set(x, cmd.name));}
 	client.commands.set(command.name, command);
 };
 
@@ -489,16 +487,16 @@ client.on("message", async message => {
 	if (message.channel.type == "text") {client.commands.get("arcustom").execute(message, msg, args, cmd, prefix, mention, client, ars[message.guild.id]);};};
 	try {
 		if (msg.startsWith(prefix)) {
-			if (client.commands.has(cmd) || client.aliases.has(cmd)) {
+			if (client.commands.has(cmd) || client.commands.find(cmddd => cmddd.aliases && cmddd.aliases.includes(cmd))) {
 				if (account && (new Date().getTime() - new Date(cstats[message.author.id]).getTime()) / 1000 >= 60) {cstats[message.author.id] = new Date().toString(); scores[account.faction.toLowerCase()].total += 15; scores[account.faction.toLowerCase()].members[message.author.id] += 15;};
 				if (!(cmd == "say" || cmd == "slap" || cmd == "send")) {
 					message.channel.startTyping();
 					await wait(800);
 					message.channel.stopTyping();
 				};
-				let cmd = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-				cmd.execute(message, msg, args, cmd, prefix, mention, client);
-				await userGameData.update({commands_executed: pstats.commands_executed + 1});
+				let cmdd = client.commands.get(cmd) || client.commands.find(cmddd => cmddd.aliases && cmddd.aliases.includes(cmd));
+				cmdd.execute(message, msg, args, cmd, prefix, mention, client);
+				await userGameData.update({commands_executed: pstats.commands_executed + 1}, {where: {user_id: message.author.id}});
 			};
 		} else if (msg.startsWith(adminPrefix)) {
 			var args = message.content.slice(adminPrefix.length).trim().split(/ +/g);
@@ -506,13 +504,11 @@ client.on("message", async message => {
 			message.channel.startTyping();
 			await wait(800);
 			message.channel.stopTyping();
-			if (client.commands.has(cmd)) {client.commands.get(cmd).execute(message, msg, args, cmd, adminPrefix, mention, client);};
-			await userGameData.update({commands_executed: pstats.commands_executed + 1}, {where: {user_id: message.author.id}});
-			if (client.commands.has(cmd) || client.aliases.has(cmd)) {
-				let cmd = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
-				cmd.execute(message, msg, args, cmd, adminPrefix, mention, client);
+			if (client.commands.has(cmd) || client.commands.find(cmddd => cmddd.aliases && cmddd.aliases.includes(cmd))) {
+				let cmdd = client.commands.get(cmd) || client.commands.find(cmddd => cmddd.aliases && cmddd.aliases.includes(cmd));
+				cmdd.execute(message, msg, args, cmd, adminPrefix, mention, client);
 			};
-			await userGameData.update({commands_executed: pstats.commands_executed + 1});
+			await userGameData.update({commands_executed: pstats.commands_executed + 1}, {where: {user_id: message.author.id}});
 		}; 
 	} catch (err) {
 		console.error(err);
