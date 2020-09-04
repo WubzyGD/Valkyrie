@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: "supportserver",
+    aliases: ["ss"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         message.reply("Sure! Check your DM's!")

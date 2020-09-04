@@ -3,6 +3,7 @@ const fs = require("fs");
 
 module.exports = {
     name: "counter",
+    aliases: ["c", "count"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         await message.delete();

@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "spell-old",
+	name: "spell-old",
+	aliases: ["sp-o", "spo", "so"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Yeah that's wrong :(. Syntax: \`${prefix}spell <list|info|cast|create> <name>\``)};

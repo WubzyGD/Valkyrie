@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: "randnum",
+    aliases: ["rand", "rn"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) { return message.channel.send(`That's not right. Usage: \`${prefix}randnum <min number> <max number>\``);}

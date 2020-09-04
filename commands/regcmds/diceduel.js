@@ -12,7 +12,8 @@ const sequelize = new Sequelize('database', 'username', 'password', {
 const diceRolled = sequelize.import("../../models/dicerolled");
 
 module.exports = {
-    name: "diceduel",
+	name: "diceduel",
+	aliases: ["dd", "dicebattle", "db", "dueldice"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
 		var e = process.argv.includes('--force') || process.argv.includes('-f');

@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "serverinfo",
+	name: "serverinfo",
+	aliases: ["si"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         var serverInfoEmbed = new Discord.MessageEmbed()

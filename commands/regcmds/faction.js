@@ -4,6 +4,7 @@ const fs = require('fs');
 
 module.exports = {
     name: "faction",
+    aliases: ["ft"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}faction <stats|leaderboard>\``);};

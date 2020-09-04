@@ -3,6 +3,7 @@ const fs = require("fs");
 
 module.exports = {
     name: "feel",
+    aliases: ["emotion"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}feel <emotion|ask @mention>\` To help you describe what you're feeling, you can use \`list\` as the emotion to see all the possible feelings.`);};

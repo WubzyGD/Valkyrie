@@ -16,6 +16,7 @@ const userGameData = sequelize.import("../../models/usergamedata");
 
 module.exports = {
     name: "vote",
+    aliases: ["votes", "vo"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return message.channel.send(new Discord.MessageEmbed().setTitle("Vote for me!").setDescription("You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)! This will give you a giant amount of XP (1,500) and in the future, possibly exclusive commands.").setColor("DC134C"));};

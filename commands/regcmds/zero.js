@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "zero",
+	name: "zero",
+	aliases: ["z", "amizero"],
     description: "",
     execute(message, msg, args, cmd, prefix, mention, client) {
         var zeroN = Math.ceil(Math.random() * 1000);

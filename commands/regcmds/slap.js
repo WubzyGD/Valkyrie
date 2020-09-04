@@ -1,7 +1,8 @@
 const Discord = require("discord.js");
 
 module.exports = {
-    name: "slap",
+	name: "slap",
+	aliases: ["hit", "wack"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (!args.length) {return(message.channel.send(`You've gotta slap someone, dingus! Syntax: \`${prefix}slap <person>\``))}

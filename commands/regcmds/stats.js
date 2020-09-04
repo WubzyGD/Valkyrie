@@ -22,7 +22,8 @@ const applyText = (canvas, text) => {
 };
 
 module.exports = {
-    name: "stats",
+	name: "stats",
+	aliases: ["level", "xp", "lvl"],
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
         var e = process.argv.includes('--force') || process.argv.includes('-f');
