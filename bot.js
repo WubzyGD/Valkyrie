@@ -5,6 +5,7 @@ const Canvas = require("canvas");
 const gbl = require("gblapi.js");
 const fetch = require("node-fetch");
 const fs = require("fs");
+const dbl = require("dblapi.js");
 
 client.commands = new Discord.Collection();
 
@@ -30,6 +31,7 @@ function wait(time) {
 };
 
 const GBLValk = new gbl("619305062900039726", 'XA-46200ce4794741d3bf7216dcb3f725b1', false, {webhookPort: 7429, webhookPath: "/GBLWebhook", webhookAuth: "pizzapineapplespeachesandpears"});
+const DBLValk = new dbl("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTMwNTA2MjkwMDAzOTcyNiIsImJvdCI6dHJ1ZSwiaWF0IjoxNTk5MzU0OTE0fQ.R339bPSx99_0HdK_96zbZnvO2oGlKdkuZQSgitFqEpM", {webhookAuth: "soup420", webhookPort: 7428, webhookPath: "/TopGG", statsInterval: 3600000}, client);
 
 var botstats = {
 	cmdcount: 0,
@@ -214,7 +216,7 @@ client.on("ready", async () => {
 		var stats = await GBLValk.getBot(client.user.id);
 		client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
 		.setAuthor("New GBL Vote!", u.avatarURL())
-		.setThumbnail("https://cdn.discordapp.com/icons/623600255987875870/a_fdb1896f4a9e2b1d1ab74b6e1eadad7b.webp?size=2048")
+		.setThumbnail("https://cdn.discordapp.com/icons/623600255987875870/a_fdb1896f4a9e2b1d1ab74b6e1eadad7b.gif?size=2048")
 		.setDescription(`From ${u.username}`)
 		.addField("Votes/Monthly", stats.monthly_upvotes, true)
 		.addField("Votes/Total", stats.total_upvotes, true)
@@ -232,6 +234,31 @@ client.on("ready", async () => {
 			.setColor("33ff33"));
 		};
 	});
+
+	DBLValk.webhook.on('vote', async vote => {
+		var u = client.users.cache.get(vote.user.id);
+		var stats = await DBLValk.getBot(client.user.id);
+		client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
+		.setAuthor("New DBL Vote!", u.avatarURL())
+		.setThumbnail("https://cdn.discordapp.com/icons/264445053596991498/a_eadf00405ab375668c76da10ee95f646.gif?size=2048")
+		.setDescription(`From ${u.username}`)
+		.addField("Votes/Monthly", stats.points, true)
+		.addField("Votes/Total", stats.monthlyPoints, true)
+		.addField("In Server?", client.guilds.cache.get("679127746592636949").members.cache.has(u.id), true)
+		.setColor("7711cc"));
+	
+		await sequelize.sync({force: e}).then(async () => {}).catch(console.error);
+		var pstats = await userGameData.findOne({where: {user_id: u.id}});
+		if (pstats) {await userGameData.update({xp: pstats.xp + 1500}, {where: {user_id: u.id}})};
+	
+		if (client.guilds.cache.get("679127746592636949").members.cache.has(u.id)) {
+			client.guilds.cache.get("679127746592636949").channels.cache.get("679127747469115405").send(new Discord.MessageEmbed()
+			.setAuthor("New Vote")
+			.setDescription(`Thanks <@${u.id}> for the vote! Enjoy 1,500XP on the house`)
+			.setColor("33ff33"));
+		};
+	});
+
 	fetch(`https://discordbotlist.com/api/v1/bots/619305062900039726/stats`, {
         method: 'POST',
         headers: {
