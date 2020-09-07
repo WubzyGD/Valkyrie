@@ -236,7 +236,7 @@ client.on("ready", async () => {
 	});
 
 	DBLValk.webhook.on('vote', async vote => {
-		var u = client.users.cache.get(vote.user.id);
+		var u = client.users.cache.get(vote.user);
 		var stats = await DBLValk.getBot(client.user.id);
 		client.guilds.cache.get("679127746592636949").channels.cache.get("736690885324177549").send(new Discord.MessageEmbed()
 		.setAuthor("New DBL Vote!", u.avatarURL())

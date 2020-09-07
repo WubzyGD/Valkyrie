@@ -54,7 +54,7 @@ module.exports = {
 				if (!response.first()) {openBattle.delete(); return message.reply("Nobody accepted your battle! Maybe try again, or mention someone?");};
 				var p1 = message.member; var p2 = message.member.guild.members.cache.get(response.first().author.id);
 			} else {
-				var closedBattle = await message.channel.send(`${message.member.guild.members.get(mention.id).displayName}, you have been challenged to battle by ${message.member.displayName}! To accept, type \`battle accept @${message.member.displayName}\`, and do not use my prefix!`);
+				var closedBattle = await message.channel.send(`${message.member.guild.members.cache.get(mention.id).displayName}, you have been challenged to battle by ${message.member.displayName}! To accept, type \`battle accept @${message.member.displayName}\`, and do not use my prefix!`);
 				var filter = m => m.content.toLowerCase().startsWith("battle accept") && m.author.id == message.mentions.members.first().id && m.mentions.members.first().id == message.author.id;
 				var response = await message.channel.awaitMessages(filter, {time: 200000, max: 1});
 				if (!response.first()) {closedBattle.delete(); return message.reply("Nobody accepted your battle! Maybe try again?");};
@@ -69,7 +69,7 @@ module.exports = {
 				var thumb = "https://cdn.discordapp.com/attachments/563198656241598484/655514893033799700/SmartSelect_20191214-140108_Samsung_Internet.jpg";
 			};
 			if (coin == "Tails") {var first = p2;} else {var first = p1;};
-			var coinflipEmbed = new Discord.RichEmbed()
+			var coinflipEmbed = new Discord.MessageEmbed()
 			.setTitle("Coinflip to decide the first player...")
 			.setThumbnail(thumb)
 			.addField("Coin Flip", `Result: \`${coin}\``)
@@ -77,7 +77,7 @@ module.exports = {
 			.setFooter("Valkyrie", client.user.avatarURL())
 			.setColor("DC134C")
 			.setTimestamp();
-			var coinFlipMsg = await message.channel.send(coinflipEmbed); coinFlipMsg.delete(10000);
+			var coinFlipMsg = await message.channel.send(coinflipEmbed); coinFlipMsg.delete({timeout: 10000});
 			var game = await message.channel.send("The game has started!");
 			var p1n = p1.displayName; var p2n = p2.displayName;
 			var players = {};
@@ -97,9 +97,9 @@ module.exports = {
 			players[p2n].armor = items.armor.Scrap[2].pieces[Math.floor(Math.random() * items.armor.Scrap[2].pieces.length)];
 			var lastTurn = "There have been no turns yet.";
 			async function turn(p) {
-				console.log(`${p.displayName} has started their turn.`);
+				//console.log(`${p.displayName} has started their turn.`);
 				var inst = `React to this message with a :crossed_swords: to attack the other player, and react to it with a :fish: to get better materials. Or, react to it with an :x: to just be a plain coward and get oofed instantly.`;
-				var battleEmbed = new Discord.RichEmbed()
+				var battleEmbed = new Discord.MessageEmbed()
 				.setAuthor("1v1 Duel", client.users.cache.get(p.id).avatarURL())
 				.setDescription(`${p1n} vs ${p2n}`)
 				.addField("Turn", `It is currently ${p.displayName}'s turn.\n\n${inst}`)
@@ -108,7 +108,7 @@ module.exports = {
 				.addField("Current Stats", `**__${p2.displayName}__**\n\n**Health**: ${players[p2n].hp}/100 HP\n__**Weapon**__: ${players[p2n].weapon.name}\n**Rarity**: ${players[p2n].weapon.rarity}\n**Hit Dice**: ${makeHDStr(players[p2n].weapon)}\n**__Armor__**: ${players[p2n].armor.name}\n**Rarity**: ${players[p2n].armor.rarity}\n**Defense**: ${players[p2n].armor.defense}`)
 				.setColor("DC134C").setFooter("Valkyrie").setTimestamp();
 				await game.edit(battleEmbed);
-				await game.clearReactions();
+				await game.reactions.removeAll();
 				await game.react("⚔️"); await game.react("🐟"); await game.react("❌");
 				await wait(200);
 
@@ -149,40 +149,36 @@ module.exports = {
 						var nweapon = rarity[Math.floor(Math.random() * rarity.length)];
 						var cweapon = players[p.displayName].weapon;
 						
-						var oldWeaponEmbed = new Discord.RichEmbed()
+						var oldWeaponEmbed = new Discord.MessageEmbed()
 						.setTitle(`${p.displayName}'s Old Weapon`)
 						.setDescription(`**Name**: ${cweapon.name}\n\n**Rarity**: ${cweapon.rarity}\n${makeHDStr(cweapon)}`)
 						.setColor(rarityColors[cweapon.rarity]);
-						var newWeaponEmbed = new Discord.RichEmbed()
+						var newWeaponEmbed = new Discord.MessageEmbed()
 						.setTitle(`${p.displayName}'s New Weapon`)
 						.setDescription(`**Name**: ${nweapon.name}\n\n**Rarity**: ${nweapon.rarity}\n${makeHDStr(nweapon)}`)
 						.setColor(rarityColors[nweapon.rarity]);
 
 						var gatherQuery1 = await message.channel.send(oldWeaponEmbed);
-						gatherQuery1.delete(200000);
 						var gatherQuery = await message.channel.send(newWeaponEmbed);
 						var gatherQuery2 = await message.channel.send("React to this message to confirm/deny that you want/don't want the weapon you just got!");
-						gatherQuery2.delete(200000);
 					} else if (begdec == "armor") {
 						var rarity = items.armor[getRar()];
 						var set = rarity[Math.floor(Math.random() * rarity.length)];
 						var narmor = set.pieces[Math.floor(Math.random() * set.pieces.length)];
 						var carmor = players[p.displayName].armor;
 
-						var oldArmorEmbed = new Discord.RichEmbed()
+						var oldArmorEmbed = new Discord.MessageEmbed()
 						.setTitle(`${p.displayName}'s Old Armor`)
 						.setDescription(`**Name**: ${carmor.name}\n\n**Rarity**: ${carmor.rarity}\n**Defense**: ${carmor.defense}`)
 						.setColor(rarityColors[carmor.rarity]);
-						var newArmorEmbed = new Discord.RichEmbed()
+						var newArmorEmbed = new Discord.MessageEmbed()
 						.setTitle(`${p.displayName}'s New Armor`)
 						.setDescription(`**Name**: ${narmor.name}\n\n**Rarity**: ${narmor.rarity}\n**Defense**: ${narmor.defense}\n**Set Name**: ${set.name}`)
 						.setColor(rarityColors[narmor.rarity]);
 
 						var gatherQuery1 = await message.channel.send(oldArmorEmbed);
-						gatherQuery1.delete(200000);
 						var gatherQuery = await message.channel.send(newArmorEmbed);
 						var gatherQuery2 = await message.channel.send("React to this message to confirm/deny that you want/don't want the armor you just got!");
-						gatherQuery2.delete(200000);
 					} else if (begdec == "heal") {
 						var oldHealth = players[p.displayName].hp;
 						var healthPot = ["Greater", "Standard", "Lesser"]; healthPot = healthPot[Math.floor(Math.random() * healthPot.length)];
@@ -197,24 +193,32 @@ module.exports = {
 							var bubble = Math.floor(Math.random() * 11);
 							players[p.displayName].hp += ((players[p.displayName].hp - 5) + bubble);
 						} else {du = true; lastTurn = `${p.displayName} fished a ${healthPot} Healing Potion, but could not use it because the potential health loss is greater than the health they have.`};
-						if (!du) {lastTurn = `${p.displayName} fished a ${healthPot} Healing Potion and used it to heal ${players[p.displayName].hp - oldHealth}HP, leaving them at ${players[p.displayName].hp}HP.`;};
-						if (players[p.displayName].hp <= 0) {if(p==p1){win(p2);}else{win(p1);};};
 						if (players[p.displayName].hp > 100) {players[p.displayName].hp = 100};
+						if (!du) {lastTurn = `${p.displayName} fished a ${healthPot} Healing Potion and used it to heal ${players[p.displayName].hp - oldHealth}HP, leaving them at ${players[p.displayName].hp}HP.`;};
+						if (players[p.displayName].hp <= 0) {if(p==p1){win(p2);}else{win(p1);};}
 						if (p == p1) {turn(p2);} else {turn(p1);};
 					} else {throw new SyntaxError("Wubzy sucks at coding. If he knew how to use sequelize there'd be a counter here.");};
 					if (begdec !== "heal") {
 						await gatherQuery.react("👍");
 						await gatherQuery.react("👎");
 						await wait(300);
-						gatherQuery.delete(200000);
-						var filter = filter = reaction => (reaction.emoji.name.includes("👍") || reaction.emoji.name.includes("👎")) && reaction.users.array()[1].id == p.id;
+						var filter = reaction => {
+							let test = Array.from(reaction.users.cache.values());
+							test = test.length > 1;
+							if (test) {test = Array.from(reaction.users.cache.values())[1].id == p.id;}
+							return (reaction.emoji.name.includes("👍") || reaction.emoji.name.includes("👎")) && test;
+						};
 						var collector = await gatherQuery.createReactionCollector(filter, {time: 200000, maxMatches: 1});
 						collector.on("collect", choice => {
-							if (choice.emoji.name == "👍") {players[p.displayName].weapon = nweapon; lastTurn = `${p.displayName} fished an item and kept it!`}
+							if (choice.emoji.name == "👍") {
+								if (begdec == "weapon") {players[p.displayName].weapon = nweapon; lastTurn = `${p.displayName} fished a weapon and kept it!`;}
+								else if (begdec == "armor") {players[p.displayName].weapon = narmor; lastTurn = `${p.displayName} fished a piece of armor and kept it!`}
+							}
 							else if (choice.emoji.name == "👎") {lastTurn = `${p.displayName} fished an item and didn't keep it!`};
-							gatherQuery.clearReactions();
+							gatherQuery.reactions.removeAll();
+							gatherQuery.delete(); gatherQuery1.delete(); gatherQuery2.delete();
 							if (players[p.displayName].hp <= 0) {if(p==p1){win(p2);}else{win(p1);};};
-							if (players[p.displayName].hp > 100) {players[p.displayName].hp = 100};
+							if (players[p.displayName].hp > 100) {players[p.displayName].hp = 100;};
 							if (p == p1) {turn(p2);} else {turn(p1);};
 						});
 						collector.on("end", collected => {
@@ -223,11 +227,16 @@ module.exports = {
 					}
 				};
 
-				var filter = filter = reaction => (reaction.emoji.name.includes("⚔️") || reaction.emoji.name.includes("🐟") || reaction.emoji.name.includes("❌")) && reaction.users.array()[1].id == p.id;
+				var filter = filter = reaction => {
+					/*console.log(reaction);*/
+					let test = Array.from(reaction.users.cache.values());
+					test = test.length > 1;
+					if (test) {test = Array.from(reaction.users.cache.values())[1].id == p.id;}
+					return (reaction.emoji.name.includes("⚔") || reaction.emoji.name.includes("🐟") || reaction.emoji.name.includes("❌")) && test;};
 				var collector = await game.createReactionCollector(filter, {time: 200000, maxMatches: 1});
 				var choice;
 				collector.on("collect", async collected => {
-					console.log("collected");
+					//console.log("collected");
 					choice = collected.emoji.name;
 					if (choice == "⚔️") {await attack();}
 					else if (choice == "🐟") {await find();}
@@ -238,10 +247,10 @@ module.exports = {
 				});
 			};
 			async function win(wpn) {
-				var battleEmbed = new Discord.RichEmbed()
-				.setAuthor("1v1 Duel", client.users.cache.get(p.id).avatarURL())
+				var battleEmbed = new Discord.MessageEmbed()
+				.setAuthor("1v1 Duel", client.users.cache.get(wpn.id).avatarURL())
 				.setDescription(`${p1n} vs ${p2n}`)
-				.addField("Winner", `The **winner** of the battle is **${p.displayName}**!`)
+				.addField("Winner", `The **winner** of the battle is **${wpn.displayName}**!`)
 				.addField("In the last turn...", lastTurn)
 				.setColor("DC134C").setFooter("Valkyrie").setTimestamp();
 				return game.edit(battleEmbed);

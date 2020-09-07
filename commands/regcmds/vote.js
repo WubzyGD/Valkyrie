@@ -3,6 +3,9 @@ const Discord = require("discord.js");
 const gbl = require("gblapi.js");
 const GBLValk = new gbl("619305062900039726", 'XA-46200ce4794741d3bf7216dcb3f725b1', false);
 
+const dbl = require("dblapi.js");
+const DBLValk = new dbl("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTMwNTA2MjkwMDAzOTcyNiIsImJvdCI6dHJ1ZSwiaWF0IjoxNTk5MzU0OTE0fQ.R339bPSx99_0HdK_96zbZnvO2oGlKdkuZQSgitFqEpM");
+
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('database', 'username', 'password', {
@@ -38,10 +41,11 @@ module.exports = {
             .setColor("DC134C")
             .setFooter("Valkyrie")
             .setTimestamp());
-        } else if (args[0] == "has") {
-            var votedString = "";
-            if (mention) {var voted = await GBLValk.hasVoted(mention.id);} else {var voted = await GBLValk.hasVoted(message.member.id);};
-            if (voted) {if (mention) {votedString = "They have voted! Thank you!"} else {votedString = "You have voted! Thank you very much!";};} else {if (mention) {var votedString = "It doesn't look like that person has voted. Vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"} else {votedString = "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";};};
+        } else if (args[0] === "has") {
+            var votedString = "Glenn Bot List: ";
+            if (mention) {var voted = await GBLValk.hasVoted(mention.id); var voted2 = await DBLValk.hasVoted(mention.id);} else {var voted = await GBLValk.hasVoted(message.member.id); var voted2 = await DBLValk.hasVoted(message.member.id);}
+            if (voted) {if (mention) {votedString += "They have voted! Thank you!"} else {votedString += "You have voted! Thank you very much!";};} else {if (mention) {votedString += "It doesn't look like that person has voted. Vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!"} else {votedString += "It doesn't look like you've voted. You can vote for me on Glenn Bot List [right here](https://glennbotlist.xyz/bot/619305062900039726/vote)!";};};
+            if (voted2) {if (mention) {votedString += "\n\nTop.gg: They have voted! Thank you!"} else {votedString += "\n\nTop.gg: You have voted! Thank you very much!"}} else {if (mention) {votedString += "\n\nTop.gg: It doesn't look like that person has voted. Vote for me on Top.gg [right here](https://top.gg/bot/619305062900039726/vote)!"} else {votedString += "\n\nTop.gg: It doesn't look like you've voted. You can vote for me on Top.gg [right here](https://top.gg/bot/619305062900039726/vote)!"}}
             return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Vote Check", message.member.guild.iconURL())
             .setDescription(votedString)
@@ -50,19 +54,22 @@ module.exports = {
             .setTimestamp());
         } else if (args[0] == "monthly") {
             var botStats = await GBLValk.getBot();
-            return message.reply(`${botStats.monthly_upvotes} monthly votes.`);
+            var botStats2 = await DBLValk.getBot(client.user.id);
+            return message.reply(`${botStats.monthly_upvotes} monthly votes on Glenn Bot List, and ${botStats2.monthlyPoints} on Top.gg.`);
         } else if (args[0] == "total") {
             var botStats = await GBLValk.getBot();
-            return message.reply(`${botStats.total_upvotes} total votes.`);
+            var botStats2 = await DBLValk.getBot(client.user.id);
+            return message.reply(`${botStats.total_upvotes} total votes on Glenn Bot List, and ${botStats2.points} on Top.gg.`);
         } else if (args[0] == "stats") {
             var botStats = await GBLValk.getBot();
+            var botStats2 = await DBLValk.getBot(client.user.id);
             return message.channel.send(new Discord.MessageEmbed()
             .setAuthor("Bot List Stats", client.users.cache.get("330547934951112705").avatarURL())
             .setThumbnail(client.user.avatarURL())
             .setDescription("Some of these stats are retrieved from [Glenn Bot List](https://glennbotlist.xyz/bot/619305062900039726/vote)")
-            .addField("Monthly Votes", botStats.monthly_upvotes, true)
-            .addField("Total Votes", botStats.total_upvotes, true)
-            .addField("Vote", "[Vote Here!](https://glennbotlist.xyz/bot/619305062900039726/vote) It helps a lot!", false)
+            .addField("Monthly Votes", `${botStats.monthly_upvotes} monthly votes on Glenn Bot List, and ${botStats2.monthlyPoints} on Top.gg.`, true)
+            .addField("Total Votes", `${botStats.total_upvotes} total votes on Glenn Bot List, and ${botStats2.points} on Top.gg.`, true)
+            .addField("Vote", "[Vote Here](https://glennbotlist.xyz/bot/619305062900039726/vote) or [here](https://top.gg/bot/619305062900039726/vote)! It helps a lot!", false)
             .addField("Invite", `[Invite me](${botStats.invite_url}) to your server`, true)
             .addField("Support Server", `Join the [official Valkyrie Server](https://discord.gg/hg4VTwc)`, true)
             .addField("Submit Feedback", `Feedback/Suggestions/Bugs? Fill out [the form](https://docs.google.com/forms/d/e/1FAIpQLSeJYUvmHURJXJZ_G99LHvAr002kN-EkmWbTDg7y1w7k3MOXKw/viewform?usp=sf_link)`, true)
