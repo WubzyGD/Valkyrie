@@ -536,7 +536,7 @@ client.on("message", async message => {
 				cmdd.execute(message, msg, args, cmd, adminPrefix, mention, client);
 			};
 			await userGameData.update({commands_executed: pstats.commands_executed + 1}, {where: {user_id: message.author.id}});
-		}; 
+		};
 	} catch (err) {
 		console.error(err);
 		message.reply("Really not sure what happened, but something you did (or something Wubzy sucks at doing) broke it. Please report this to WubzyGD#8766.")
