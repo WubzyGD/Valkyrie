@@ -1,0 +1,30 @@
+{
+    "config": {
+        "logch": "", 
+        "maxWarnings": 0, 
+        "onMaxWarn": "kick", 
+        "muteOnWarn": false
+    },
+    "cases": {
+        "1": {
+            "members": [""], 
+            "punishment": "", 
+            "reason": "", 
+            "moderators": [""], 
+            "status": "open",
+            "issued": "<date>",
+            "notes": []
+        }
+    },
+    "nextCaseNo": 1,
+    "warnings": {
+        "user_id": [{
+            "warning": "",
+            "moderator": "",
+            "case": 1
+        }]
+    },
+    "automod": {
+        "spam": {"enabled": true, "messagesPerMin": 5, "punishment": ["mute", "warn"]}
+    }
+}
