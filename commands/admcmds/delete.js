@@ -11,11 +11,11 @@ module.exports = {
 		if (Number(args[0]) < 5) { message.delete(); return message.channel.send("The least amount of messages you can specify is 5.")};
 		if (isNaN(args[0])) {message.delete(); return(message.channel.send(`You didn't give me a number of messages to delete. Usage: \`${adminPrefix}delete <number> [@member]\``))};
 		if (args.length == 1) {
-			message.channel.bulkDelete(Number(args[0]) + 1);
+			message.channel.bulkDelete(Number(args[0]));
 		} else {
-			if (!mention) {return(message.channel.send("You have to mention someone, silly."))}
+			if (!mention) {if (client.users.cache.has(args[1].trim())) {mention = client.users.cache.get(args[1].trim());} else {return(message.channel.send("You have to mention someone, silly."));}}
 			message.channel.messages.fetch({limit: 100}).then((messages) => {
-				var filterBy = mention ? mention.id : Client.mention.id;
+				var filterBy = mention.id;
 				messages = messages.filter(m => m.author.id === filterBy).array().slice(0, Number(args[0]));
 				message.channel.bulkDelete(messages).catch(console.error);
 			});

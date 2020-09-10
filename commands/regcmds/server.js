@@ -73,6 +73,16 @@ module.exports = {
                     currentServer.leave_message_channel = getChannel(); if (currentServer.leave_message_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
                     return message.reply(`This server will now receive leaving messages in <#${currentServer.leave_message_channel}>.`);
                 } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit leavechannel <#channel|channelID|none>\``);};
+            } else if (args[0] == "logchannel") {
+                args.shift();
+                if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit logchannel <#channel|channelID|none>\` This will set the channel that logs will be sent to for your server.`);}
+                if (args[0] == "none") {
+                    currentServer.log_channel = null; save();
+                    return message.reply("This server will no longer receive logs. This can be re-enabled at any time.");
+                } else if ((args[0].startsWith("<#") && args[0].endsWith(">")) || args[0].length == 18) {
+                    currentServer.log_channel = getChannel(); if (currentServer.log_channel == 0) {return message.reply("You must tag a channel or provide an ID!");}; save();
+                    return message.reply(`This server will now receive log messages in <#${currentServer.log_channel}>.`);
+                } else {return message.reply(`You didn't provide a valid operator. Syntax: \`${prefix}server edit logchannel <#channel|channelID|none>\``);};
             } else if (args[0] == "defaultrole") {
                 args.shift();
                 if (!args.length) {return message.channel.send(`Syntax: \`${prefix}server edit defaultrole <@role|none>\` This will add the role to users who join - if you mention a role, or disable it if you type "none".`)};
@@ -128,6 +138,7 @@ module.exports = {
             .addField("Join Role", currentServer.join_role)
             .addField("Welcome Committee Role", currentServer.welcome_ping_role)
             .addField("Level Up Messages", currentServer.level_update)
+            .addField("Logs Channel", currentServer.log_channel)
             .addField("Prefix", currentServer.prefix)
             .setColor("DC134C")
             .setFooter("Valkyrie")

@@ -510,6 +510,17 @@ client.on("message", async message => {
 			.setThumbnail(m.guild.iconURL({size: 2048}))
 			.setColor("DC134C"));
 		} else {return message.reply("I can snipe an `edit` or a `delete`!");};
+	} else if (msg.startsWith(prefix) && cmd === "music") {
+		const ytdl = require('ytdl-core-discord');
+
+		async function play(connection, url) {return connection.play(await ytdl(url), {type: 'opus', highWaterMark: 500});}
+		const voiceChannel = message.member.voice.channel;
+		if (!voiceChannel) {return message.reply('You have to be in a voice channel for me to play music!');}
+
+		voiceChannel.join().then(async connection => {
+			let dispatcher = await play(connection, args.join(" ").trim());
+			dispatcher.on('finish', () => {voiceChannel.leave();});
+		});
 	} else if (!client.commands.has(cmd)) {
 	if (message.channel.type == "text") {client.commands.get("arcustom").execute(message, msg, args, cmd, prefix, mention, client, ars[message.guild.id]);};};
 	try {
@@ -557,14 +568,100 @@ client.on("message", async message => {
 	//raids
 });
 
+function getTS(guildId) {
+	if (fs.existsSync(`./data/guildconfig/${guildId}.json`)) {
+		var thisServerSettings = fs.readFileSync(`./data/guildconfig/${guildId}.json`);
+		thisServerSettings = JSON.parse(thisServerSettings);
+		return thisServerSettings;
+	} else {return null;}
+};
+
 client.on("messageUpdate", async (oldM, newM) => {
 	if (oldM.channel.type != "text") {return;};
+	if (oldM.author.bot) {return;}
+	if (oldM.deleted) {return;}
 	if (!Object.keys(snipe.edit).includes(oldM.guild.id)) {snipe.edit[oldM.guild.id] = {};};
 	snipe.edit[oldM.guild.id][oldM.channel.id] = {old: oldM, cur: newM};
+
+	let ts = getTS(oldM.guild.id);
+	if (ts && ts.log_channel) {if (oldM.guild.channels.cache.has(ts.log_channel)) {oldM.guild.channels.cache.get(ts.log_channel).send(new Discord.MessageEmbed()
+		.setTitle('Message Edited')
+		.setDescription(`Sent by <@${oldM.author.id}> | In <#${oldM.channel.id}> | [See Message](${oldM.url})`)
+		.setThumbnail(oldM.author.avatarURL({size: 1024}))
+		.addField("Old Message", "`-> `" + oldM.content.toString())
+		.addField("New Message", "`-> `" + newM.content.toString())
+		.setColor('8034eb').setFooter("Valkyrie", client.user.avatarURL()).setTimestamp());
+	}}
 });
 
 client.on("messageDelete", async message => {
 	if (message.channel.type != "text") {return;};
 	if (!Object.keys(snipe.delete).includes(message.guild.id)) {snipe.delete[message.guild.id] = {};};
 	snipe.delete[message.guild.id][message.channel.id] = message;
+
+	let ts = getTS(message.guild.id);
+	if (ts && ts.log_channel) {if (message.guild.channels.cache.has(ts.log_channel)) {
+		let mde = new Discord.MessageEmbed()
+			.setTitle('Message Deleted')
+			.setDescription(`Sent by <@${message.author.id}> | In <#${message.channel.id}>`)
+			.setThumbnail(message.author.avatarURL({size: 1024}))
+			.setColor('ecff8f').setFooter("Valkyrie", client.user.avatarURL()).setTimestamp();
+		if (message.content && message.content.length) {mde.addField("Message", "`-> `" + message.content.toString());}
+		if (message.attachments.size) {
+			if (message.attachments.first().url.includes(".png") || message.attachments.first().url.includes(".jpg") || message.attachments.first().url.includes(".gif")) {/*console.log('e');*/ try {mde.setImage(message.attachments.first().url);} catch {}}
+			let av = Array.from(message.attachments.values());
+			as = ''; for (let a of av) {
+				as += `[Att. ${av.indexOf(a) + 1}](${a.url})`;
+				if (av.indexOf(a) + 1 < av.length) {as += ' | ';}
+			}
+			if (as.length) {mde.addField('Attachments', as);}
+		}
+		message.guild.channels.cache.get(ts.log_channel).send(mde);
+	}}
 });
+
+client.on('channelCreate', async channel => {
+	if (channel.type == 'dm') {return;}
+
+	let ts = getTS(channel.guild.id);
+	if (ts && ts.log_channel) {if (channel.guild.channels.cache.has(ts.log_channel)) {channel.guild.channels.cache.get(ts.log_channel).send(new Discord.MessageEmbed()
+		.setTitle('Channel Created')
+		.setDescription(`Channel: <#${channel.id}> | \`#${channel.name}\``)
+		.addField(`In Category`, channel.parent.name, true)
+		.addField(`Type`, channel.type, true)
+		.setThumbnail(channel.guild.iconURL({size: 1024}))
+		.setColor('66d2e3').setFooter("Valkyrie", client.user.avatarURL()).setTimestamp());
+	}}
+});
+
+client.on('channelDelete', async channel => {
+	if (channel.type == 'dm') {return;}
+
+	let ts = getTS(channel.guild.id);
+	if (ts && ts.log_channel) {if (channel.guild.channels.cache.has(ts.log_channel)) {channel.guild.channels.cache.get(ts.log_channel).send(new Discord.MessageEmbed()
+		.setTitle('Channel Deleted')
+		.setDescription(`Old Channel Naame: #${channel.name}`)
+		.addField(`In Category`, channel.parent.name)
+		.setThumbnail(channel.guild.iconURL({size: 1024}))
+		.setColor('66d2e3').setFooter("Valkyrie", client.user.avatarURL()).setTimestamp());
+	}}
+});
+
+client.on('channelUpdate', async (oldCh, newCh) => {
+	let channel = oldCh;
+	if (channel.type == 'dm') {return;}
+	if (channel.deleted) {return;}
+	let ts = getTS(channel.guild.id);
+	if (ts && ts.log_channel) {if (channel.guild.channels.cache.has(ts.log_channel)) {
+		let ded = new Discord.MessageEmbed()
+			.setTitle('Channel Edited')
+			.setDescription(`Channel: <#${channel.id}>`)
+			.setThumbnail(channel.guild.iconURL({size: 1024}))
+			.setColor('66d2e3').setFooter("Valkyrie", client.user.avatarURL()).setTimestamp()
+		if (oldCh.name !== newCh.name) {ded.addField("Name Change", `**Old**: \`${oldCh.name}\`\n**New**: \`${newCh.name}\``, true);}
+		if (oldCh.parent.name != newCh.parent.name) {ded.addField("Category Change", `**Old**: \`${oldCh.parent.name}\`\n**New**: \`${newCh.parent.name}\``, true);}
+		//if (!oldCh.permissions.equals(newCh.permissions)) {ded.addField("Permissions Update", "Channel permissions were changed.");}
+		if (!ded.fields.length) {return;}
+		channel.guild.channels.cache.get(ts.log_channel).send(ded);
+	}}
+})

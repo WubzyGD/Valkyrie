@@ -10,15 +10,19 @@
         "dblapi.js": "^2.4.1",
         "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
         "discord.js": "^12.2.0",
+        "ffmpeg-static": "^4.2.7",
         "gblapi.js": "^2.0.5",
         "heroku": "^7.42.1",
         "lavaclient": "^3.1.2",
         "lavaqueue": "^3.1.6",
         "manyitems": "^1.0.2",
+        "mongoose": "^5.10.3",
         "node-fetch": "^2.6.0",
         "sequelize": "^5.22.3",
         "sqlite3": "^4.2.0",
-        "winston": "^3.3.3"
+        "winston": "^3.3.3",
+        "ytdl-core": "^3.2.2",
+        "ytdl-core-discord": "^1.2.1"
     },
     "engines": {
         "node": "12.14.1"
