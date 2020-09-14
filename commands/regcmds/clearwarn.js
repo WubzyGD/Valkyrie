@@ -9,8 +9,8 @@ module.exports = {
         if (!message.guild) {return message.reply("This is a server-only command!");}
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}clearwarn <@user>\``);}
         if (!message.member.permissions.has("ADMINISTRATOR")) {return message.reply("You must be an administrator in your server to do this. In the near future, server owners will be able to add roles that can warn users, though!");}
-        if (args.length < 1) {return message.reply("You must mention a user to clear the warnings of.");}
-        if (message.guild.members.cache.has(args[0].trim())) {mention = client.users.cache.get(args[0].trim());}
+        if (!mention) {if (args.length < 1) {return message.reply("You must mention a user to clear the warnings of.");}
+        if (message.guild.members.cache.has(args[0].trim())) {mention = client.users.cache.get(args[0].trim());}}
         else {return message.reply("You must mention a user to clear the warnings of.");}
         if (!fs.existsSync(`./data/mod/${message.guild.id}.json`)) {return message.reply("Nobody in your server has ever been warned! There's actually no moderation settings available for your server at all.");}
         var guildW = JSON.parse(fs.readFileSync(`./data/mod/${message.guild.id}.json`));

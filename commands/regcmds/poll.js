@@ -12,7 +12,7 @@ module.exports = {
     name: "poll",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}poll <options>\`. Use \`${prefix}poll options\` to see a list of available options.`);};
+        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}poll <options>\`. Use \`${prefix}poll options\` to see a list of available options.`);}
         if (args[0] == "options") {return message.reply("**Valid options are:**\n\n-Title - Required\n-Text - Displays below title\n-Color - must be hex; Embed color\n-Channel - Optional; must be tagged\n-Option - Required; no more than 9\n-Image - Pass a **URL** for an image to add\n-Thumbnail - Pass a **URL** for the embed thumbnail\n-Servericonimage/Servericonthumbnail - Uses the server's icon as the image/thumbnail\n-Time - Required; ms only\n-Secret - Only DMs results\n-DM - Send results by DM\n\nUsage: `$option data` Example: `poll $title Ex. $text Test Text $option Left $option Right $time 10000`");};
         var title = "";
 		var text = "";
@@ -27,6 +27,7 @@ module.exports = {
         var secret = false;
         var dm = false;
         var time;
+        if (!message.guild.members.cache.get(client.user.id).permissions.has("MANAGE_MESSAGES")) {return message.reply("Unfortunately, I need to have Manage Messages permissions in this server in order to ensure the best operation of this command.");}
 		for (t = 0; t < args.length; t++) {
 			i = args[t];
 			if ((!reading == false) && (!i.startsWith("$"))) {
@@ -78,7 +79,7 @@ module.exports = {
         title.trim();
         if (!options) {return message.reply("You must include options in a poll, silly ;)");};
         if (text.length > 0) {pollEmbed.setDescription(text);};
-		if (title.length >= 1) {pollEmbed.setAuthor(title, message.author.avatarURL());} else {message.reply("You must have a poll title!");};
+		if (title.length >= 1) {pollEmbed.setAuthor(title, message.author.avatarURL());} else {return message.reply("You must have a poll title!");};
         if (color.length > 0) {pollEmbed.setColor(color);} else {pollEmbed.setColor("DC134C");};
 		if (!channel) {channel = message.channel.id;};
         if (options.length > 9) {return message.reply("You can't have more than 9 options!");};
@@ -86,12 +87,12 @@ module.exports = {
 		if (text.search(`<@${message.member.guild.id}>`) !== -1 || text.search("@everyone") !== -1) {
 			if (!message.member.guild.channels.cache.get(channel).permissionsFor(message.member.roles.highest).has("MENTION_EVERYONE")) {return message.reply("You included a mass mention, but don't have the permission to do that.");};
 			message.member.guild.channels.cache.get(channel).send("@everyone");
-        };
-        if (thumbnail) {pollEmbed.setThumbnail(thumbnail);};
-        if (image) {pollEmbed.setImage(image);};
+        }
+        if (thumbnail) {pollEmbed.setThumbnail(thumbnail);}
+        if (image) {pollEmbed.setImage(image);}
         for (i of options) {
             optionText += `${options.indexOf(i) + 1}. ${i}\n`;
-        };
+        }
         pollEmbed.addField("Options", optionText);
         if (secret == true) {pollEmbed.addField(`Secret Poll`, `This poll is **secret**, which means that the results will only be seen by the poll creator, ${message.member.displayName}.`);};
         message.delete();

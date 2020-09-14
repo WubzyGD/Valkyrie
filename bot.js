@@ -659,7 +659,7 @@ client.on('channelUpdate', async (oldCh, newCh) => {
 			.setThumbnail(channel.guild.iconURL({size: 1024}))
 			.setColor('66d2e3').setFooter("Valkyrie", client.user.avatarURL()).setTimestamp()
 		if (oldCh.name !== newCh.name) {ded.addField("Name Change", `**Old**: \`${oldCh.name}\`\n**New**: \`${newCh.name}\``, true);}
-		if (oldCh.parent.name != newCh.parent.name) {ded.addField("Category Change", `**Old**: \`${oldCh.parent.name}\`\n**New**: \`${newCh.parent.name}\``, true);}
+		if (oldCh.parent && oldCh.parent.name != newCh.parent.name) {ded.addField("Category Change", `**Old**: \`${oldCh.parent.name}\`\n**New**: \`${newCh.parent.name}\``, true);}
 		//if (!oldCh.permissions.equals(newCh.permissions)) {ded.addField("Permissions Update", "Channel permissions were changed.");}
 		if (!ded.fields.length) {return;}
 		channel.guild.channels.cache.get(ts.log_channel).send(ded);

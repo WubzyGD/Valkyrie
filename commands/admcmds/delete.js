@@ -6,7 +6,8 @@ module.exports = {
     description: "",
     execute(message, msg, args, cmd, adminPrefix, mention, client) {
 		if (!message.member.hasPermission("MANAGE_MESSAGES")) {return message.channel.send("You must be able to manage messages to do that.");};
-        if (!args.length) { message.delete(); return message.channel.send(`You haven't specified how many messages to delete, or anything actually. Usage: \`${adminPrefix}delete <number> [@member]\``)};
+		if (!message.guild.members.cache.get(client.user.id).permissions.has("MANAGE_MESSAGES")) {return message.reply("Believe it or not, I'll need to be able to delete messages in order to delete messages.");}
+		if (!args.length) { message.delete(); return message.channel.send(`You haven't specified how many messages to delete, or anything actually. Usage: \`${adminPrefix}delete <number> [@member]\``)};
         if (Number(args[0]) > 101) { message.delete(); return message.channel.send("That's a bit too many messages. The maximum number of messages to delete is 100")};
 		if (Number(args[0]) < 5) { message.delete(); return message.channel.send("The least amount of messages you can specify is 5.")};
 		if (isNaN(args[0])) {message.delete(); return(message.channel.send(`You didn't give me a number of messages to delete. Usage: \`${adminPrefix}delete <number> [@member]\``))};

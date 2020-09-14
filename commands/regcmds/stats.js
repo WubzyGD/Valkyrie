@@ -49,7 +49,7 @@ module.exports = {
 		ctx.fillStyle = '#ffffff';
 		ctx.fillText(person.displayName, canvas.width / 2.5, canvas.height / 1.8);
 		if (lvlpercent <= 3) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-0.png");} else if (lvlpercent <= 10) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-1.png");} else if (lvlpercent <= 20) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-2.png");} else if (lvlpercent <= 30) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-3.png");} else if (lvlpercent <= 40) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-4.png");} else if (lvlpercent <= 50) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-5.png");} else if (lvlpercent <= 60) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-6.png");} else if (lvlpercent <= 70) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-7.png");} else if (lvlpercent <= 80) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-8.png");} else if (lvlpercent <= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-9.png");} else if (lvlpercent >= 90) {var xpbar = await Canvas.loadImage("./images/dw/xp/xp-bar-10.png");}
-		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably alredy knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
+		else {return message.reply("Yeah chief it seems Wubzy is an idiot. He also probably already knows that this is a problem, so give him a bit to fix it. Gaining a bit more xp could help.");};
 		ctx.drawImage(xpbar, canvas.width / 2.5, canvas.height / 1.5, (canvas.width / 2.2) - 5, (canvas.height / 1.5) - 100);
 		ctx.beginPath();
 		ctx.arc(125, 125, 100, 0, Math.PI * 2, true);

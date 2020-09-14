@@ -5,11 +5,11 @@ module.exports = {
     name: "char",
     description: "",
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}char <create|view|edit|delete>\``);};
+        if (!args.length) {return message.channel.send(`Syntax: \`${prefix}char <create|view|edit|delete>\``);}
         var td = args[0];
-        if (td == "create") {
+        if (td === "create") {
             try {
-                if (message.channel.type !== "dm") {return message.reply("You must create a character in a DM with me first, and then you can use your character anywhere!");};
+                if (message.channel.type !== "dm") {return message.reply("You must create a character in a DM with me first, and then you can use your character anywhere!");}
                 
                 await message.channel.send("You will be asked a series of questions about your character. At any time, you can type \"skip\" to omit an option. You can always come back to it later.");
                 //await message.channel.send("And, please keep in mind that inappropriate/sexual characters aren't allowed. Let's just try and keep things civil and SFW, as I am an SFW bot :) A Valkyrie admin can remove your character at any time if they feel that it is offensive or overly lewd.")
@@ -23,7 +23,7 @@ module.exports = {
                     await message.channel.send(`${prompt} Lim: ${charLim}`);
                     var temp = await message.channel.awaitMessages(filter, {time: 2000000, max: 1, errors: ["time"]});
                     temp = temp.first().content;
-                    if (typeof(charLim) == "number") {if (temp.length > charLim) {temp = temp.slice(0, charLim);};};
+                    if (typeof(charLim) == "number") {if (temp.length > charLim) {temp = temp.slice(0, charLim);}}
                     if (temp.toLowerCase().trim() == "skip") {temp = "Omitted";};
                     return temp;
                 };
@@ -105,7 +105,7 @@ module.exports = {
                         var json = JSON.stringify(chars);
                         fs.writeFileSync(`./data/chars/${message.author.id}.json`, json, 'utf8');
                     };
-                    return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view ${cid}\`. To see a list of your characters' IDs, use \`${prefix}char view list}\`**. Your character can now be accessed in any server that I am in, and updated anywhere. Using \`${prefix}char view text ${cid}\` will have me give you a text file of your character's info.`);
+                    return message.channel.send(`**Your character, ${cname}, was successfully created! To view it, use \`${prefix}char view rp ${cid}\`. To see a list of your characters' IDs, use \`${prefix}char view list}\`**. Your character can now be accessed in any server that I am in, and updated anywhere. Using \`${prefix}char view text rp ${cid}\` will have me give you a text file of your character's info.`);
                 } else if (format.toLowerase().trim().includes("dnd")) {
                     await message.channel.send("What is your __DnD__ character's name? Chars limit: 40. Any characters over 30 will be sliced off, and this will be the case for all questions.");
                     var name = await message.channel.awaitMessages(filter, {time: 1000000, max: 1, errors: ["time"]});
@@ -122,7 +122,7 @@ module.exports = {
                 } else {return message.reply("You didn't specify a valid format. Try again!");};
             } catch (e) {
                 message.reply("Looks like you ran out of time. --If you're certain that you didn't take more than about 100 seconds, contact my creator.");
-            };
+            }
         } else if (td == "edit") {
 
         } else if (td == "view") {
@@ -131,7 +131,7 @@ module.exports = {
             if (fs.existsSync(`./data/chars/${message.author.id}.json`)) {
                 var chars = JSON.parse(fs.readFileSync(`./data/chars/${message.author.id}.json`));
                 chars = chars.chars;
-            } else {return message.reply("You don't have any characters made!");};
+            } else {return message.reply("You don't have any characters made!");}
             function viewChar(type, char) {
                 try {
                     var charEmbed = new Discord.MessageEmbed().setAuthor(char.name, message.author.avatarURL())
@@ -147,11 +147,11 @@ module.exports = {
                     if (char.ref_image != "Omitted") {try {
                         charEmbed.addField("Image Source", `[${char.name} Ref Img](${char.ref_image})`, true);
                         charEmbed.setImage(char.ref_image); } catch {message.author.send("It seems like the link you provided for the image for your character is invalid. Please edit your character and fix this!");};
-                    };
+                    }
                     if (char.ref_link != "Omitted") {charEmbed.addField("Reference Link", `Go [here](${char.ref_link}) to learn more.`, true);};
                     return message.channel.send(charEmbed);
                 } catch (e) {console.log(`Error while displaying character: ${e}`); return message.reply("There was an error in displaying your character. Most likely, if you had an image for your character, you gave a bad link. It's possible that you had too many letters in your character's bio fields, in which case, yell at Wubzy for me and he'll make a fix.");};
-            };
+            }
             if (args[0] == "list") {
                 var lsr = "";
                 var lsd = "";
@@ -167,8 +167,8 @@ module.exports = {
                 .setColor("DC134C")
                 .setFooter("Valkyrie")
                 .setTimestamp());
-            } else if (args[0] == "rp") {
-                if (args[1] == "list") {
+            } else if (args[0] === "rp") {
+                if (args[1] === "list") {
                     var lsr = "";
                     if (Object.keys(chars.rp).length > 0) {for (var charid of Object.keys(chars.rp)) {lsr += `**${Object.keys(chars.rp).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.rp[charid].name}\n\n`;};}
                     else {lsr = "No RP Characters made yet!";};
@@ -180,11 +180,11 @@ module.exports = {
                     .setFooter("Valkyrie")
                     .setTimestamp());
                 } else {if (Object.keys(chars.rp).includes(args[1])) {viewChar("RP", chars.rp[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");};};
-            } else if (args[0] == "dnd") {
-                if (args[1] == "list") {
+            } else if (args[0] === "dnd") {
+                if (args[1] === "list") {
                     var lsd = "";
-                    if (Object.keys(chars.dnd).length > 0) {for (var charid of Object.keys(chars.dnd)) {lsd += `**${Object.keys(chars.dnd).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.dnd[charid].name}\n\n`;};}
-                    else {lsd = "No DnD Characters made yet!";};
+                    if (Object.keys(chars.dnd).length > 0) {for (var charid of Object.keys(chars.dnd)) {lsd += `**${Object.keys(chars.dnd).indexOf(charid) + 1}.** \`${charid}\`\nName: ${chars.dnd[charid].name}\n\n`;}}
+                    else {lsd = "No DnD Characters made yet!";}
                     return message.channel.send(new Discord.MessageEmbed()
                     .setAuthor("Character List", message.author.avatarURL())
                     .setDescription(`For ${message.author.username}`)
@@ -192,15 +192,15 @@ module.exports = {
                     .setColor("DC134C")
                     .setFooter("Valkyrie")
                     .setTimestamp());
-                } else {if (Object.keys(chars.dnd).includes(args[1])) {viewChar("DnD", chars.dnd[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");};};
-            } else {return message.reply("Please specify either `list`, or the character's type, `rp` or `dnd`");};
-        } else if (args[0] == "delete") {
+                } else {if (Object.keys(chars.dnd).includes(args[1])) {viewChar("DnD", chars.dnd[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");}}
+            } else {return message.reply("Please specify either `list`, or the character's type, `rp` or `dnd`");}
+        } else if (args[0] === "delete") {
             args.shift();
             if (!args.length) {return message.channel.send(`You must provide first the character's type (\`rp\` or \`DnD\`), then an an ID of the character you wish to delete. If you do not know the character's ID, use \`list\` as the ID to see all of you characters' IDs.`);};
             if (fs.existsSync(`./data/chars/${message.author.id}.json`)) {
                 var chars = JSON.parse(fs.readFileSync(`./data/chars/${message.author.id}.json`));
                 chars = chars.chars;
-            } else {return message.reply("You don't have any characters made!");};
+            } else {return message.reply("You don't have any characters made!");}
             async function delChar(type, char) {
                 await message.channel.send(`Are you absolutely positive you want to delete ${char.name}? It cannot be undone!`);
                 var filter = m => m.author.id == message.author.id;
@@ -211,13 +211,13 @@ module.exports = {
                     var data = JSON.stringify({"chars": chars});
                     fs.writeFileSync(`./data/chars/${message.author.id}.json`, data, 'utf8');
                     return message.reply("Okay, I deleted that character.");
-                } else {return message.reply("Okay, I won't delete anything.");};
-            };
+                } else {return message.reply("Okay, I won't delete anything.");}
+            }
             if (args[0] == "rp") {
-                if (Object.keys(chars.rp).includes(args[1])) {delChar("rp", chars.rp[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");};
+                if (Object.keys(chars.rp).includes(args[1])) {delChar("rp", chars.rp[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");}
             } else if (args[0] == "dnd") {
-                if (Object.keys(chars.dnd).includes(args[1])) {delChar("dnd", chars.dnd[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");};
-            } else {return message.reply("You must specify the type, `rp` or `dnd`!");};
-        } else {return message.reply(`Invalid syntax. Syntax: \`${prefix}char <create|view|edit|delete>\``);};
+                if (Object.keys(chars.dnd).includes(args[1])) {delChar("dnd", chars.dnd[args[1]]);} else {return message.reply("I don't seem to have the character you're looking for.");}
+            } else {return message.reply("You must specify the type, `rp` or `dnd`!");}
+        } else {return message.reply(`Invalid syntax. Syntax: \`${prefix}char <create|view|edit|delete>\``);}
     }
 };

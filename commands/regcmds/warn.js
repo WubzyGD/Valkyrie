@@ -10,8 +10,8 @@ module.exports = {
         if (!args.length) {return message.channel.send(`Syntax: \`${prefix}warn <@user> <reason>\` or use \`warn <list|clear> @user\``);}
         if (args[0] === "list" || args[0] === "view" || args[0] === "v" || args[0] === "l") {
             if (args.length < 2) {return message.reply("You must mention a user to check the warnings of.");}
-            if (message.guild.members.cache.has(args[1].trim())) {mention = client.users.cache.get(args[1].trim());}
-            else {return message.reply("You must mention a user to check the warnings of.");}
+            if (!mention) {if (message.guild.members.cache.has(args[1].trim())) {mention = client.users.cache.get(args[1].trim());}
+            else {return message.reply("You must mention a user to check the warnings of.");}}
             if (!fs.existsSync(`./data/mod/${message.guild.id}.json`)) {return message.reply("Nobody in your server has ever been warned! There's actually no moderation settings available for your server at all.");}
             var guildW = JSON.parse(fs.readFileSync(`./data/mod/${message.guild.id}.json`));
             if (!Object.keys(guildW.warnings).length) {return message.reply("Nobody in your server has ever been warned! Consider yourself lucky :D");}
@@ -21,7 +21,7 @@ module.exports = {
             let ws = '';
             let cwc = 0;
             for (warning of warnings[mention.id]) {if (guildW.cases[warning.case].status !== "Cleared") {ws += `\`Case #${warning.case}\` - Issued by <@${warning.moderator}>\n${warning.warning}\n\n`;} else {cwc++;}}
-            if (cwc > 0) {ws += '\n\n*Plus ' + cwc + ' other warnings that have been cleared.*';}
+            if (cwc > 0) {ws += '*Plus ' + cwc + ' other warnings that have been cleared.*';}
             if (cwc === warnings[mention.id].length) {return message.reply("That user has no uncleared warnings.");}
             return message.reply(new Discord.MessageEmbed()
             .setTitle("User Warnings")
@@ -34,8 +34,8 @@ module.exports = {
         } else if (args[0] === "clear" || args[0] === "c") {
             if (!message.member.permissions.has("ADMINISTRATOR")) {return message.reply("You must be an administrator in your server to do this. In the near future, server owners will be able to add roles that can warn users, though!");}
             if (args.length < 2) {return message.reply("You must mention a user to clear the warnings of.");}
-            if (message.guild.members.cache.has(args[1].trim())) {mention = client.users.cache.get(args[1].trim());}
-            else {return message.reply("You must mention a user to clear the warnings of.");}
+            if (!mention) {if (message.guild.members.cache.has(args[1].trim())) {mention = client.users.cache.get(args[1].trim());}
+            else {return message.reply("You must mention a user to clear the warnings of.");}}
             if (!fs.existsSync(`./data/mod/${message.guild.id}.json`)) {return message.reply("Nobody in your server has ever been warned! There's actually no moderation settings available for your server at all.");}
             var guildW = JSON.parse(fs.readFileSync(`./data/mod/${message.guild.id}.json`));
             if (!Object.keys(guildW.warnings).length) {return message.reply("Nobody in your server has ever been warned! Consider yourself lucky :D");}
@@ -57,8 +57,8 @@ module.exports = {
         } else {
             if (!message.member.permissions.has("ADMINISTRATOR")) {return message.reply("You must be an administrator in your server to do this. In the near future, server owners will be able to add roles that can warn users, though!");}
             if (args.length < 1) {return message.reply("You must mention a user to warn.");}
-            if (message.guild.members.cache.has(args[0].trim())) {mention = client.users.cache.get(args[0].trim());}
-            else {return message.reply("You must mention a user to warn.");}
+            if (!mention) {if (message.guild.members.cache.has(args[0].trim())) {mention = client.users.cache.get(args[0].trim());}
+            else {return message.reply("You must mention a user to warn.");}}
             args.shift();
             if (!args.length) {return message.reply("You must specify what you'd like to warn the user with!");}
             if (!fs.existsSync(`./data/mod/${message.guild.id}.json`)) {
