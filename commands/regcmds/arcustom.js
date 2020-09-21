@@ -32,7 +32,20 @@ module.exports = {
             if (msg.slice((message.content.search("m ") + 2)).trim() == "valk" || msg.slice((message.content.search("m ") + 2)).trim() == "valkyrie") {return message.reply("No, I'm Valkyrie, you silly goose!");};
             return message.channel.send(`Hi **${message.content.slice((message.content.search("m ") + 2))}**, I'm Mom!`);
         };
-        if ((msg.includes("want") && msg.includes("to fuck") && msg.includes("valk")) || (msg.includes("mommy valk")) || (msg.includes("dominate valk")) || (msg.includes("dom") && msg.includes("by valk") || (msg.includes("dom") && msg.includes("me valk")) || (msg.includes("master valkyrie")) || (msg.includes("valk") && msg.includes("lookin") && (msg.includes("thicc") || msg.includes("fuckable") || msg.includes("hot")))) && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")) {
+        function inc(i) {return msg.includes(i);};
+        function incw() {return (inc('want to') || inc('going to') || inc('gonna') || inc('wanna'));};
+        if ((
+            (inc('want') && inc('to fuck valk'))
+            || (incw() && inc ('fuck valk'))
+            || ((inc('dom ') || inc('dominate')) && (inc('me valk') || inc('by valk') || inc('valk')))
+            || (inc('mommy valk'))
+            || (
+                inc('valk') 
+                && (inc('makes me') || inc('gets me')) 
+                && (inc('wet') || inc('horny') || inc('moist'))
+            )
+        ) && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
+        ) {
             var data = fs.readFileSync("./data/misc/count.json", "utf-8");
             const write = () => {var json = JSON.stringify(counter); fs.writeFileSync(`./data/misc/count.json`, json, 'utf8');}
             var counter = JSON.parse(data);
@@ -40,6 +53,8 @@ module.exports = {
             write();
             return message.reply(`Sure thing, you horny fuck! So what's that, like, ${counter.simpforvalk} times you've tried to hit on me?`);
         };
+        if (incw() && inc('marry valk')) {return message.reply("I am a dragon, and I actually have a soulmate! But that's really sweet of you to think of me that way ^^");}
+        if (inc('i love valk') || inc('love you valk')) {return message.reply("Thanks for that! ~~Though I hope you just mean platonically~~");}
         if (message.channel.type == "text") {
             if (ars == null) {return;};
             for (var arr of Object.keys(ars)) {if (msg == arr) {return message.channel.send(ars[arr]);};};

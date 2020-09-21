@@ -419,7 +419,7 @@ client.on("message", async message => {
 			ancient_boss_damage_done: 0
 		});
 		var pstats = await userGameData.findOne({where: {user_id: message.author.id}});
-	};
+	}; message.channel.c
 
 	if (Object.keys(accounts).includes(message.author.id)) {var account = accounts[message.author.id]; if (!Object.keys(cstats).includes(message.author.id)) {cstats[message.author.id] = new Date().toString();}; if (!Object.keys(scores[account.faction.toLowerCase()].members).includes(message.author.id)) {scores[account.faction.toLowerCase()].members[message.author.id] = 0;};} else {var account = null;};
 

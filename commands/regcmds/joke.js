@@ -19,7 +19,6 @@ module.exports = {
             "What's red and bad for your teeth?\n||A brick.||",
             "If at first you don't succeed… ||Then skydiving definitely isn't for you.||",
             "It turns out a major new study recently found that humans eat more bananas than monkeys. It's true. I can't remember the last time I ate a monkey.",
-            "Cremation. My final hope for a smokin’ hot body!",
             "What's a skeleton samurai's favorite weapon?\n||A __Shoulder Blade__!||"
         ];
         var joke = jokes[Math.floor(Math.random() * jokes.length)];
