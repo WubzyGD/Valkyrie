@@ -1,3 +1,3 @@
-title Valkyrie - I'm in pain.
+title {Rewrite} Valkyrie.
 node bot.js
 pause
