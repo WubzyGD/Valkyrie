@@ -36,13 +36,44 @@ module.exports = {
         function incw() {return (inc('want to') || inc('going to') || inc('gonna') || inc('wanna'));};
         if ((
             (inc('want') && inc('to fuck valk'))
-            || (incw() && inc ('fuck valk'))
-            || ((inc('dom ') || inc('dominate')) && (inc('me valk') || inc('by valk') || inc('valk')))
+            || (incw() && (
+                inc('fuck valk')
+                || inc('have sex with valk')
+                || inc('69 valk')
+            ))
+            || (
+                (inc('dom ')
+                || inc('dominate')
+                || inc('dominatrix')
+                || inc('bite my penis')
+                || inc('pinch')
+                || inc('tickle')
+                || inc('bite')
+                || inc('pee on')
+                || inc('fuck my')
+                || inc('fuck me')
+                || inc('69')
+                || inc('choke')
+                || inc('choked')
+                || inc('use')
+                || inc('used')
+                || inc('make love')
+                || inc('enslave')
+            ) && (
+                inc('me valk')
+                || inc('by valk')
+                || inc('valk')
+            )) 
             || (inc('mommy valk'))
+            || (
+                (inc('pinch') || inc('tickle') || inc('bite'))
+                && (inc('my') || inc('valk'))
+                && (inc('nipples'))
+            )
             || (
                 inc('valk') 
                 && (inc('makes me') || inc('gets me')) 
-                && (inc('wet') || inc('horny') || inc('moist'))
+                && (inc('wet') || inc('horny') || inc('moist') || inc('hard') || inc('erect') || inc('stiff') || inc('solid'))
             )
             || (inc('fuck me valk') || inc('fuck me now valk') || inc('fuck me please valk') || inc('fuck me already valk'))
         ) && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
@@ -54,6 +85,13 @@ module.exports = {
             write();
             return message.reply(`Sure thing, you horny fuck! So what's that, like, ${counter.simpforvalk} times you've tried to hit on me?`);
         };
+        if (
+            (
+                (inc('use valk') && inc('urinal'))
+                || (inc('use me') && inc('urinal') && inc('valk'))
+            )
+            && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
+        ) {return message.reply("...k then... *I'm gonna step away now.*");}
         if (incw() && inc('marry valk')) {return message.reply("I am a dragon, and I actually have a soulmate! But that's really sweet of you to think of me that way ^^");}
         if (inc('i love valk') || inc('love you valk')) {return message.reply("Thanks for that! ~~Though I hope you just mean platonically~~");}
         if (((
