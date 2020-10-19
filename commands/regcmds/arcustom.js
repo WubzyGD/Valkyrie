@@ -28,7 +28,7 @@ module.exports = {
         if (msg.startsWith("whats up valk") || msg.startsWith("what's up valk") || msg.startsWith("what’s up valk")) {
             return message.channel.send("Not too much. But quit asking how I'm doing, ask it to the goblin behind you. Party member down...");
         };
-        if ((msg.startsWith("i am ") || msg.startsWith("im ") || msg.startsWith("i'm ") || msg.startsWith("i’m ")) && message.content.length <= 30 && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")) {
+        if ((msg.startsWith("i am ") || msg.startsWith("im ") || msg.startsWith("i'm ") || msg.startsWith("i’m ")) && message.content.length <= 30 && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "434437407023169547" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")) {
             if (msg.slice((message.content.search("m ") + 2)).trim() == "valk" || msg.slice((message.content.search("m ") + 2)).trim() == "valkyrie") {return message.reply("No, I'm Valkyrie, you silly goose!");};
             return message.channel.send(`Hi **${message.content.slice((message.content.search("m ") + 2))}**, I'm Mom!`);
         };
@@ -44,6 +44,7 @@ module.exports = {
                 && (inc('makes me') || inc('gets me')) 
                 && (inc('wet') || inc('horny') || inc('moist'))
             )
+            || (inc('fuck me valk') || inc('fuck me now valk') || inc('fuck me please valk') || inc('fuck me already valk'))
         ) && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
         ) {
             var data = fs.readFileSync("./data/misc/count.json", "utf-8");
@@ -55,6 +56,25 @@ module.exports = {
         };
         if (incw() && inc('marry valk')) {return message.reply("I am a dragon, and I actually have a soulmate! But that's really sweet of you to think of me that way ^^");}
         if (inc('i love valk') || inc('love you valk')) {return message.reply("Thanks for that! ~~Though I hope you just mean platonically~~");}
+        if (((
+            (inc("glad") || inc('great') || inc("good") || inc("happy"))
+            && (inc('got my back') || inc('there for me') || inc('support me') || inc('doing your job'))
+            && inc('valk')
+        ) || (msg == "thanks valk" || msg == "thanks valkyrie")) && message.author.id == "330547934951112705") {
+            let rs = [
+                "Sure thing! I'm always here to help.",
+                "I know I'm a broken bot sometimes, but I try my best, and I'm glad to know that you see that, Wubzy!",
+                "You can always count on me!",
+                "Pleasing my creator is my only goal in life!",
+                "Thanks for the compliment, Wubzy!",
+                "Glad to know I'm doing things right.",
+                "You get mad when I mess things up, but your compliments make it all worth it!",
+                "Anything for you, Wubzy",
+                "Hey, just returning the favor to my creator.",
+                "I appreciate the compliment, but we have a horde of really angry goblins to deal with, so could ya maybe save it for later?"
+            ];
+            return message.channel.send(rs[Math.floor(Math.random() * rs.length)]);
+        }
         if (message.channel.type == "text") {
             if (ars == null) {return;};
             for (var arr of Object.keys(ars)) {if (msg == arr) {return message.channel.send(ars[arr]);};};

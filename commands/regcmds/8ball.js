@@ -15,7 +15,7 @@ module.exports = {
 		var result = Math.floor(Math.random() * responses.length);
 		var embedtosend = new Discord.MessageEmbed()
 		.setAuthor("8ball Question", message.author.avatarURL())
-		.addField("Question: \"*" + message.content.slice(prefix.length + 6) + "*\"", `\n\nAnswer: ${responses[result]}`)
+		.addField("Question: \"*" + message.content.slice(cmd.length + prefix.length + 1) + "*\"", `\n\nAnswer: ${responses[result]}`)
 		.setFooter(`Asked by ${message.member.displayName}`)
 		.setColor("DC134C")
 		.setTimestamp();

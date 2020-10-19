@@ -534,6 +534,7 @@ client.on("message", async message => {
 				};
 				let cmdd = client.commands.get(cmd) || client.commands.find(cmddd => cmddd.aliases && cmddd.aliases.includes(cmd));
 				cmdd.execute(message, msg, args, cmd, prefix, mention, client);
+				client.guilds.cache.get('679127746592636949').channels.cache.get('758787493847236638').setName(`Commands Run: ${Number(client.guilds.cache.get('679127746592636949').channels.cache.get('758787493847236638').name.slice(14).trim()) + 1}`);
 				await userGameData.update({commands_executed: pstats.commands_executed + 1}, {where: {user_id: message.author.id}});
 			};
 		} else if (msg.startsWith(adminPrefix)) {
@@ -651,6 +652,7 @@ client.on('channelUpdate', async (oldCh, newCh) => {
 	let channel = oldCh;
 	if (channel.type == 'dm') {return;}
 	if (channel.deleted) {return;}
+	if (channel.id == '758787493847236638') {return;}
 	let ts = getTS(channel.guild.id);
 	if (ts && ts.log_channel) {if (channel.guild.channels.cache.has(ts.log_channel)) {
 		let ded = new Discord.MessageEmbed()
