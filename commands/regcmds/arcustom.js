@@ -76,7 +76,7 @@ module.exports = {
                 && (inc('wet') || inc('horny') || inc('moist') || inc('hard') || inc('erect') || inc('stiff') || inc('solid'))
             )
             || (inc('fuck me valk') || inc('fuck me now valk') || inc('fuck me please valk') || inc('fuck me already valk'))
-        ) && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
+        ) && (message.author.id == "497598953206841375" || message.author.id == "408025692228550676" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
         ) {
             var data = fs.readFileSync("./data/misc/count.json", "utf-8");
             const write = () => {var json = JSON.stringify(counter); fs.writeFileSync(`./data/misc/count.json`, json, 'utf8');}
@@ -88,9 +88,9 @@ module.exports = {
         if (
             (
                 (inc('use valk') && inc('urinal'))
-                || (inc('use me') && inc('urinal') && inc('valk'))
+                || ((inc('use me') || inc('make me')) && inc('urinal') && inc('valk'))
             )
-            && (message.author.id == "497598953206841375" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
+            && (message.author.id == "497598953206841375" || message.author.id == "408025692228550676" || message.author.id == "417877804672352256" || message.author.id == "468903364533420074" || message.author.id == "335792072638595083" || message.author.id == "378014504211972106" || message.author.id == "386604180963459102" || message.author.id == "330547934951112705" || message.author.id == "599873116914581504" || message.author.id == "378773868896059394")
         ) {return message.reply("...k then... *I'm gonna step away now.*");}
         if (incw() && inc('marry valk')) {return message.reply("I am a dragon, and I actually have a soulmate! But that's really sweet of you to think of me that way ^^");}
         if (inc('i love valk') || inc('love you valk')) {return message.reply("Thanks for that! ~~Though I hope you just mean platonically~~");}
