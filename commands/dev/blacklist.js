@@ -28,7 +28,7 @@ module.exports = {
             if (args[1].match(/\d+/)) {args.shift();}
             if (!args[1]) {return message.channel.send("You must specify whether to `add` or `del` a guild's blacklist!");}
 
-            if (message.guild.id === "762707532417335296") {return message.reply("You can't blacklist my support server!");}
+            if (message.guild.id === "679127746592636949") {return message.reply("You can't blacklist my support server!");}
 
             if (['a', 'add'].includes(args[1].toLowerCase())) {
                 if (tg.blacklisted) {return message.reply("That guild is already blacklisted!");}

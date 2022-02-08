@@ -10,10 +10,10 @@ module.exports = async (client, spinner) => {
         let amount = 0;
 
         for await (const ar of AR.find()) {
+            amount++;
             client.misc.cache.ar.set(ar.gid, ar.triggers);
             if (ar.ignoreChs.length) {client.misc.cache.arIgnore.set(ar.gid, ar.ignoreChs);}
             spinner.update({text: `${chalk.gray('[PROC]')} >> ${chalk.blueBright(`Cached`)} ${chalk.white(`${amount}`)} ${chalk.blueBright(`guilds with auto responses.`)}`});
-            amount++;
         }
 
         const cacheTime = new Date().getTime() - st;

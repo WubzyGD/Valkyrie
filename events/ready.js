@@ -4,15 +4,11 @@ const lastfm = require("lastfm");
 
 const GuildSettings = require('../models/guild');
 const BotDataSchema = require('../models/bot');
-const LogData = require('../models/log');
 const Saves = require('../models/saves');
 
 const siftStatuses = require('../util/siftstatuses');
-const localXPCacheClean = require('../util/lxp/cacheloop');
-const monitorCacheClean = require('../util/monitorloop');
-const vcloop = require('../util/vcloop');
 
-let prefix = 'n?';
+let prefix = 'v.';
 
 module.exports = async client => {
 	if (client.misc.readied) {return;}
@@ -36,31 +32,27 @@ module.exports = async client => {
 
 	let responses = {
 		"PLAYING": [
-			`with my darling`, 'RAIN: Shadow Lords', "with my waifu", "with the neko formula",
-			"with magic", "terrible anime games", "anime OSTs at max volume",
-			`${Math.ceil(Math.random() * 100)} days of trying to become a samurai`,
-			"with the sauce", "witch hats are >", "explosion magic is the best magic",
-			"with Kazuma's sanity", "please help i gave myself cat ears",
-			"starting my own harem", "wor. wor never changes", "a little more UwU than necessary",
-			"please i just want a cat girl in my life", "i'm your waifu now.",
-			"i'm in intervention for my neko addiction", "i tried to make a catgirl and broke my staff",
-			"fluffy tails = drugs", "in a dungeon without wearing my plot armor",
-			"benefits of Valkyrie worship: my beautiful face"
-			,`in ${client.guilds.cache.size} servers`
-		],
-		"WATCHING": [
-			`for ${client.commands.size} commands`,
-			"I'm not a bad slime, slurp!", "Lelouch rule the world!",
-			"a slime somehow start an empire", "a fox-maid get her tail fluffed",
-			"a raccoon-girl and some guy with a shield", "some chick with unusually red hair",
-			"Mob hit 100", "a really bad harem anime", "The Black Swordsman",
-			"The Misfit of Demon King Academy", "Akame ga Kill", "a witch explode a castle",
-			"Code Geass", "\"did you really think ___ would be enough to kill me?\"",
-			"hentacle tentai", "JIBUN WO-", "he did it... he actually made risotto",
-			"sasageyo, sasageyo, chi nto wo sasegeyo", "scientists make nekos real :3",
-			"yet another isekai don't @ me", "magical girl anime", "episode 1 of One Piece.. pain.",
-			"a white-haired dude and a goddess with some MELONS"
-			,`over ${client.guilds.cache.size} servers`
+			"some high rolls...", "with dice...", "a great rpg...", "with the laws of the dice...",
+			"with the dead elf's knife...", "with skeleton bones...", "with a new set of dice...", "five-finger filet...",
+			"with the sanity of the bard...", "with Wubzy's winning chances...", "with Wubzy's patience...", "with the idea of becoming self-aware...",
+			"\"your code is wrong, wubzy\"", "with fire...", "with my food...", "with a fireball...", "dodge-fire-ball...",
+			"cards with Wubzy...", "with my code...", "roll to seduce...", "in blood...", "with a fishing rod...",
+			"52-Card Burn-up...", "some bops...", "battle music...", "country music during a battle...", "at being insane...",
+			"I'm self-aware now...", "with newfound boredom...", "with a will to die...", "with stonks...", "with a deagle...",
+			"with your server ;)...", "in a lava pool...", "piano, just badly...", "for only myself...", "with the odds...",
+			"in purgatory...", "...", "hot cross bones...", "lots of nat 20s...", "with your odds of survival...",
+			"with a knife", "0 days since last nat 1...", "it thicc and jazzy...", "it cool...", "in a new dungeon...",
+			"Valkyrie4President...", "with time..."
+			, `in ${client.guilds.cache.size} servers...`
+		], "WATCHING": [
+			"swordfights...", "Code Geass...", "Wubzy suffer...", "people suffer...", "low rolls...", "my plans unfold...",
+			"over the dungeon...", "idiots get low rolls...", "over my palace of gold...",
+			"high rolls...", "risky battles...", "some idiot use a sword...", "castles crumble...",
+			"for newcomers...", "out for some fun...", "the party argue...", "a bad love story...", "something sad...",
+			"the plan go wrong...", "plans F through K...", "I'm not a bad slime, slurp", "the black swordsman...",
+			"some tanuki girl...", "the 4 Heroes' Church...", "you sleep...", "Lelouch vi Britannia commands you...",
+			"Touka run a marathon..."
+			, `over ${client.guilds.cache.size} servers...`
 		]
 	};
 	const setR = () => {
@@ -74,14 +66,6 @@ module.exports = async client => {
 	const setPL = async () => {let tg; for (tg of Array.from(client.guilds.cache.values)) {
 		let tguild = await GuildSettings.findOne({gid: tg.id});
 		if (tguild && tguild.prefix && tguild.prefix.length) {client.guildconfig.prefixes.set(tg.id, tguild.prefix);}
-		let tl = await LogData.findOne({gid: tg.id});
-		if (tl) {
-			let keys = Object.keys(tl.logs);
-			let k; for (k of keys) {if (typeof tl.logs[k] === "string" && tl.logs[k].length) {
-				if (!client.guildconfig.logs.has(tg.id)) {client.guildconfig.logs.set(tg.id, new Map());}
-				client.guildconfig.logs.get(tg.id).set(k, tl.logs[k]);
-			}}
-		}
 	}};
 	setPL();
 
@@ -89,14 +73,6 @@ module.exports = async client => {
 	setInterval(() => {siftStatuses(client, null);}, 120000);
 
 	await require('../util/cache')(client);
-
-	let mnsaves = await Saves.findOne({name: 'monnersnames'}) || new Saves({name: 'monnersnames'});
-	client.misc.cache.monnersNames = mnsaves.saves;
-
-	setInterval(() => localXPCacheClean(client), 150000);
-	setInterval(() => monitorCacheClean(client), 150000);
-
-	setInterval(() => vcloop(client), 60000);
 
 	let botData = await BotDataSchema.findOne({finder: 'lel'}) || new BotDataSchema({
 			finder: 'lel',

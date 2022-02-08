@@ -16,24 +16,6 @@ module.exports = async (client) => {
         let bluCache = spin.add("blu", {text: "Caching User Blacklists..."});
         loaders.push(require('./cache/bl')(client, blCache, bluCache));
 
-        let lxpCache = spin.add("xp", {text: "Caching Local XPs..."});
-        loaders.push(require('./cache/lxp')(client, lxpCache));
-
-        let lrCache = spin.add("lr", {text: "Caching Level Roles..."});
-        loaders.push(require('./cache/lr')(client, lrCache));
-
-        let moCache = spin.add("m", {text: "Caching Monitors..."});
-        loaders.push(require('./cache/monit')(client, moCache));
-
-        let anCache = spin.add("a", {text: "Caching Animes..."});
-        loaders.push(require('./cache/anime')(client, anCache));
-
-        let chCache = spin.add("ch", {text: "Caching Characters..."});
-        loaders.push(require('./cache/char')(client, chCache));
-
-        let ctCache = spin.add("cht", {text: "Caching Chests..."});
-        loaders.push(require('./cache/chest')(client, ctCache));
-
         await Promise.all(loaders);
         
         /*console.log(`${chalk.gray('[PROC]')} >> ${chalk.blueBright(`Cached`)} ${chalk.white(`${client.misc.cache.bl.guild.length}`)} ${chalk.blueBright(`guild blacklists`)}`);

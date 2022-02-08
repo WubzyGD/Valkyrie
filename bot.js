@@ -30,12 +30,6 @@ client.misc = {
             guild: [],
             user: []
         },
-        lxp: {
-            enabled: [],
-            xp: {},
-            hasLevelRoles: [],
-            disabledChannels: new Map()
-        },
         chests: [],
         chestsTimeout: new Map(),
         chests: {
@@ -43,19 +37,7 @@ client.misc = {
             timeout: new Map(),
             waiting: new Map()
         },
-        monit: {},
-        monitEnabled: [],
-        inVC: [],
-        VCG: {},
         activeVC: [],
-        chars: new Discord.Collection(),
-        anime: new Discord.Collection(),
-        charsID: new Discord.Collection(),
-        animeID: new Discord.Collection(),
-        charsNum: 0,
-        charsLove: new Discord.Collection(),
-        monners: {},
-        monnersNames: new Map(),
         spin: new spinnies()
     },
     loggers: {},
@@ -116,7 +98,7 @@ async function init() {
     let pmcc = new Date().getTime();
     const config = client.config;
     try {
-        await mongoose.connect(`mongodb+srv://${config.database.user}:${config.database.password}@${config.database.cluster}.3jpp4.mongodb.net/test`, {
+        await mongoose.connect(`mongodb+srv://${config.database.user}:${config.database.password}@${config.database.cluster}.uqyvv.mongodb.net/test`, {
             useFindAndModify: false, useNewUrlParser: true, dbName: 'Valkyrie-Main', useUnifiedTopology: true, useCreateIndex: true
         }).catch(e => {
             let date = new Date(); date = date.toString().slice(date.toString().search(":") - 2, date.toString().search(":") + 6);
@@ -157,7 +139,7 @@ async function init() {
     }
     if (!client.misc.config.nocli) {require('./handle/console')(client);}
 
-    client.utils.logch = async () => {return client.guilds.cache.get('762707532417335296').channels.cache.get('762732961753595915');};
+    client.utils.logch = async () => {return client.guilds.cache.get('679127746592636949').channels.cache.get('940432676802953216');};
     client.guildconfig = {};
     client.guildconfig.prefixes = new Map();
 

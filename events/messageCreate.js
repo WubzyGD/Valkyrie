@@ -5,9 +5,6 @@ const wait = require('../util/wait');
 
 const UserData = require('../models/user');
 const AR = require('../models/ar');
-const LXP = require('../models/localxp');
-const Monitors = require('../models/monitor');
-const Monners = require('../models/monners');
 
 const channelTypes = ["GUILD_MESSAGE", "DM", "GUILD_NEWS_THREAD", "GUILD_PRIVATE_THREAD", "GUILD_PUBLIC_THREAD", "GUILD_NEWS", "GROUP_DM", "GUILD_STORE", "GUILD_TEXT"];
 
@@ -23,7 +20,7 @@ module.exports = async (client, message) => {
 
     if (message.guild && !message.member.permissions.has("SEND_MESSAGES")) {return undefined;}
 	
-    let defaultPrefix = client.misc.config.dev ? 'n!' : 'n?';
+    let defaultPrefix = client.misc.config.dev ? 'v..' : 'v.';
     let prefix = message.guild ? client.guildconfig.prefixes.has(message.guild.id) ? client.guildconfig.prefixes.get(message.guild.id) !== null ? client.guildconfig.prefixes.get(message.guild.id) : defaultPrefix : defaultPrefix : defaultPrefix;
 
 	let msg = message.content.toLowerCase().replace('\u200E', '');
@@ -35,13 +32,11 @@ module.exports = async (client, message) => {
             : message.content.slice(3 + client.user.id.length).trim().replace('\u200E', '').split(/\s+/g);
 	let cmd = args.shift().toLowerCase().trim();
 
-    message.misc = {mn: message.guild ? (client.misc.cache.monnersNames.get(message.guild.id) || 'Monners') : 'Monners'};
-
     if (message.content.includes("@everyone")) {return;}
 
 	if ([`<@${client.user.id}>`, `<@!${client.user.id}>`].includes(msg)) {
 	    return message.channel.send({embeds: [new Discord.MessageEmbed()
-        .setTitle(["Yep, that's me!", "^^ Hiya!", "Oh, hi there!", "Sure, what's up?", "How can I help!", "Valkyrie is busy, but I can take a message for you!", "Teehee that's me!", "You were looking for Valkyrie Tivastl, right?", "Sure! What's up?", "Pong!"][Math.floor(Math.random() * 10)])
+        .setTitle(["Yep, that's me!", "^^ Hiya!", "Oh, hi there!", "Sure, what's up?", "How can I help!", "Valkyrie is busy, but I can take a message for you!", "Teehee that's me!", "You were looking for Valkyrie, right?", "Sure! What's up?", "Pong!"][Math.floor(Math.random() * 10)])
         .setDescription(`My prefix here is \`${prefix}\`. Use \`${prefix}help\` to see what commands you can use.`)
         .setColor('dc134c')]}).catch(() => {});
     }
@@ -62,50 +57,6 @@ module.exports = async (client, message) => {
 	    });
 	}
 
-	if (message.guild && client.misc.cache.lxp.enabled.includes(message.guild.id)) {
-        if (!client.misc.cache.lxp.disabledChannels.has(message.guild.id) || !client.misc.cache.lxp.disabledChannels.get(message.guild.id).includes(message.channel.id)) {
-            if (!client.misc.cache.lxp.xp[message.guild.id]) {client.misc.cache.lxp.xp[message.guild.id] = {};}
-            if (!client.misc.cache.lxp.xp[message.guild.id][message.author.id]) {
-                LXP.findOne({gid: message.guild.id}).then(xp => {
-                    client.misc.cache.lxp.xp[message.guild.id][message.author.id] = {
-                        xp: xp.xp[message.author.id] ? xp.xp[message.author.id][0] : 0,
-                        level: xp.xp[message.author.id] ? xp.xp[message.author.id][1] : 1,
-                        lastXP: new Date().getTime() - 60000
-                    };
-                    require('../util/lxp/gainxp')(client, message.member.id, message.channel);
-                });
-            }
-            else if (new Date().getTime() - client.misc.cache.lxp.xp[message.guild.id][message.author.id].lastXP > 60000) {
-                require('../util/lxp/gainxp')(client, message.member.id, message.channel);
-            }
-        }
-    }
-
-    if (message.guild && client.misc.cache.chests.enabled.includes(message.guild.id)) {require('../util/lxp/spawnchest')(client, message.member, message.channel, prefix);}
-
-    if (!client.misc.cache.monners[message.author.id]) {
-        let tmonners = await Monners.findOne({uid: message.author.id}) || new Monners({uid: message.author.id});
-        client.misc.cache.monners[message.author.id] = tmonners.currency;
-    }
-
-    if (message.guild && client.misc.cache.monitEnabled.includes(message.guild.id)) {
-        if (!client.misc.cache.monit[message.guild.id]) {
-            let tm = await Monitors.findOne({gid: message.guild.id});
-            client.misc.cache.monit[tm.gid] = {
-                messages: tm.messages,
-                voice: tm.voice,
-                expiry: new Date()
-            };
-        }
-        if (!client.misc.cache.monit) {client.misc.cache.monit = {};}
-        if (!client.misc.cache.monit[message.guild.id].messages.channels[message.channel.id]) {client.misc.cache.monit[message.guild.id].messages.channels[message.channel.id] = 0;}
-        if (!client.misc.cache.monit[message.guild.id].messages.members[message.author.id]) {client.misc.cache.monit[message.guild.id].messages.members[message.author.id] = 0;}
-        client.misc.cache.monit[message.guild.id].messages.channels[message.channel.id] += 1;
-        client.misc.cache.monit[message.guild.id].messages.members[message.author.id] += 1;
-        client.misc.cache.monit[message.guild.id].messages.total += 1;
-        client.misc.cache.monit[message.guild.id].expiry.setTime(Date.now());
-    }
-
     try {
         if (msg.startsWith(prefix) || msg.startsWith(`<@${client.user.id}>`) || msg.startsWith(`<@!${client.user.id}>`)) {
             let command = client.commands.get(cmd) || client.commands.get(client.aliases.get(cmd));
@@ -121,7 +72,6 @@ module.exports = async (client, message) => {
             if (!require('../util/cooldownhandler')(client, message, command)) {return;}
             if (command.meta && command.meta.guildOnly && !message.guild) {return message.channel.send("You must be in a server to use this command!").catch(() => {});}
             require('../util/oncommand')(message, msg, args, cmd, prefix, mention, client);
-            if (client.misc.loggers.cmds) {client.misc.loggers.cmds.send(`${chalk.gray("[CMDL]")} >> ${chalk.white("Command")} ${chalk.blue(command.name)} ${message.guild ? `|| ${chalk.blue("Guild ID: ")} ${chalk.blueBright(message.guild.id)}` : ''} || ${chalk.blue("User ID: ")} ${chalk.blueBright(message.author.id)}`);}
             return command.execute(message, msg, args, cmd, prefix, mention, client);
         }
         let trigger; for (trigger of client.responses.triggers) {if (await trigger[1](message, msg, args, cmd, prefix, mention, client)) {await client.responses.commands.get(trigger[0]).execute(message, msg, args, cmd, prefix, mention, client); break;}}

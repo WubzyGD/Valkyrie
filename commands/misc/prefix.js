@@ -22,7 +22,7 @@ module.exports = {
             ? await GuildSettings.findOne({gid: message.guild.id})
             : new GuildSettings({gid: message.guild.id});
         if (!message.member.permissions.has("ADMINISTRATOR") && (!tguild.staffrole.length || !message.guild.roles.cache.has(tguild.staffrole) || !message.member.roles.cache.has(tguild.staffrole))) {return message.reply("You don't have the permissions to use this command here.");}
-        if (!args.length) {return message.channel.send(`Syntax: \`${prefix} <newPrefix|clear>\`. My current prefix in this server is \`${tguild.prefix.length ? tguild.prefix : 'n?'}\``);}
+        if (!args.length) {return message.channel.send(`Syntax: \`${prefix} <newPrefix|clear>\`. My current prefix in this server is \`${tguild.prefix.length ? tguild.prefix : 'v.'}\``);}
         let np = args[0];
         if (np.length > 7) {return message.reply("Hmmm, that prefix is a bit long. Try making something smaller!");}
         if (!np.match(/^[a-zA-Z0-9,.!?<>\-_+=/;$#%^&*]+$/)) {return message.reply('Your custom prefix contains some *wonky* characters. Please use only alphanumerics and basic symbols.');}
@@ -30,7 +30,7 @@ module.exports = {
         tguild.save();
         if (['c', 'clear', 'n', 'none'].includes(np.trim().toLowerCase())) {
             client.guildconfig.prefixes.set(message.guild.id, null);
-            return message.reply('this server\'s prefix has been reset to the default, `n?`.');
+            return message.reply('this server\'s prefix has been reset to the default, `v.`.');
         }
         client.guildconfig.prefixes.set(message.guild.id, np);
         let upm = await message.reply("sure thing!");

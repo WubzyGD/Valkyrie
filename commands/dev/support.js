@@ -36,7 +36,7 @@ module.exports = {
             .setColor("e8da3a")
             .setFooter({text: "Valkyrie"})
             .setTimestamp();
-        client.guilds.cache.get('762707532417335296').channels.cache.get('762732961753595915').send({embeds: [logemb(['a', 'add'].includes(args[0]) ? 'Added' : 'Removed')]});
+        client.guilds.cache.get('679127746592636949').channels.cache.get('940432676802953216').send({embeds: [logemb(['a', 'add'].includes(args[0]) ? 'Added' : 'Removed')]});
         return message.reply(`${message.guild.members.cache.get(person.id).displayName} is no${['a', 'add'].includes(args[0]) ? 'w' : ' longer'} a Support Team member!`);
     }
 };

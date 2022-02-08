@@ -13,7 +13,7 @@ module.exports = async (client, guild) => {
     botData.servers = client.guilds.cache.size;
     botData.save();
 
-    client.guilds.cache.get('762707532417335296').channels.cache.get('766031709866557471').send({embeds: [new Discord.MessageEmbed()
+    client.guilds.cache.get('679127746592636949').channels.cache.get('736690885324177549').send({embeds: [new Discord.MessageEmbed()
         .setAuthor({name: 'Server Lost', iconURL: client.users.cache.get(guild.ownerId).displayAvatarURL()})
         .setTitle(guild.name)
         .setThumbnail(guild.iconURL({size: 2048}))
