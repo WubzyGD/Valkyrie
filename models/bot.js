@@ -8,7 +8,8 @@ const botDataSchema = new mongoose.Schema({
     restarts: Number,
     lastRestart: Date,
     errors_all: Number,
-    totalErrors: Number
+    totalErrors: Number,
+    simp: Number
 });
 
 module.exports = mongoose.model("bot", botDataSchema);

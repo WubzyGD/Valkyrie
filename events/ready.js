@@ -75,14 +75,15 @@ module.exports = async client => {
 	await require('../util/cache')(client);
 
 	let botData = await BotDataSchema.findOne({finder: 'lel'}) || new BotDataSchema({
-			finder: 'lel',
-			commands: 0,
-			servers: 0,
-			servers_all: 0,
-			restarts: 0,
-			lastRestart: new Date(),
-			errors_all: 0,
-		});
+		finder: 'lel',
+		commands: 0,
+		servers: 0,
+		servers_all: 0,
+		restarts: 0,
+		lastRestart: new Date(),
+		errors_all: 0,
+		simp: 0
+	});
     if (!client.misc.config.dev) {
 		botData.restarts = botData.restarts + 1;
     	botData.lastRestart = new Date();

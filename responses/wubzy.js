@@ -16,11 +16,24 @@ module.exports = {
         const is = m => msg.trim() === m;
         function incl(ml, s) {let tm; for (tm of ml) {if (inc(tm, s)) {return true;}}}
 
-        if (incl(["thanks valkyrie", "thank you valkyrie", "ty valkyrie"])) {
-            const r = ["Anytime!", "Anything for my creator!", "I hope I was at least a little bit helpful!",
-                ":P Happy to help!", "You're welcome, Wubzy!", "Always happy to help you, Wubz",
-                "I do take tips :D"];
-            return message.channel.send(r[Math.floor(Math.random() * r.length)]);
+        if (((
+            (inc("glad") || inc('great') || inc("good") || inc("happy"))
+            && (inc('got my back') || inc('there for me') || inc('support me') || inc('doing your job'))
+            && inc('valk')
+        ) || (msg === "thanks valk" || msg === "thanks valkyrie"))) {
+            let rs = [
+                "Sure thing! I'm always here to help.",
+                "I know I'm a broken bot sometimes, but I try my best, and I'm glad to know that you see that, Wubzy!",
+                "You can always count on me!",
+                "Pleasing my creator is my only goal in life!",
+                "Thanks for the compliment, Wubzy!",
+                "Glad to know I'm doing things right.",
+                "You get mad when I mess things up, but your compliments make it all worth it!",
+                "Anything for you, Wubzy",
+                "Hey, just returning the favor to my creator.",
+                "I appreciate the compliment, but we have a horde of really angry goblins to deal with, so could ya maybe save it for later?"
+            ];
+            return message.channel.send(rs[Math.floor(Math.random() * rs.length)]);
         }
 
         if (is("❤")) {
