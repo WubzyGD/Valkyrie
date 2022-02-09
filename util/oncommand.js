@@ -11,8 +11,8 @@ module.exports = async (message, msg, args, cmd, prefix, mention, client) => {
     if (tu.commands > 50 && !tu.msg) {
         await message.author.send({embeds: [new Discord.MessageEmbed()
             .setThumbnail(client.user.displayAvatarURL({size: 2048}))
-            .setDescription(`Hey there **${message.author.username}**! Looks like you've used my commands over **50 times**${tu.commands > 51 ? ` (${tu.commands} to be exact)` : ''}!\nI hope you're enjoying the wonderful things I have to offer, because I've enjoyed offering them to you.`)
-            .addField("What next?", "If you're enjoying what I do, you can [join my support server](https://discord.gg/T2JZtuf) to leave feedback and say hi to my developers. You can also consider [giving the repository a star](https://github.com/ValkyrieDev/Valkyrie) to show your support! I look forward to my time with you in the future <:hearty:812130944319750144>")
+            .setDescription(`Hey there **${message.author.username}**! Looks like you've used my commands over **50 times**${tu.commands > 51 ? ` (${tu.commands} to be exact)` : ''}!\nThis is good ol' dragon lady coming to you with some :star:news:star:: I need attention! Give me attention! Seriously, I hope you're enjoying my help ^^`)
+            .addField("What next?", "If you're enjoying what I do, you can [join my support server](https://discord.gg/T2JZtuf) to leave feedback and say hi to my developers. You can also consider [giving the repository a star](https://github.com/WubzyGD/Valkyrie) to show your support! I look forward to my time with you in the future <:NC_hearty:841489530413383712>")
             .setFooter({text: "Valkyrie"})
             .setTimestamp()
             .setColor('dc134c')
