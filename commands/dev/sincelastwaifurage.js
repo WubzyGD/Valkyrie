@@ -18,11 +18,11 @@ module.exports = {
         .setDescription("")
         .addField("Syntax", "`sincelastwaifurage`"),
     async execute(message, msg, args, cmd, prefix, mention, client) {
-        if (!client.developers.includes(message.author.id)) {return message.channel.send("Forbidden");}
         const bot = await BotData.findOne({finder: 'lel'});
         if (!args.length) {
-            message.channel.send(`${moment.preciseDiff(Date.now(), bot.lastWaifuRage)} since last waifugami rage incident.`);
+            message.channel.send(`${moment.preciseDiff(Date.now(), bot.lastWaifuRage)} since Wubzy's last waifugami rage incident.`);
         } else {
+            if (!client.developers.includes(message.author.id)) {return message.channel.send("Forbidden");}
             bot.lastWaifuRage = new Date().getTime();
             bot.save();
             return message.channel.send("Make that 0 days since Wubzy's last waifu rage incident.");
