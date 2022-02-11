@@ -6,7 +6,7 @@ module.exports = {
         .setTitle("Help -> ")
         .setDescription("")
         .addField("Syntax", "``"),
-    async condition (message, msg, args, cmd, prefix, mention, client) {return ["497598953206841375", "408025692228550676", "417877804672352256", "468903364533420074", "335792072638595083", "378014504211972106", "386604180963459102", "330547934951112705", "599873116914581504", "378773868896059394", "276576032964739082"].includes(message.author.id)},
+    async condition (message, msg, args, cmd, prefix, mention, client) {return ["497598953206841375", "408025692228550676", "417877804672352256", "468903364533420074", "335792072638595083", "378014504211972106", "386604180963459102", "330547934951112705", "599873116914581504", "378773868896059394", "276576032964739082", "691488806012190780"].includes(message.author.id)},
     async execute(message, msg, args, cmd, prefix, mention, client) {
         if (msg.includes("dice said so")) {
             return message.channel.send("And the dice are never wrong.");
