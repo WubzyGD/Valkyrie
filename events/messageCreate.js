@@ -5,6 +5,7 @@ const wait = require('../util/wait');
 
 const UserData = require('../models/user');
 const AR = require('../models/ar');
+const RP = require('../models/rpch');
 
 const channelTypes = ["GUILD_MESSAGE", "DM", "GUILD_NEWS_THREAD", "GUILD_PRIVATE_THREAD", "GUILD_PUBLIC_THREAD", "GUILD_NEWS", "GROUP_DM", "GUILD_STORE", "GUILD_TEXT"];
 
