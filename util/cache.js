@@ -16,6 +16,9 @@ module.exports = async (client) => {
         let bluCache = spin.add("blu", {text: "Caching User Blacklists..."});
         loaders.push(require('./cache/bl')(client, blCache, bluCache));
 
+        let rpCache = spin.add("rp", {text: "Caching RP..."});
+        loaders.push(require('./cache/rp')(client, rpCache));
+
         await Promise.all(loaders);
         
         /*console.log(`${chalk.gray('[PROC]')} >> ${chalk.blueBright(`Cached`)} ${chalk.white(`${client.misc.cache.bl.guild.length}`)} ${chalk.blueBright(`guild blacklists`)}`);

@@ -41,6 +41,21 @@ module.exports = async (client, message) => {
         .setColor('dc134c')]}).catch(() => {});
     }
 
+    if (message.guild && client.misc.cache.rp.has(message.guild.id) && client.misc.cache.rp.get(message.guild.id).includes(message.channel.id)) {
+        if (msg.match(/^\w+:/m)) {    
+            const rp = await RP.findOne({uid: message.author.id});
+            if (rp && rp.chars[msg.split(':')[0]]) {
+                const webhooks = await message.channel.fetchWebhooks();
+                const webhook = await webhooks.find(wh => wh.token);
+                if (webhook) {
+                    const char = rp.chars[msg.split(':')[0]];
+                    webhook.send({content: message.content.slice(char.prefix.length + 1), avatarURL: char.image, username: char.name}).catch(() => {});
+                    message.delete().catch(() => {});
+                }
+            }
+        }
+    }
+
 	if (mention && message.guild) {require('../util/mention')(message, msg, args, cmd, prefix, mention, client);}
     UserData.findOne({uid: message.author.id}).then(async (tu) => {
 	if (tu && tu.statusmsg.length && tu.statusclearmode === 'auto') {
